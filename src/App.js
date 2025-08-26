@@ -4,6 +4,7 @@ import * as Components from './components';
 import * as Pages from './pages';
 
 Object.entries(Layout).forEach(([name, component]) => {
+  console.log(name, component)
   Handlebars.registerPartial(name, component);
 });
 Object.entries(Components).forEach(([name, component]) => {
@@ -67,7 +68,7 @@ export default class App {
 
   getPagesList() {
     return this.PAGES.map((item) => {
-      const className = (this.page === item.link) ? 'nav__link active' : 'nav__link';
+      const className = (this.page === item.link) ? 'active' : '';
       return {...item, class: className}
     })
   }
