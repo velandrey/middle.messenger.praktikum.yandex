@@ -1,5 +1,9 @@
 {{#> Wrapper }}
     {{#> FormBox }}
-        {{> Button id="test" text="test"}}
+        {{> Input type="text" name="login" label="Логин:"}}
+        {{> Input type="password" name="password" label="Пароль:"}}
+        <div class="form_field">
+            {{> Button id="button_registration" text="Вход"}}
+        </div>
     {{/ FormBox }}
 {{/ Wrapper }}

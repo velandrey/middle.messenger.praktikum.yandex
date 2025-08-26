@@ -1,7 +1,7 @@
-@import "font/font-import.css";
-
+@import "font/font-import.pcss";
 :root {
     --main_color: #3c3ec2;
+    --main_text_color: #444444;
     --main_color_dark: #25266e;
     --white-color: #ffffff;
     --border-color: #cccccc;
@@ -9,10 +9,18 @@
     --highlighted-color: #48497f;
     --radius: 4px;
 }
+html {
+    height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto Condensed', Helvetica, sans-serif;
+    color: var(--main_text_color);
+    font-size: 16px;
+    position: relative;
+    text-align: left;
+    background: var(--white-color);
 }
 * {
     box-sizing: border-box;
@@ -41,4 +49,13 @@ body {
 }
 .form_box {
     margin-top: 30px;
+}
+.form_field_link {
+    margin-top: 15px;
+}
+.form_field_link_auth {
+    color: var(--main_color);
+    text-align: center;
+    text-decoration: none;
+    display: block;
 }

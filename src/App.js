@@ -4,13 +4,11 @@ import * as Components from './components';
 import * as Pages from './pages';
 
 Object.entries(Layout).forEach(([name, component]) => {
-  console.log(name, component)
   Handlebars.registerPartial(name, component);
 });
 Object.entries(Components).forEach(([name, component]) => {
   Handlebars.registerPartial(name, component);
 });
-
 export default class App {
   PAGES = [
     {
@@ -39,7 +37,7 @@ export default class App {
       pages: this.getPagesList(),
     };
     if (this.page === 'Registration') {
-      template = Handlebars.compile(Pages.Auth);
+      template = Handlebars.compile(Pages.Registration);
       this.appElement.innerHTML = template(context);
     } else if (this.page === 'Chat') {
       template = Handlebars.compile(Pages.Chat);
