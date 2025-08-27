@@ -23,6 +23,18 @@ export default class App {
       title: 'Список чатов',
       link: 'Chat',
     },
+    {
+      title: 'Профиль',
+      link: 'Profile',
+    },
+    {
+      title: 'Ошибка 404',
+      link: 'Error404',
+    },
+    {
+      title: 'Ошибка 500',
+      link: 'Error500',
+    },
   ];
 
   constructor() {
@@ -41,6 +53,15 @@ export default class App {
       this.appElement.innerHTML = template(context);
     } else if (this.page === 'Chat') {
       template = Handlebars.compile(Pages.Chat);
+      this.appElement.innerHTML = template(context);
+    } else if (this.page === 'Error404') {
+      template = Handlebars.compile(Pages.Error404);
+      this.appElement.innerHTML = template(context);
+    } else if (this.page === 'Error500') {
+      template = Handlebars.compile(Pages.Error500);
+      this.appElement.innerHTML = template(context);
+    } else if (this.page === 'Profile') {
+      template = Handlebars.compile(Pages.Profile);
       this.appElement.innerHTML = template(context);
     } else {
       template = Handlebars.compile(Pages.Auth);

@@ -5,6 +5,8 @@ npm i postcss-preset-env -D
 npm i autoprefixer -D
 
 
+TODO each как отказаться?
+
 
 
 
