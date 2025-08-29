@@ -58,7 +58,7 @@ export default class App {
             this.render(Pages.Error500, context);
         } else if (this.page === 'Profile') {
             context.full_name = 'Игнат Ёжиков';
-            context.image = './assets/images/user.webp';
+            context.image = '/images/user.webp';
             this.render(Pages.Profile, context);
         } else {
             this.render(Pages.Auth, context);
