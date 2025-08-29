@@ -89,13 +89,6 @@ export default class App {
                 this.changePage(e.target.dataset.link);
             });
         });
-        const forms = document.querySelectorAll('form');
-        forms.forEach(element => {
-            element.addEventListener('submit', (e) => {
-                e.preventDefault();
-                //Обрботчики форм
-            });
-        });
         initModal();
     }
 
