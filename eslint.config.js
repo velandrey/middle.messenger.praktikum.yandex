@@ -12,7 +12,8 @@ export default defineConfig([
             "space-in-parens": "error",
             "no-multiple-empty-lines": "error",
             "prefer-const": "error",
-            "no-use-before-define": "error"
+            "no-use-before-define": "error",
+            "eol-last": "error"
         },
         files: ["**/*.{js,mjs,cjs}"],
         plugins: { js },
