@@ -15,8 +15,14 @@
     left: 10px;
     background: var(--border_color);
 }
-.chat_list_item:last-child {
-    border-bottom: 1px solid var(--border_color);
+.chat_list_item:last-child:after {
+    position: absolute;
+    content: '';
+    width: calc(100% - 20px);
+    height: 1px;
+    bottom: 0;
+    left: 10px;
+    background: var(--border_color);
 }
 .chat_list_item:hover {
     background: var(--main_color_lighter);
