@@ -82,7 +82,7 @@ export default class App {
     }
 
     addEventHandlers() {
-        const elementsLink = document.querySelectorAll('.nav__link');
+        const elementsLink = document.querySelectorAll('.nav_list_item');
         elementsLink.forEach(element => {
             element.addEventListener('click', (e) => {
                 e.preventDefault();

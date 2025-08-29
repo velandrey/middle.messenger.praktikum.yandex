@@ -1,12 +1,10 @@
 {{#> Wrapper }}
     {{#> Box }}
-        {{> Input type="text" name="login" label="Логин:"}}
-        {{> Input type="password" name="password" label="Пароль:"}}
-        <div class="form_field">
-            {{> Button id="button_registration" text="Вход"}}
-        </div>
+        {{> Input type="text" name="login" label="Логин" required="required"}}
+        {{> Input type="password" name="password" label="Пароль" required="required"}}
+        {{> Button type="submit" id="button_registration" text="Вход"}}
         <div class="form_field_link">
-            <a href="#" class="form_field_link_auth">Регистрация</a>
+            <a href="#" class="form_field_link_auth nav_list_item" data-link="Registration">Регистрация</a>
         </div>
     {{/ Box }}
 {{/ Wrapper }}

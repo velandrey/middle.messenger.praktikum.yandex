@@ -12,7 +12,6 @@ export function initModal() {
     modals.forEach(element => {
         element.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log(e.target.classList);
             e.target.classList.remove('active');
         });
     });
