@@ -1,0 +1,42 @@
+{{#> Wrapper }}
+    <div class="chat">
+        <div class="chat_list">
+            <div class="chat_list_head">
+                <div class="chat_list_head_profile">
+                    <a href="#" class="chat_list_head_profile_link">Профиль</a>
+                </div>
+                <div class="chat_list_head_search">
+                    <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input"/>
+                </div>
+            </div>
+            <div class="chat_list_body">
+                {{> ChatListItem name="Рфик Непричёмкин" date="15:30" count="2" text="Последнее сообщение" image="../../assets/images/user.webp" }}
+                {{> ChatListItem name="Рфик Непричёмкин" date="15:30" count="2" text="Последнее сообщение" image="../../assets/images/user.webp" }}
+                {{> ChatListItem name="Рфик Непричёмкин" date="15:30" count="12" text="Последнее сообщение" image="../../assets/images/user.webp" }}
+                {{> ChatListItem name="Рфик Непричёмкин" date="15:30" count="3" text="Последнее сообщение" image="../../assets/images/user.webp" }}
+                {{> ChatListItem name="Рфик Непричёмкин" date="15:30" count="2" text="Последнее сообщение" image="../../assets/images/user.webp" }}
+            </div>
+        </div>
+        <div class="chat_box">
+            <div class="chat_box_head">
+                <div class="chat_box_head_partner">
+                    <img src="../../assets/images/user.webp" alt="{{p_name}}" class="chat_box_head_partner_avatar">
+                    Рфик Непричёмкин
+                </div>
+                <div class="chat_box_head_menu">⋮</div>
+            </div>
+            <div class="chat_box_feed">
+                {{>ChatMessageRow direction="to" type="text" time="08:13" status="unread" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda cumque, deserunt, dignissimos dolores exercitationem explicabo id ipsam laborum laudantium molestiae porro quis quisquam quos saepe sed sunt vero? Labore, repellendus."}}
+                {{>ChatMessageRow direction="to" type="text" time="08:14" status="read" content="Assumenda cumque, deserunt, dignissimos dolores exercitationem explicabo id ipsam laborum laudantium molestiae porro"}}
+                {{>ChatMessageRow direction="from" type="text" time="08:17" content="Go to" }}
+            </div>
+            <div class="chat_box_sending">
+                <div class="chat_box_sending_attach"><img src="../../assets/images/attach.svg" alt="Attach file"></div>
+                <div class="chat_box_sending_message">
+                    <input type="text" name="message" id="message" placeholder="Сообщение" class="chat_box_sending_message_input"/>
+                </div>
+                <div class="chat_box_sending_submit">➤</div>
+            </div>
+        </div>
+    </div>
+{{/ Wrapper }}

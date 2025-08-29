@@ -1,3 +1,4 @@
-export { Error } from './error'
-export { FormBox } from './formbox'
-export { Wrapper } from './wrapper'
+export { Error } from './error';
+export { Box } from './box';
+export { Popup } from './popup';
+export { Wrapper } from './wrapper';

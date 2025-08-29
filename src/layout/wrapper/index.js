@@ -1,1 +1,1 @@
-export { default as Wrapper } from "./wrapper.hbs?raw"
+export { default as Wrapper } from './template.hbs?raw';

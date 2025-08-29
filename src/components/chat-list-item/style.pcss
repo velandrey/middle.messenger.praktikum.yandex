@@ -1,0 +1,65 @@
+.chat_list_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+.chat_list_item:before {
+    position: absolute;
+    content: '';
+    width: calc(100% - 20px);
+    height: 1px;
+    top: 0;
+    left: 10px;
+    background: var(--border_color);
+}
+.chat_list_item:last-child {
+    border-bottom: 1px solid var(--border_color);
+}
+.chat_list_item:hover {
+    background: var(--main_color_lighter);
+}
+.chat_list_item_main {
+    display: flex;
+}
+.chat_list_item_avatar {
+    flex: 0 0 55px;
+    max-width: 55px;
+}
+.chat_list_item_avatar img {
+    width: var(--avatar_size);
+    height: var(--avatar_size);
+    border-radius: 50%;
+}
+.chat_list_item_text {
+    padding: 0 10px;
+}
+.chat_list_item_text_name {
+    font-weight: bold;
+}
+.chat_list_item_text_preview {
+    font-size: 14px;
+    margin-top: 4px;
+}
+.chat_list_item_info {
+
+}
+.chat_list_item_info_date {
+    font-size: 12px;
+    text-align: right;
+}
+.chat_list_item_info_count {
+    background: var(--main_color);
+    color: var(--white_color);
+    font-weight: bold;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 0 auto;
+}

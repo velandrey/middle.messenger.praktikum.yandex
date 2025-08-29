@@ -1,2 +1,2 @@
-import './nav.pcss'
-export { default as Nav } from "./nav.hbs?raw"
+import './style.pcss';
+export { default as Nav } from './template.hbs?raw';

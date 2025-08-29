@@ -3,11 +3,18 @@
     --main_color: #3c3ec2;
     --main_text_color: #444444;
     --main_color_dark: #25266e;
-    --white-color: #ffffff;
-    --border-color: #cccccc;
-    --wrapper-color: #f8f8f8;
+    --main_color_lighter: #e4e4ee;
+    --white_color: #ffffff;
+    --border_color: #cccccc;
+    --wrapper_color: #f8f8f8;
     --highlighted-color: #48497f;
+    --gray_color: #e4e4e4;
+    --red_color: #c23c3c;
+    --yellow_color: #c2b73c;
+    --green_color: #40c23c;
     --radius: 4px;
+    --avatar_size: 55px;
+    --chat_list_with: 320px;
 }
 html {
     height: 100%;
@@ -20,12 +27,28 @@ body {
     font-size: 16px;
     position: relative;
     text-align: left;
-    background: var(--white-color);
+    background: var(--white_color);
 }
 * {
     box-sizing: border-box;
     margin: 0;
     font-family: 'Roboto Condensed', Helvetica, sans-serif;
+}
+a {
+    color: var(--main_color);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--main_color_dark);
+}
+input {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--border_color);
+    border-radius: var(--radius);
+    padding: 10px 10px;
+    font-weight: 300;
+    font-size: 16px;
 }
 .wrapper {
 
@@ -33,9 +56,9 @@ body {
 .app_box {
 
 }
-.form_wrapper {
-    background: var(--wrapper-color);
-    border: 1px solid var(--border-color);
+.box_wrapper {
+    background: var(--wrapper_color);
+    border: 1px solid var(--border_color);
     margin: 0 auto;
     max-width: 450px;
     padding: 30px 45px;

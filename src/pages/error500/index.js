@@ -1,1 +1,1 @@
-export { default as Error500 } from "./error500.hbs?raw"
+export { default as Error500 } from './template.hbs?raw';

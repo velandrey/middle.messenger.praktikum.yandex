@@ -1,1 +1,1 @@
-export { default as Auth } from "./auth.hbs?raw"
+export { default as Auth } from './template.hbs?raw';

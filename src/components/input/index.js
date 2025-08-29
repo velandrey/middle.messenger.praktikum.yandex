@@ -1,2 +1,2 @@
-import './input.pcss'
-export { default as Input } from "./input.hbs?raw"
+import './style.pcss';
+export { default as Input } from './template.hbs?raw';

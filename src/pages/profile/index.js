@@ -1,1 +1,2 @@
-export { default as Profile } from "./profile.hbs?raw"
+import './style.pcss';
+export { default as Profile } from './template.hbs?raw';

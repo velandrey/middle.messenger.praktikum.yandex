@@ -1,2 +1,2 @@
-import './error.pcss'
-export { default as Error } from "./error.hbs?raw"
+import './style.pcss';
+export { default as Error } from './template.hbs?raw';

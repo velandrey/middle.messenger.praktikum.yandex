@@ -1,0 +1,50 @@
+{{#> Wrapper }}
+    {{#> Box }}
+        <div class="profile">
+            <div class="profile_head">
+                <img src="{{image}}" alt="{{full_name}}" class="profile_image"/>
+                <h2 class="profile_name">{{full_name}}</h2>
+            </div>
+            <div class="profile_info">
+                {{> ProfileRow prop="Имя" value="Игнат" }}
+                {{> ProfileRow prop="Фамилия" value="Ёжиков" }}
+                {{> ProfileRow prop="Почта" value="test@yandex.ru" }}
+                {{> ProfileRow prop="Логин" value="mylogin" }}
+                {{> ProfileRow prop="Имя в чате" value="i_yozh" }}
+                {{> ProfileRow prop="Телефон" value="+7 (987) 654 32 11" }}
+            </div>
+            <div class="profile_info">
+                {{#> Popup linkclass="profile_action" linkid="change_profile" linktext="Изменить данные"}}
+                    <div class="profile_edit">
+                        <div class="profile_edit_row">
+                            <div class="profile_edit_colum">
+                                {{> Input type="text" name="first_name" label="Имя:"}}
+                                {{> Input type="text" name="second_name" label="Фамилия:"}}
+                                {{> Input type="text" name="display_name" label="Имя в чате:"}}
+                                {{> Input type="text" name="login" label="Логин:"}}
+                            </div>
+                            <div class="profile_edit_colum">
+                                {{> Input type="email" name="email" label="Почта:" value="test@yandex.ru"}}
+                                {{> Input type="text" name="phone" label="Телефон:"}}
+                                {{> Input type="file" name="avatar" label="Аватар:"}}
+                            </div>
+                        </div>
+                        <div class="form_field profile_edit_save">
+                            {{> Button id="button_save_profile" text="Сохрнить"}}
+                        </div>
+                    </div>
+                {{/ Popup }}
+                {{#> Popup linkclass="profile_action" linkid="change_password" linktext="Изменить пароль"}}
+                    {{#> Box }}
+                        {{> Input type="text" name="oldPassword" label="Старый пароль:"}}
+                        {{> Input type="text" name="newPassword" label="Новый пароль:"}}
+                        <div class="form_field">
+                            {{> Button id="button_save_passworrd" text="Изменить пароль"}}
+                        </div>
+                    {{/ Box }}
+                {{/ Popup }}
+                <div class="profile_action profile_logout" id="profile_logout">Выйти</div>
+            </div>
+        </div>
+    {{/ Box }}
+{{/ Wrapper }}
