@@ -1,15 +1,13 @@
 {{#> Wrapper }}
     {{#> Box }}
-        {{> Input type="email" name="email" label="Почта:"}}
-        {{> Input type="text" name="login" label="Логин:"}}
-        {{> Input type="text" name="first_name" label="Имя:"}}
-        {{> Input type="text" name="second_name" label="Фамилия:"}}
-        {{> Input type="text" name="phone" label="Телефон:"}}
-        {{> Input type="password" name="password" label="Пароль:"}}
-        {{> Input type="password" name="password2" label="Пароль (ещё раз):"}}
-        <div class="form_field">
-            {{> Button id="button_registration" text="Зарегистрироваться"}}
-        </div>
+        {{> Input type="email" name="email" label="Почта" required="required"}}
+        {{> Input type="text" name="login" label="Логин" required="required"}}
+        {{> Input type="text" name="first_name" label="Имя" required="required"}}
+        {{> Input type="text" name="second_name" label="Фамилия" required="required"}}
+        {{> Input type="text" name="phone" label="Телефон" required="required"}}
+        {{> Input type="password" name="password" label="Пароль" required="required"}}
+        {{> Input type="password" name="password2" label="Пароль (ещё раз)" required="required"}}
+        {{> Button type="submit" id="button_registration" text="Зарегистрироваться"}}
         <div class="form_field_link">
             <a href="#" class="form_field_link_auth">Войти</a>
         </div>

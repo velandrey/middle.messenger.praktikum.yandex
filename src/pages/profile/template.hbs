@@ -16,31 +16,33 @@
             <div class="profile_info">
                 {{#> Popup linkclass="profile_action" linkid="change_profile" linktext="Изменить данные"}}
                     <div class="profile_modal profile_edit">
-                        <div class="profile_edit_row">
-                            <div class="profile_edit_colum">
-                                {{> Input type="text" name="first_name" label="Имя:"}}
-                                {{> Input type="text" name="second_name" label="Фамилия:"}}
-                                {{> Input type="text" name="display_name" label="Имя в чате:"}}
-                                {{> Input type="text" name="login" label="Логин:"}}
+                        <form action="/" method="post">
+                            <div class="profile_edit_row">
+                                <div class="profile_edit_colum">
+                                    {{> Input type="text" name="first_name" label="Имя" required="required"}}
+                                    {{> Input type="text" name="second_name" label="Фамилия" required="required"}}
+                                    {{> Input type="text" name="display_name" label="Имя в чате" required="required"}}
+                                    {{> Input type="text" name="login" label="Логин" required="required"}}
+                                </div>
+                                <div class="profile_edit_colum">
+                                    {{> Input type="email" name="email" label="Почта" required="required"}}
+                                    {{> Input type="text" name="phone" label="Телефон" required="required"}}
+                                    {{> Input type="file" name="avatar" label="Аватар"}}
+                                </div>
                             </div>
-                            <div class="profile_edit_colum">
-                                {{> Input type="email" name="email" label="Почта:" value="test@yandex.ru"}}
-                                {{> Input type="text" name="phone" label="Телефон:"}}
-                                {{> Input type="file" name="avatar" label="Аватар:"}}
+                            <div class="profile_edit_save">
+                                {{> Button type="submit" id="button_save_profile" text="Сохрнить"}}
                             </div>
-                        </div>
-                        <div class="form_field profile_edit_save">
-                            {{> Button id="button_save_profile" text="Сохрнить"}}
-                        </div>
+                        </form>
                     </div>
                 {{/ Popup }}
                 {{#> Popup linkclass="profile_action" linkid="change_password" linktext="Изменить пароль"}}
                     <div class="profile_modal profile_change_pass">
-                        {{> Input type="password" name="oldPassword" label="Старый пароль:"}}
-                        {{> Input type="password" name="newPassword" label="Новый пароль:"}}
-                        <div class="form_field">
-                            {{> Button id="button_save_passworrd" text="Изменить пароль"}}
-                        </div>
+                        <form action="/" method="post">
+                            {{> Input type="password" name="oldPassword" label="Старый пароль" required="required"}}
+                            {{> Input type="password" name="newPassword" label="Новый пароль" required="required"}}
+                            {{> Button type="submit" id="button_save_passworrd" text="Изменить пароль"}}
+                        </form>
                     </div>
                 {{/ Popup }}
                 <div class="profile_action profile_logout" id="profile_logout">Выйти</div>

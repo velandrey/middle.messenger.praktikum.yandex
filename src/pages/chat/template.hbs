@@ -5,9 +5,9 @@
                 <div class="chat_list_head_profile">
                     <a href="#" class="chat_list_head_profile_link">Профиль</a>
                 </div>
-                <div class="chat_list_head_search">
-                    <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input"/>
-                </div>
+                <form class="chat_list_head_search" action="/" method="post">
+                    <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input" required/>
+                </form>
             </div>
             <div class="chat_list_body">
                 {{> ChatListItem name="Рафик Непричёмкин" date="15:30" count="2" text="Go to" image="/images/user.webp" }}
@@ -30,13 +30,15 @@
                 {{>ChatMessageRow direction="to" type="text" time="08:14" status="read" content="Assumenda cumque, deserunt, dignissimos dolores exercitationem explicabo id ipsam laborum laudantium molestiae porro"}}
                 {{>ChatMessageRow direction="from" type="text" time="08:17" content="Go to" }}
             </div>
-            <div class="chat_box_sending">
-                <div class="chat_box_sending_attach"></div>
-                <div class="chat_box_sending_message">
-                    <input type="text" name="message" id="message" placeholder="Сообщение" class="chat_box_sending_message_input"/>
+            <form class="chat_box_sending" method="post" action="/">
+                <div class="chat_box_sending_attach">
+                    <input type="hidden" name="message_attach">
                 </div>
-                <div class="chat_box_sending_submit">➤</div>
-            </div>
+                <div class="chat_box_sending_message">
+                    <input type="text" name="message" id="message" placeholder="Сообщение" class="chat_box_sending_message_input" required/>
+                </div>
+                <button type="submit" class="chat_box_sending_submit">➤</button>
+            </form>
         </div>
     </div>
 {{/ Wrapper }}
