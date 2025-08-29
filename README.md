@@ -9,7 +9,7 @@
 
 
 ## Demo
-[Netlify](https://******.netlify.app/)
+[Netlify](https://chat-praktikum.netlify.app/)
 
 ## Прототип
 Макеты интерфейса в каталоге /ui
