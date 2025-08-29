@@ -15,7 +15,7 @@
             </div>
             <div class="profile_info">
                 {{#> Popup linkclass="profile_action" linkid="change_profile" linktext="Изменить данные"}}
-                    <div class="profile_edit">
+                    <div class="profile_modal profile_edit">
                         <div class="profile_edit_row">
                             <div class="profile_edit_colum">
                                 {{> Input type="text" name="first_name" label="Имя:"}}
@@ -35,13 +35,13 @@
                     </div>
                 {{/ Popup }}
                 {{#> Popup linkclass="profile_action" linkid="change_password" linktext="Изменить пароль"}}
-                    {{#> Box }}
-                        {{> Input type="text" name="oldPassword" label="Старый пароль:"}}
-                        {{> Input type="text" name="newPassword" label="Новый пароль:"}}
+                    <div class="profile_modal profile_change_pass">
+                        {{> Input type="password" name="oldPassword" label="Старый пароль:"}}
+                        {{> Input type="password" name="newPassword" label="Новый пароль:"}}
                         <div class="form_field">
                             {{> Button id="button_save_passworrd" text="Изменить пароль"}}
                         </div>
-                    {{/ Box }}
+                    </div>
                 {{/ Popup }}
                 <div class="profile_action profile_logout" id="profile_logout">Выйти</div>
             </div>
