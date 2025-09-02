@@ -2,7 +2,13 @@ import Handlebars from 'handlebars';
 import * as Layout from './layout';
 import * as Components from './components';
 import * as Pages from './pages';
-import {initModal} from "./layout/popup/index.js";
+import {initModal} from './layout/popup';
+import {Context, Page} from "../types";
+
+
+
+
+
 
 Object.entries(Layout).forEach(([name, component]) => {
     Handlebars.registerPartial(name, component);
@@ -11,7 +17,7 @@ Object.entries(Components).forEach(([name, component]) => {
     Handlebars.registerPartial(name, component);
 });
 export default class App {
-    PAGES = [
+    PAGES:Page[] = [
         {
             title: 'Авторизация',
             link: 'Auth',
@@ -37,6 +43,8 @@ export default class App {
             link: 'Error500',
         },
     ];
+    private page: string;
+    readonly appElement: HTMLElement | null;
 
     constructor() {
         this.page = 'Auth';
@@ -44,7 +52,8 @@ export default class App {
     }
 
     load() {
-        const context = {
+        // @ts-ignore
+        const context:Context = {
             title: this.getPageTitle(),
             pages: this.getPagesList(),
         };
@@ -66,46 +75,56 @@ export default class App {
         this.addEventHandlers();
     }
 
-    render(templateString, context) {
+    render(templateString:string, context:Context) {
         const template = Handlebars.compile(templateString);
         const html = template(context);
         const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+        const doc:Document = parser.parseFromString(html, 'text/html');
         const fragment = document.createDocumentFragment();
-        Array.from(doc.body.firstChild.childNodes).forEach(node => {
-            fragment.appendChild(node.cloneNode(true));
-        });
-        while (this.appElement.firstChild) {
-            this.appElement.removeChild(this.appElement.firstChild);
+        if(doc.body.firstChild){
+            Array.from(doc.body.firstChild.childNodes).forEach(node => {
+                fragment.appendChild(node.cloneNode(true));
+            });
+            if(this.appElement){
+                while (this.appElement.firstChild) {
+                    this.appElement.removeChild(this.appElement.firstChild);
+                }
+                this.appElement.appendChild(fragment);
+            }
         }
-        this.appElement.appendChild(fragment);
     }
 
     addEventHandlers() {
         const elementsLink = document.querySelectorAll('.nav_list_item');
         elementsLink.forEach(element => {
-            element.addEventListener('click', (e) => {
+            element.addEventListener('click', (e:Event) => {
                 e.preventDefault();
-                this.changePage(e.target.dataset.link);
+                if (e.target instanceof HTMLElement
+                    && e.target.dataset
+                    && 'link' in e.target.dataset
+                    && typeof e.target.dataset.link === 'string'
+                ){
+                    this.changePage(e.target.dataset.link);
+                }
             });
         });
         initModal();
     }
 
-    changePage(page) {
+    changePage(page:string):void {
         this.page = page;
         this.load();
     }
 
-    getPagesList() {
+    getPagesList():Page[] {
         return this.PAGES.map((item) => {
             const className = (this.page === item.link) ? 'active' : '';
             return {...item, class: className};
         });
     }
 
-    getPageTitle() {
-        const objPage = this.PAGES.find(item => item.link === this.page);
-        return (objPage.title) ? objPage.title : '';
+    getPageTitle():string {
+        const objPage:Page | undefined = this.PAGES.find(item => item.link === this.page);
+        return (typeof(objPage) ==='object' && objPage.title) ? objPage.title : '';
     }
 }
