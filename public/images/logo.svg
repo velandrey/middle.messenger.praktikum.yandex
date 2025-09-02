@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#3C3EC2;stroke:#2C3E50;stroke-width:2;}
+	.st1{fill:#FFFFFF;}
+</style>
+<path class="st0" d="M20,20c-5,0-10,5-10,10v35c0,5,5,10,10,10h15l5,5l5-5h35c5,0,10-5,10-10V30c0-5-5-10-10-10H20z"/>
+<circle class="st1" cx="30" cy="40" r="5"/>
+<circle class="st1" cx="50" cy="40" r="5"/>
+<circle class="st1" cx="70" cy="40" r="5"/>
+<path class="st1" d="M27,55h46c1.1,0,2,0.9,2,2v1c0,1.1-0.9,2-2,2H27c-1.1,0-2-0.9-2-2v-1C25,55.9,25.9,55,27,55z"/>
+</svg>
