@@ -5,11 +5,6 @@ import * as Pages from './pages';
 import {initModal} from './layout/popup';
 import {Context, Page} from "../types";
 
-
-
-
-
-
 Object.entries(Layout).forEach(([name, component]) => {
     Handlebars.registerPartial(name, component);
 });
@@ -52,7 +47,6 @@ export default class App {
     }
 
     load() {
-        // @ts-ignore
         const context:Context = {
             title: this.getPageTitle(),
             pages: this.getPagesList(),
