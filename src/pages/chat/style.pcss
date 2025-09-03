@@ -1,8 +1,10 @@
 .chat {
     display: flex;
+
     /** min-height: 100vh; */
     min-height: calc(100vh - 40px);
 }
+
 .chat_list {
     flex: 0 0 var(--chat_list_with);
     max-width: var(--chat_list_with);
@@ -10,34 +12,42 @@
     padding: 10px 0;
     border-right: 1px solid var(--border_color);
 }
+
 .chat_list_head {
     padding: 0 10px;
 }
+
 .chat_list_head_profile {
     font-size: 13px;
     font-weight: bold;
     text-align: right;
 }
+
 .chat_list_head_profile_link {
 
 }
+
 .chat_list_head_search {
     padding: 10px 0;
 }
+
 .chat_list_head_search_input {
     background: var(--gray_color);
     padding: 7px 10px;
     font-size: 13px;
 }
+
 .chat_list_body {
 
 }
+
 .chat_box {
     width: calc(100vw - var(--chat_list_with));
     height: calc(100vh - 40px);
     padding: 65px 10px 10px;
     position: relative;
 }
+
 .chat_box_head {
     display: flex;
     align-items: center;
@@ -50,12 +60,14 @@
     background: var(--wrapper_color);
     user-select: none;
 }
+
 .chat_box_head_partner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: bold;
 }
+
 .chat_box_head_partner_avatar {
     width: var(--avatar_size);
     height: var(--avatar_size);
@@ -63,6 +75,7 @@
     margin-right: 10px;
     font-size: 14px;
 }
+
 .chat_box_head_menu {
     width: 40px;
     height: 40px;
@@ -73,9 +86,11 @@
     border-radius: var(--radius);
     cursor: pointer;
 }
+
 .chat_box_head_menu:hover {
     background: var(--main_color_lighter);
 }
+
 .chat_box_feed {
     min-height: 400px;
     overflow: hidden;
@@ -84,11 +99,13 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
 .chat_box_sending {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .chat_box_sending_attach {
     cursor: pointer;
     width: 40px;
@@ -100,15 +117,19 @@
     background: url("/images/attach.svg") no-repeat center center;
     background-size: 25px 25px;
 }
+
 .chat_box_sending_attach:hover {
     opacity: .9;
 }
+
 .chat_box_sending_message {
     width: 100%;
 }
+
 .chat_box_sending_message_input {
 
 }
+
 .chat_box_sending_submit {
     cursor: pointer;
     width: 50px;
@@ -125,6 +146,7 @@
     outline: none;
     border: none;
 }
+
 .chat_box_sending_submit:hover {
     color: var(--main_text_color);
     background: var(--main_color_lighter);

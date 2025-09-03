@@ -1,11 +1,12 @@
-@import "/font/font-import.pcss";
+@import url("/font/font-import.pcss");
+
 :root {
     --main_color: #3c3ec2;
-    --main_text_color: #444444;
+    --main_text_color: #444;
     --main_color_dark: #25266e;
     --main_color_lighter: #e4e4ee;
-    --white_color: #ffffff;
-    --border_color: #cccccc;
+    --white_color: #fff;
+    --border_color: #ccc;
     --wrapper_color: #f8f8f8;
     --highlighted-color: #48497f;
     --gray_color: #e4e4e4;
@@ -16,9 +17,11 @@
     --avatar_size: 55px;
     --chat_list_with: 320px;
 }
+
 html {
     height: 100%;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -29,33 +32,40 @@ body {
     text-align: left;
     background: var(--white_color);
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
     font-family: 'Roboto Condensed', Helvetica, sans-serif;
 }
+
 a {
     color: var(--main_color);
     text-decoration: none;
 }
+
 a:hover {
     color: var(--main_color_dark);
 }
+
 input {
     width: 100%;
     display: block;
     border: 1px solid var(--border_color);
     border-radius: var(--radius);
-    padding: 10px 10px;
+    padding: 10px;
     font-weight: 300;
     font-size: 16px;
 }
+
 .wrapper {
 
 }
+
 .app_box {
 
 }
+
 .box_wrapper {
     background: var(--wrapper_color);
     border: 1px solid var(--border_color);
@@ -64,18 +74,22 @@ input {
     padding: 30px 45px;
     border-radius: var(--radius);
 }
+
 .main_title {
     text-align: center;
     font-size: 32px;
     font-weight: 300;
     color: var(--highlighted-color);
 }
+
 .form_box {
     margin-top: 30px;
 }
+
 .form_field_link {
     margin-top: 15px;
 }
+
 .form_field_link_auth {
     color: var(--main_color);
     text-align: center;

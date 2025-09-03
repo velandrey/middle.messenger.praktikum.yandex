@@ -12,7 +12,7 @@
     "lint": "eslint . --ext \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "lint:fix": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "stylelint": "stylelint \"./src/**/*.pcss\"",
-    "stylelint:fix": "npm run stylelint --fix"
+    "stylelint:fix": "stylelint \"./src/**/*.pcss\" --fix"
   },
   "engines": {
     "node": ">=22.0.0",

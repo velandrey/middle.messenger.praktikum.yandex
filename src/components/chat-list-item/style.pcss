@@ -1,12 +1,13 @@
 .chat_list_item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 10px;
+    padding: 10px;
     user-select: none;
     cursor: pointer;
     position: relative;
 }
-.chat_list_item:before {
+
+.chat_list_item::before {
     position: absolute;
     content: '';
     width: calc(100% - 20px);
@@ -15,7 +16,8 @@
     left: 10px;
     background: var(--border_color);
 }
-.chat_list_item:last-child:after {
+
+.chat_list_item:last-child::after {
     position: absolute;
     content: '';
     width: calc(100% - 20px);
@@ -24,38 +26,48 @@
     left: 10px;
     background: var(--border_color);
 }
+
 .chat_list_item:hover {
     background: var(--main_color_lighter);
 }
+
 .chat_list_item_main {
     display: flex;
 }
+
 .chat_list_item_avatar {
     flex: 0 0 55px;
     max-width: 55px;
 }
+
 .chat_list_item_avatar img {
     width: var(--avatar_size);
     height: var(--avatar_size);
     border-radius: 50%;
 }
+
 .chat_list_item_text {
     padding: 0 10px;
 }
+
 .chat_list_item_text_name {
     font-weight: bold;
 }
+
 .chat_list_item_text_preview {
     font-size: 14px;
     margin-top: 4px;
 }
+
 .chat_list_item_info {
 
 }
+
 .chat_list_item_info_date {
     font-size: 12px;
     text-align: right;
 }
+
 .chat_list_item_info_count {
     background: var(--main_color);
     color: var(--white_color);
