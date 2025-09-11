@@ -2,7 +2,7 @@ import './style.pcss';
 import Block from '@/utils/block'
 
 export class Button extends Block {
-    constructor({ ...props }:object) {
+    constructor({...props}: object) {
         super({...props})
     }
 

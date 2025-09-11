@@ -2,16 +2,16 @@ import Block from '@/utils/block'
 import {Button, Input} from "@/components";
 
 export class ProfileChangePassword extends Block {
-    constructor({ ...props }:object) {
+    constructor({...props}: object) {
         super({
             ...props,
-            InputPass:new Input({
+            InputPass: new Input({
                 type: 'password',
                 name: 'oldPassword',
                 label: 'Старый пароль',
                 required: 'required',
             }),
-            InputPass2:new Input({
+            InputPass2: new Input({
                 type: 'password',
                 name: 'newPassword',
                 label: 'Новый пароль',

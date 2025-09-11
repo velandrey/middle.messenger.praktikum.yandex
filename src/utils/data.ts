@@ -1,9 +1,6 @@
-export type PageLinkProps = {
-    title: string,
-    link: string,
-    class?: string;
-}
-export const pages:PageLinkProps[] = [
+import {Discussant, InputParams, Message, PageLinkProps} from "@/utils/types";
+
+export const pages: PageLinkProps[] = [
     {
         title: 'Авторизация',
         link: 'Auth',
@@ -29,7 +26,7 @@ export const pages:PageLinkProps[] = [
         link: 'Error500',
     },
 ];
-export const chatList = [
+export const chatList: Discussant[] = [
     {
         name: 'Рафик Непричёмкин',
         date: '15:30',
@@ -66,7 +63,7 @@ export const chatList = [
         image: '/images/user.webp',
     }
 ];
-export const chatMessages = [
+export const chatMessages: Message[] = [
     {
         direction: 'to',
         type: 'text',
@@ -90,7 +87,7 @@ export const chatMessages = [
     }
 ];
 
-export const profileData = {
+export const profileData: Record<string, string> = {
     first_name: 'Игнат',
     second_name: 'Ёжиков',
     email: 'test@yandex.ru',
@@ -98,41 +95,42 @@ export const profileData = {
     nic_name: 'i_yozh',
     phone: '+7 (987) 654 32 11',
 };
+
 /**
  * Список свойств полей ввода
  */
-export const fieldsParams = [
+export const fieldsParams: InputParams[] = [
     {
         type: 'text',
         name: 'login',
         label: 'Логин',
         required: 'required',
-    },{
+    }, {
         type: 'text',
         name: 'first_name',
         label: 'Имя',
         required: 'required',
-    },{
+    }, {
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
         required: 'required',
-    },{
+    }, {
         type: 'email',
         name: 'email',
         label: 'Почта',
         required: 'required',
-    },{
+    }, {
         type: 'text',
         name: 'phone',
         label: 'Телефон',
         required: 'required',
-    },{
+    }, {
         type: 'password',
         name: 'password',
         label: 'Пароль',
         required: 'required',
-    },{
+    }, {
         type: 'password',
         name: 'password2',
         label: 'Пароль (ещё раз)',
@@ -145,13 +143,13 @@ export const fieldsParams = [
         required: 'required',
     },
     {
-        type: 'text',
+        type: 'file',
         name: 'avatar',
         label: 'Аватар',
         required: 'required',
     },
 ];
-export const inputLabels = {
+export const inputLabels: Record<string,string> = {
     first_name: 'Имя',
     second_name: 'Фамилия',
     email: 'Почта',
@@ -159,9 +157,20 @@ export const inputLabels = {
     nic_name: 'Имя в чате',
     phone: 'Телефон',
 };
-export function getLabelByName(name:string):string{
-    if(name in inputLabels){
+
+export function getLabelByName(name: string): string {
+    if (name in inputLabels) {
         return inputLabels[name as keyof typeof inputLabels];
     }
     return '';
+}
+export function getFieldParams(arrFieldName: string[]): InputParams[] {
+    const arParams: InputParams[] = [];
+    arrFieldName.forEach(fieldName => {
+        const field: InputParams | undefined = fieldsParams.find((fieldRow: InputParams) => fieldRow.name === fieldName)
+        if (field) {
+            arParams.push(field)
+        }
+    });
+    return arParams;
 }

@@ -31,8 +31,8 @@ export class Profile extends Block {
                         <h1 class="main_title">Профиль</h1>
                         <div class="profile">
                             <div class="profile_head">
-                                <img src="{{image}}" alt="{{full_name}}" class="profile_image"/>
-                                <h2 class="profile_name">{{full_name}}</h2>
+                                <img src="/images/user.webp" alt="Игнат Ёжиков" class="profile_image"/>
+                                <h2 class="profile_name">Игнат Ёжиков</h2>
                             </div>
                             <div class="profile_info">
                                 {{Test}}

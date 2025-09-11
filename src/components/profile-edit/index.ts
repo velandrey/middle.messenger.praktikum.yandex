@@ -1,35 +1,33 @@
 import Block from '@/utils/block'
 import {Button, Input} from "@/components";
-import {fieldsParams} from "@/utils/data";
+import {getFieldParams} from "@/utils/data";
+import {InputParams} from "@/utils/types";
+
+/**
+ * Получить параметры для полей ввода.
+ * @param arrFieldName
+ */
+
 
 export class ProfileEdit extends Block {
-    constructor({ ...props }:object) {
-        const fieldsL = [
+    constructor({...props}: object) {
+        const fieldsLColum: string[] = [
             'first_name',
             'second_name',
             'nic_name',
             'login',
         ]
-        const inputsLeftParams = fieldsL.map(fieldName=>{
-            const field = fieldsParams.find(fieldRow=> fieldRow.name === fieldName)
-            return (field) ? field : false
-        });
-
-        const fieldsR = [
+        const fieldsRColum: string[] = [
             'email',
             'phone',
             'avatar',
         ]
-        const inputsRightParams = fieldsR.map(fieldName=>{
-            const field = fieldsParams.find(fieldRow=> fieldRow.name === fieldName)
-            return (field) ? field : false
-        });
-        const inputsLeft = inputsLeftParams.map(item=>new Input(item));
-        const inputsRight = inputsRightParams.map(item=>new Input(item));
+        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new Input(item));
+        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new Input(item));
         super({
             ...props,
-            InputsLeft:inputsLeft,
-            InputsRight:inputsRight,
+            InputsLeft: inputsLeft,
+            InputsRight: inputsRight,
             ButtonSubmit: new Button({
                 type: 'submit',
                 id: 'button_save_profile',
@@ -37,6 +35,7 @@ export class ProfileEdit extends Block {
             }),
         })
     }
+
 
     render() {
         return `

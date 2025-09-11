@@ -1,6 +1,7 @@
-export type EventCallback = (...args: []) => void;
+type EventCallback = (...args: []) => void;
+
 export class EventBus {
-    private listeners: Record<string, EventCallback[]>;
+    private readonly listeners: Record<string, EventCallback[]>;
 
     constructor() {
         this.listeners = {};
@@ -26,7 +27,7 @@ export class EventBus {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
-        this.listeners[event].forEach(function (listener: EventCallback):void {
+        this.listeners[event].forEach(function (listener: EventCallback): void {
             listener(...args);
         });
     }

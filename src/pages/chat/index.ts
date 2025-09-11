@@ -3,8 +3,41 @@ import Block from '@/utils/block'
 import {ChatListItem, ChatMessageRow, Nav} from "@/components";
 import {chatList, chatMessages} from "@/utils/data";
 
+
+
 export class Chat extends Block {
     constructor({...props}) {
+        /**
+         * Доделать на промисах
+         *
+         const getChatList = () => {
+         return new Promise((resolve,reject) => {
+         setTimeout(()=>{
+         resolve(chatList)
+         },1000)
+         setTimeout(()=>{
+         reject(new Error(`Не удалось получить список чатов.`))
+         },10000)
+         })
+
+         }
+
+
+        let chatListItem = [];
+        getChatList().then(response=>{
+            console.log(response)
+            if(Array.isArray(response)) {
+                chatListItem = response.map((item)=>{
+                    return new ChatListItem({...item})
+                })
+            }
+            console.log(chatListItem)
+        }).catch(reason => {
+            chatListItem = [];
+            console.log(reason)
+        })
+            */
+
         super({
             ...props,
             Navigation: new Nav({...props}),
