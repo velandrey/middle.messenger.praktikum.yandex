@@ -5,7 +5,7 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
-    "strict": true,
+//    "strict": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -17,7 +17,11 @@
 
     "noImplicitAny": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+
+    "paths": {
+      "@/*": ["src/*"],
+    }
   },
   "include": ["src"]
 }

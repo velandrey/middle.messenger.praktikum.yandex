@@ -1,2 +1,17 @@
 import './style.pcss';
-export { default as ProfileRow } from './template.hbs?raw';
+import Block from '@/utils/block'
+
+export class ProfileRow extends Block {
+    constructor({ ...props }:object) {
+        super({...props})
+    }
+
+    render() {
+        return `
+            <div class="profile_info_row">
+                <div class="profile_info_row_prop">{{prop}}</div>
+                <div class="profile_info_row_value">{{value}}</div>
+            </div>
+        `;
+    }
+}

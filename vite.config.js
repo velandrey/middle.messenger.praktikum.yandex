@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'node:path';
+import path, { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
@@ -10,6 +10,11 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, './index.html'),
             },
+        },
+    },
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "src"),
         },
     },
     css: {
