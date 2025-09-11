@@ -1,6 +1,9 @@
 export { Button } from './button';
 export { ChatListItem } from './chat-list-item';
 export { ChatMessageRow } from './chat-message-row';
+export { Error } from './error';
 export { Input } from './input';
 export { Nav } from './nav';
+export { ProfileChangePassword } from './profile-change-password';
+export { ProfileEdit } from './profile-edit';
 export { ProfileRow } from './profile-row';

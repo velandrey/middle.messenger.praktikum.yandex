@@ -18,7 +18,10 @@ export class Registration extends Block {
             return (field) ? field : false
         });
         const inputs = inputsParams.map((item)=>{
-            return new Input(item)
+            if(item){
+                return new Input(item)
+            }
+            return {}
         });
         super({
             ...props,
