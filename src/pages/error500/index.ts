@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Nav} from "@/components";
 import {Error} from "@/components/error";
 
@@ -11,7 +11,7 @@ export class Error500 extends Block {
                 title: 'Ошибка 500',
                 description: 'Мы знаем о возникщей проблеме и уже почти всё починили.'
             })
-        })
+        });
     }
 
     render() {

@@ -1,5 +1,5 @@
 import './style.pcss';
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Input} from "@/components";
 import {FormValidator} from "@/utils/validator";
 
@@ -13,17 +13,17 @@ export class FormField extends Block {
                     blur: (e: Event) => {
                         const validator = new FormValidator();
                         if (e.target instanceof HTMLInputElement) {
-                            const validationResult = validator.validateField(e.target.name, e.target.value)
+                            const validationResult = validator.validateField(e.target.name, e.target.value);
                             if (validationResult.isValid) {
-                                this.props.error = ''
+                                this.props.error = '';
                             } else {
-                                this.props.error = validationResult.errorMessage
+                                this.props.error = validationResult.errorMessage;
                             }
                         }
                     },
                 }
             })
-        })
+        });
     }
 
     render() {

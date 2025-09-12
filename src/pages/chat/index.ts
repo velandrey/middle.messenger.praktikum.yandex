@@ -1,5 +1,5 @@
 import './style.pcss';
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {ChatListItem, ChatMessageRow, ChatMessageSender, Nav} from "@/components";
 import {chatList} from "@/utils/data";
 import {Discussant, Message} from "@/utils/types";
@@ -11,7 +11,7 @@ const getChatList = (activeChatId: number = 1): {
     let messages: Message[] | [] = [];
 
     const list: Discussant[] = chatList.map((item: Discussant) => {
-        const chatParams = {...item}
+        const chatParams = {...item};
         chatParams.active = '';
         if (item.id === activeChatId) {
             chatParams.active = 'active';
@@ -20,22 +20,22 @@ const getChatList = (activeChatId: number = 1): {
         return chatParams;
     });
     return {list, messages};
-}
+};
 
 export class Chat extends Block {
     constructor({...props}) {
-        const {list, messages} = getChatList()
+        const {list, messages} = getChatList();
         super({
             ...props,
             Navigation: new Nav({...props}),
             ChatListBlocks: list.map((item) => {
-                return new ChatListItem({...item})
+                return new ChatListItem({...item});
             }),
             ChatMessages: messages.map((item) => {
-                return new ChatMessageRow({...item})
+                return new ChatMessageRow({...item});
             }),
             ChatMessageSender: new ChatMessageSender({}),
-        })
+        });
     }
 
     render() {

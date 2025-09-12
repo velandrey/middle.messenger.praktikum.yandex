@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Nav} from "@/components";
 import {Error} from "@/components/error";
 
@@ -11,7 +11,7 @@ export class Error404 extends Block {
                 title: 'Ошибка 404',
                 description: 'Такой страницы не существует.'
             })
-        })
+        });
     }
 
     render() {

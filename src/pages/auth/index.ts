@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {FormAuth, Nav} from "@/components";
 
 export class Auth extends Block {
@@ -7,7 +7,7 @@ export class Auth extends Block {
             ...props,
             Navigation: new Nav({...props}),
             FormAuth: new FormAuth({...props})
-        })
+        });
     }
 
     render() {

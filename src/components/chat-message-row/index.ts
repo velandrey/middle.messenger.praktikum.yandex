@@ -1,9 +1,9 @@
 import './style.pcss';
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 
 export class ChatMessageRow extends Block {
     constructor({ ...props }:object) {
-        super({...props})
+        super({...props});
     }
 
     render() {

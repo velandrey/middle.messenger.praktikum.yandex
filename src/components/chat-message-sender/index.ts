@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {FormValidator} from "@/utils/validator";
 
 export class ChatMessageSender extends Block {
@@ -8,11 +8,11 @@ export class ChatMessageSender extends Block {
             events: {
                 submit: (e: Event) => this.submitCallback(e)
             }
-        })
+        });
     }
 
     submitCallback(e: Event) {
-        e.preventDefault()
+        e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
             const arResult: Record<string, string> = {};
@@ -22,7 +22,7 @@ export class ChatMessageSender extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Корректные данные для авторизации: ', arResult)
+                console.log('Корректные данные для авторизации: ', arResult);
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

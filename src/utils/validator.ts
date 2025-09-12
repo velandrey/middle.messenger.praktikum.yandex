@@ -66,10 +66,10 @@ export class FormValidator {
 
     public validateField(fieldName: string, value: string): ValidationResult {
         if (fieldName === 'oldPassword' || fieldName === 'newPassword'){
-            fieldName = 'password'
+            fieldName = 'password';
         }
         if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'nic_name'){
-            fieldName = 'name'
+            fieldName = 'name';
         }
         const rule:FieldValidationRule = this.validationRules[fieldName];
         if (!rule) {

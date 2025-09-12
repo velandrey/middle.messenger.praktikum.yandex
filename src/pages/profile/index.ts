@@ -1,5 +1,5 @@
 import './style.pcss';
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Nav, ProfileRow} from "@/components";
 import {getLabelByName, profileData} from "@/utils/data";
 import {ProfileEdit} from "@/components/profile-edit";
@@ -11,7 +11,7 @@ export class Profile extends Block {
             return new ProfileRow({
                 prop: getLabelByName(key),
                 value: value,
-            })
+            });
         });
         super({
             ...props,
@@ -33,7 +33,7 @@ export class Profile extends Block {
                             element.classList.add('active');
                         }
                     }
-                    const openedModal = document.querySelector('.popup_modal.active')
+                    const openedModal = document.querySelector('.popup_modal.active');
                     if (
                         e.target instanceof HTMLElement
                         && e.target.classList.contains('popup_modal_close')

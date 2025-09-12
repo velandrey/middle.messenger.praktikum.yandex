@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Nav} from "@/components";
 import {FormRegistration} from "@/components/form-registration";
 
@@ -8,7 +8,7 @@ export class Registration extends Block {
             ...props,
             Navigation: new Nav({...props}),
             FormRegistration: new FormRegistration({...props})
-        })
+        });
     }
 
     render() {

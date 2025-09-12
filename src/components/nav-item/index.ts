@@ -1,8 +1,8 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 
 export class NavItem extends Block {
     constructor({...props}: object) {
-        super({...props})
+        super({...props});
     }
 
     render() {

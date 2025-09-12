@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Button, FormField, Input} from "@/components";
 import {getFieldParams, profileData} from "@/utils/data";
 import {InputParams} from "@/utils/types";
@@ -6,8 +6,8 @@ import {FormValidator} from "@/utils/validator";
 
 function getValue(fieldName:string):string | null {
     const key = Object.keys(profileData).find((key) => {
-        return key === fieldName
-    })
+        return key === fieldName;
+    });
     if(key){
         return profileData[key];
     }
@@ -17,12 +17,12 @@ function getValue(fieldName:string):string | null {
 function initInput(item:InputParams):FormField {
     const inputParams = {
         ...item
-    }
+    };
     const value = getValue(inputParams.name);
     if (value) {
         inputParams.value = value;
     }
-    return new FormField(inputParams)
+    return new FormField(inputParams);
 }
 
 export class ProfileEdit extends Block {
@@ -32,12 +32,12 @@ export class ProfileEdit extends Block {
             'second_name',
             'nic_name',
             'login',
-        ]
+        ];
         const fieldsRColum: string[] = [
             'email',
             'phone',
             'avatar',
-        ]
+        ];
         const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => initInput(item));
         const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => initInput(item));
         super({
@@ -52,12 +52,12 @@ export class ProfileEdit extends Block {
             events: {
                 submit: (e: Event) => this.submitCallback(e)
             }
-        })
+        });
     }
 
     submitCallback(e: Event) {
-        e.preventDefault()
-        console.log(e)
+        e.preventDefault();
+        console.log(e);
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
             const arResult: Record<string, string> = {};
@@ -67,7 +67,7 @@ export class ProfileEdit extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Корректные данные для изменения профиля: ', arResult)
+                console.log('Корректные данные для изменения профиля: ', arResult);
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

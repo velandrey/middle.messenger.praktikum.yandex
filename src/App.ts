@@ -44,7 +44,7 @@ export default class App {
     private render(componentBlock: Block) {
         if (this.appElement) {
             componentBlock.dispatchComponentDidMount();
-            const html = componentBlock.getContent()
+            const html = componentBlock.getContent();
             while (this.appElement.firstChild) {
                 this.appElement.removeChild(this.appElement.firstChild);
             }

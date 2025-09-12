@@ -1,4 +1,4 @@
-import Block from '@/utils/block'
+import Block from '@/utils/block';
 import {Button, FormField, Input} from "@/components";
 import {FormValidator} from "@/utils/validator";
 import {getFieldParams} from "@/utils/data";
@@ -9,7 +9,7 @@ export class ProfileChangePassword extends Block {
         const fieldsColum: string[] = [
             'oldPassword',
             'newPassword',
-        ]
+        ];
         const formField: Input[] = getFieldParams(fieldsColum).map((item: InputParams) => new FormField(item));
         super({
             ...props,
@@ -22,11 +22,11 @@ export class ProfileChangePassword extends Block {
             events: {
                 submit: (e: Event) => this.submitCallback(e)
             }
-        })
+        });
     }
 
     submitCallback(e: Event) {
-        e.preventDefault()
+        e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
             const arResult: Record<string, string> = {};
@@ -36,7 +36,7 @@ export class ProfileChangePassword extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Данные для изменения пароля: ', arResult)
+                console.log('Данные для изменения пароля: ', arResult);
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }
