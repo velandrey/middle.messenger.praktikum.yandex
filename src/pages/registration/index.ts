@@ -1,37 +1,13 @@
 import Block from '@/utils/block'
-import {Button, Input, Nav} from "@/components";
-import {fieldsParams} from "@/utils/data";
+import {Nav} from "@/components";
+import {FormRegistration} from "@/components/form-registration";
 
 export class Registration extends Block {
     constructor({...props}) {
-        const fields = [
-            'email',
-            'login',
-            'first_name',
-            'second_name',
-            'phone',
-            'password',
-            'password2',
-        ]
-        const inputsParams = fields.map(fieldName=>{
-            const field = fieldsParams.find(fieldRow=> fieldRow.name === fieldName)
-            return (field) ? field : false
-        });
-        const inputs = inputsParams.map((item)=>{
-            if(item){
-                return new Input(item)
-            }
-            return {}
-        });
         super({
             ...props,
             Navigation: new Nav({...props}),
-            Inputs: inputs,
-            ButtonSubmit: new Button({
-                type: 'submit',
-                id: 'button_registration',
-                label: 'Зарегистрироваться',
-            }),
+            FormRegistration: new FormRegistration({...props})
         })
     }
 
@@ -42,13 +18,10 @@ export class Registration extends Block {
                 <main class="app_box">
                     <div class="box_wrapper">
                         <h1 class="main_title">Регистрация</h1>
-                        <form class="form_box" action="/" method="post">
-                            {{{Inputs}}}
-                            {{{ButtonSubmit}}}
-                            <div class="form_field_link">
-                                <a href="#" class="form_field_link_auth nav_list_item" data-link="Auth">Войти</a>
-                            </div>
-                        </form>
+                        {{{FormRegistration}}}
+                        <div class="form_field_link">
+                            <a href="#" class="form_field_link_auth nav_list_item" data-link="Auth">Войти</a>
+                        </div>
                     </div>
                 </main>
             </div>

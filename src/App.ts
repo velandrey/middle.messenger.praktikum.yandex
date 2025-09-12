@@ -24,7 +24,7 @@ export default class App {
 
     constructor() {
         this.page = 'Auth';
-        this.page = 'Chat';//TODO Remove Chat
+        // this.page = 'Chat';//TODO Remove Chat
         this.appElement = document.getElementById('app');
     }
 

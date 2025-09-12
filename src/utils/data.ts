@@ -105,51 +105,60 @@ export const fieldsParams: InputParams[] = [
         name: 'login',
         label: 'Логин',
         required: 'required',
+        error: '',
     }, {
         type: 'text',
         name: 'first_name',
         label: 'Имя',
         required: 'required',
+        error: '',
     }, {
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
         required: 'required',
+        error: '',
     }, {
         type: 'email',
         name: 'email',
         label: 'Почта',
         required: 'required',
+        error: '',
     }, {
         type: 'text',
         name: 'phone',
         label: 'Телефон',
         required: 'required',
+        error: '',
     }, {
         type: 'password',
         name: 'password',
         label: 'Пароль',
         required: 'required',
+        error: '',
     }, {
         type: 'password',
         name: 'password2',
         label: 'Пароль (ещё раз)',
         required: 'required',
+        error: '',
     },
     {
         type: 'text',
         name: 'nic_name',
         label: 'Имя в чате',
         required: 'required',
+        error: '',
     },
     {
         type: 'file',
         name: 'avatar',
         label: 'Аватар',
         required: 'required',
+        error: '',
     },
 ];
-export const inputLabels: Record<string,string> = {
+export const inputLabels: Record<string, string> = {
     first_name: 'Имя',
     second_name: 'Фамилия',
     email: 'Почта',
@@ -164,6 +173,7 @@ export function getLabelByName(name: string): string {
     }
     return '';
 }
+
 export function getFieldParams(arrFieldName: string[]): InputParams[] {
     const arParams: InputParams[] = [];
     arrFieldName.forEach(fieldName => {

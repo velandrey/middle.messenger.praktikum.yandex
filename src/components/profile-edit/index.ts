@@ -1,5 +1,5 @@
 import Block from '@/utils/block'
-import {Button, Input} from "@/components";
+import {Button, FormField, Input} from "@/components";
 import {getFieldParams} from "@/utils/data";
 import {InputParams} from "@/utils/types";
 
@@ -22,8 +22,8 @@ export class ProfileEdit extends Block {
             'phone',
             'avatar',
         ]
-        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new Input(item));
-        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new Input(item));
+        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new FormField(item));
+        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new FormField(item));
         super({
             ...props,
             InputsLeft: inputsLeft,

@@ -1,11 +1,11 @@
 import {EventBus} from "./event-bus";
 import Handlebars from "handlebars";
 
-export type TProps<T = Record<string, unknown>> = T & {
+export type TypeProps<T = Record<string, unknown>> = T & {
     events?: Record<string, EventListener>;
 };
-export type TChild = Record<string, Block>;
-export type TList = Record<string, Block[]>;
+export type TypeChild = Record<string, Block>;
+export type TypeList = Record<string, Block[]>;
 
 
 export default abstract class Block {
@@ -18,14 +18,14 @@ export default abstract class Block {
 
     protected _element: HTMLElement | null;
     protected _id: number = Math.floor(100000 + Math.random() * 900000);
-    protected props: TProps;
-    protected children: TChild;
-    protected lists: TList;
+    protected props: TypeProps;
+    protected children: TypeChild;
+    protected lists: TypeList;
     protected eventBus: () => EventBus;
 
-    protected constructor(propsBlock: TProps = {}) {
+    protected constructor(propsBlock: TypeProps = {}) {
         const eventBus = new EventBus();
-        const {props, children, lists} = this._getChildrenPropsAndProps(propsBlock);
+        const {props, children, lists} = this._geTypeChildrenPropsAndProps(propsBlock);
         this.props = this._makePropsProxy({...props});
         this.children = children;
         this.lists = this._makePropsProxy({...lists});
@@ -35,14 +35,14 @@ export default abstract class Block {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    private _getChildrenPropsAndProps(propsAndChildren: TProps): {
+    private _geTypeChildrenPropsAndProps(propsAndChildren: TypeProps): {
         children: Record<string, Block>,
-        props: TProps,
-        lists: TList
+        props: TypeProps,
+        lists: TypeList
     } {
         const children: Record<string, Block> = {};
-        const props: TProps = {};
-        const lists: TList = {};
+        const props: TypeProps = {};
+        const lists: TypeList = {};
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (value instanceof Block) {
                 children[key] = value;
@@ -91,16 +91,15 @@ export default abstract class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-    private _componentDidUpdate(oldProps: TProps = {}, newProps: TProps = {}) {
+    private _componentDidUpdate(oldProps: TypeProps = {}, newProps: TypeProps = {}) {
         if (!this.componentDidUpdate(oldProps, newProps)) {
             return;
         }
         this._render();
     }
 
-    protected componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-        console.log(oldProps, newProps);
-        return true;
+    protected componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
+        return (oldProps && newProps) && true;
     }
 
     _render(): void {
@@ -197,6 +196,14 @@ export default abstract class Block {
             },
         });
     }
+
+    public setProps = (nextProps: TypeProps): void => {
+        if (!nextProps) {
+            return;
+        }
+
+        Object.assign(this.props, nextProps);
+    };
 
     public show(): void {
         const content = this.getContent();

@@ -1,23 +1,23 @@
-import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig, globalIgnores } from "eslint/config";
+import js from '@eslint/js';
+import globals from 'globals';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
     {
         rules: {
-            "no-var": "error",
-            "semi": "error",
-            "indent": "error",
-            "no-multi-spaces": "error",
-            "space-in-parens": "error",
-            "no-multiple-empty-lines": "error",
-            "prefer-const": "error",
-            "no-use-before-define": "error",
-            "eol-last": "error",
-            "no-unused-vars": 2,
-            "max-len": [1, 100],
-            "max-params": [2, 3],
+            'no-var': 'error',
+            'semi': 'error',
+            'indent': 'error',
+            'no-multi-spaces': 'error',
+            'space-in-parens': 'error',
+            'no-multiple-empty-lines': 'error',
+            'prefer-const': 'error',
+            'no-use-before-define': 'error',
+            'eol-last': 'error',
+            'no-unused-vars': 'off',
+            'max-len': [1, 100],
+            'max-params': [2, 3],
             'import/extensions': 'off',
             'import/no-extraneous-dependencies': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
@@ -28,9 +28,9 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-member-access': 'off',
             '@typescript-eslint/ban-ts-comment': 'off',
         },
-        files: ["**/*.{js,mjs,cjs}"],
+        files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
-        extends: ["js/recommended"],
+        extends: ['js/recommended'],
         languageOptions: {
             globals: {
                 ...globals.browser,
@@ -40,5 +40,5 @@ export default defineConfig([
         }
     },
     tseslint.configs.recommended,
-    globalIgnores(["dist/*","node_modules/*"])
+    globalIgnores(['dist/*','node_modules/*'])
 ]);

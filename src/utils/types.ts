@@ -25,5 +25,6 @@ export type InputParams = {
     name: string,
     type: 'text' | 'password' | 'email' | 'file',
     label: string,
+    error: string,
     required?: 'required',
 }
