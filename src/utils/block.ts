@@ -1,12 +1,12 @@
-import {EventBus} from "./event-bus";
+import { EventBus } from "./event-bus";
 import Handlebars from "handlebars";
 
 export type TypeProps<T = Record<string, unknown>> = T & {
     events?: Record<string, EventListener>;
 };
+
 export type TypeChild = Record<string, Block>;
 export type TypeList = Record<string, Block[]>;
-
 
 export default abstract class Block {
     static EVENTS: Record<string, string> = {
@@ -16,7 +16,7 @@ export default abstract class Block {
         FLOW_RENDER: "flow:render"
     } as const;
 
-    protected _element: HTMLElement | null;
+    protected _element: HTMLElement | null = null;
     protected _id: number = Math.floor(100000 + Math.random() * 900000);
     protected props: TypeProps;
     protected children: TypeChild;
@@ -25,10 +25,10 @@ export default abstract class Block {
 
     protected constructor(propsBlock: TypeProps = {}) {
         const eventBus = new EventBus();
-        const {props, children, lists} = this._geTypeChildrenPropsAndProps(propsBlock);
-        this.props = this._makePropsProxy({...props});
+        const { props, children, lists } = this._geTypeChildrenPropsAndProps(propsBlock);
+        this.props = this._makePropsProxy({ ...props });
         this.children = children;
-        this.lists = this._makePropsProxy({...lists});
+        this.lists = this._makePropsProxy({ ...lists }) as TypeList;
         this._element = null;
         this.eventBus = (): EventBus => eventBus;
         this._registerEvents(eventBus);
@@ -36,13 +36,14 @@ export default abstract class Block {
     }
 
     private _geTypeChildrenPropsAndProps(propsAndChildren: TypeProps): {
-        children: Record<string, Block>,
-        props: TypeProps,
-        lists: TypeList
+        children: TypeChild;
+        props: TypeProps;
+        lists: TypeList;
     } {
-        const children: Record<string, Block> = {};
+        const children: TypeChild = {};
         const props: TypeProps = {};
         const lists: TypeList = {};
+
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (value instanceof Block) {
                 children[key] = value;
@@ -53,28 +54,28 @@ export default abstract class Block {
             }
         });
 
-        return {children, props, lists};
+        return { children, props, lists };
     }
 
-    _registerEvents(eventBus: EventBus): void {
+    private _registerEvents(eventBus: EventBus): void {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    init() {
+    private init(): void {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    _componentDidMount() {
+    private _componentDidMount(): void {
         if (this.children) {
-            Object.values(this.children).forEach(child => {
+            Object.values(this.children).forEach((child: Block) => {
                 child.dispatchComponentDidMount();
             });
         }
         if (this.lists) {
-            Object.values(this.lists).flat().forEach(child => {
+            Object.values(this.lists).flat().forEach((child: unknown) => {
                 if (child instanceof Block) {
                     child.dispatchComponentDidMount();
                 }
@@ -83,15 +84,13 @@ export default abstract class Block {
         this.componentDidMount();
     }
 
-    componentDidMount() {
+    protected componentDidMount(): void {}
 
-    }
-
-    dispatchComponentDidMount() {
+    public dispatchComponentDidMount(): void {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-    private _componentDidUpdate(oldProps: TypeProps = {}, newProps: TypeProps = {}) {
+    private _componentDidUpdate(oldProps: TypeProps = {}, newProps: TypeProps = {}): void {
         if (!this.componentDidUpdate(oldProps, newProps)) {
             return;
         }
@@ -102,46 +101,52 @@ export default abstract class Block {
         return (oldProps && newProps) && true;
     }
 
-    _render(): void {
-        const propsAndStubs = {...this.props};
+    private _render(): void {
+        const propsAndStubs: Record<string, unknown> = { ...this.props };
+
         if (this.children) {
-            Object.entries(this.children).forEach(([key, child]) => {
+            Object.entries(this.children).forEach(([key, child]: [string, Block]) => {
                 propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
             });
         }
+
         if (this.lists) {
-            Object.entries(this.lists).forEach(([key]) => {
+            Object.entries(this.lists).forEach(([key]: [string, Block[]]) => {
                 propsAndStubs[key] = `<div data-id="l-${key}"></div>`;
             });
         }
-        const fragment = this._createDocumentElement('template');
-        const compiledTpl = Handlebars.compile(this.render());
+
+        const fragment: HTMLTemplateElement = this._createDocumentElement('template');
+        const compiledTpl: HandlebarsTemplateDelegate = Handlebars.compile(this.render());
         fragment.innerHTML = compiledTpl(propsAndStubs);
+
         if (this.children) {
-            Object.values(this.children).forEach(child => {
-                const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            Object.values(this.children).forEach((child: Block) => {
+                const stub: Element | null = fragment.content.querySelector(`[data-id="${child._id}"]`);
                 if (stub) {
                     stub.replaceWith(child.getContent());
                 }
             });
         }
+
         if (this.lists) {
-            Object.entries(this.lists).forEach(([key, child]) => {
-                const listCont = this._createDocumentElement('template');
-                child.forEach(item => {
+            Object.entries(this.lists).forEach(([key, childList]: [string, Block[]]) => {
+                const listCont: HTMLTemplateElement = this._createDocumentElement('template');
+                childList.forEach((item: Block | unknown) => {
                     if (item instanceof Block) {
                         listCont.content.append(item.getContent());
                     } else {
                         listCont.content.append(`${item}`);
                     }
                 });
-                const stub = fragment.content.querySelector(`[data-id="l-${key}"]`);
+                const stub: Element | null = fragment.content.querySelector(`[data-id="l-${key}"]`);
                 if (stub) {
                     stub.replaceWith(listCont.content);
                 }
             });
         }
-        const newElement = fragment.content.firstElementChild as HTMLElement;
+
+        const newElement: HTMLElement = fragment.content.firstElementChild as HTMLElement;
         if (this._element && newElement) {
             this._element.replaceWith(newElement);
         }
@@ -149,13 +154,11 @@ export default abstract class Block {
         this._addEvents();
     }
 
-    render(): string {
-        return '';
-    }
+    protected abstract render(): string;
 
     private _addEvents(): void {
-        const {events = {}} = this.props;
-        Object.keys(events).forEach(eventName => {
+        const { events = {} } = this.props;
+        Object.keys(events).forEach((eventName: string) => {
             if (this._element) {
                 this._element.addEventListener(eventName, events[eventName]);
             }
@@ -166,26 +169,26 @@ export default abstract class Block {
         return document.createElement(tagName) as HTMLTemplateElement;
     }
 
-    getContent() {
+    public getContent(): HTMLElement {
         if (!this._element) {
-            throw new Error('Элемент не создан')
+            throw new Error('Элемент не создан');
         }
-        return this._element
+        return this._element;
     }
 
-    _makePropsProxy<T extends Record<string, unknown>>(props: T): T {
+    private _makePropsProxy(props: TypeProps): TypeProps {
         return new Proxy(props, {
-            get: (target: T, prop: string) => {
+            get: (target: TypeProps, prop: string | symbol): unknown => {
                 if (prop in target) {
-                    const value = target[prop as keyof T];
-                    return typeof value === 'function' ? value.bind(target) : value;
+                    const value = target[prop as keyof TypeProps];
+                    return typeof value === 'function' ? (value).bind(target) : value;
                 }
                 return undefined;
             },
-            set: (target: T, prop: string, newValue: unknown): boolean => {
+            set: (target: TypeProps, prop: string | symbol, newValue: unknown): boolean => {
                 if (prop in target) {
-                    const oldTarget = { ...target };
-                    (target as Record<string, unknown>)[prop] = newValue;
+                    const oldTarget: TypeProps = { ...target };
+                    (target as Record<string | symbol, unknown>)[prop] = newValue;
                     this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                     return true;
                 }
@@ -197,25 +200,20 @@ export default abstract class Block {
         });
     }
 
-    public setProps = (nextProps: TypeProps): void => {
+    public setProps(nextProps: TypeProps): void {
         if (!nextProps) {
             return;
         }
-
         Object.assign(this.props, nextProps);
-    };
+    }
 
     public show(): void {
-        const content = this.getContent();
-        if (content) {
-            content.style.display = 'block';
-        }
+        const content: HTMLElement = this.getContent();
+        content.style.display = 'block';
     }
 
     public hide(): void {
-        const content = this.getContent();
-        if (content) {
-            content.style.display = 'none';
-        }
+        const content: HTMLElement = this.getContent();
+        content.style.display = 'none';
     }
 }

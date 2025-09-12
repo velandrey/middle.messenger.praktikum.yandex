@@ -1,50 +1,37 @@
 import './style.pcss';
 import Block from '@/utils/block'
 import {ChatListItem, ChatMessageRow, ChatMessageSender, Nav} from "@/components";
-import {chatList, chatMessages} from "@/utils/data";
+import {chatList} from "@/utils/data";
+import {Discussant, Message} from "@/utils/types";
 
+const getChatList = (activeChatId: number = 1): {
+    list: Discussant[];
+    messages: Message[] | []
+} => {
+    let messages: Message[] | [] = [];
 
+    const list: Discussant[] = chatList.map((item: Discussant) => {
+        const chatParams = {...item}
+        chatParams.active = '';
+        if (item.id === activeChatId) {
+            chatParams.active = 'active';
+            messages = item.messages;
+        }
+        return chatParams;
+    });
+    return {list, messages};
+}
 
 export class Chat extends Block {
     constructor({...props}) {
-        /**
-         * Доделать на промисах
-         *
-         const getChatList = () => {
-         return new Promise((resolve,reject) => {
-         setTimeout(()=>{
-         resolve(chatList)
-         },1000)
-         setTimeout(()=>{
-         reject(new Error(`Не удалось получить список чатов.`))
-         },10000)
-         })
-
-         }
-
-
-        let chatListItem = [];
-        getChatList().then(response=>{
-            console.log(response)
-            if(Array.isArray(response)) {
-                chatListItem = response.map((item)=>{
-                    return new ChatListItem({...item})
-                })
-            }
-            console.log(chatListItem)
-        }).catch(reason => {
-            chatListItem = [];
-            console.log(reason)
-        })
-            */
-
+        const {list, messages} = getChatList()
         super({
             ...props,
             Navigation: new Nav({...props}),
-            ChatListBlocks: chatList.map((item)=>{
+            ChatListBlocks: list.map((item) => {
                 return new ChatListItem({...item})
             }),
-            ChatMessages: chatMessages.map((item)=>{
+            ChatMessages: messages.map((item) => {
                 return new ChatMessageRow({...item})
             }),
             ChatMessageSender: new ChatMessageSender({}),

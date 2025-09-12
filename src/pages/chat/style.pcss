@@ -11,6 +11,7 @@
     background: var(--wrapper_color);
     padding: 10px 0;
     border-right: 1px solid var(--border_color);
+    overflow: auto;
 }
 
 .chat_list_head {
@@ -84,8 +85,8 @@
 }
 
 .chat_box_feed {
-    min-height: 400px;
-    overflow: hidden;
+    min-height: calc(100% - 42px);
+    overflow: auto;
     padding: 10px 0;
     display: flex;
     flex-direction: column;

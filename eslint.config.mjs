@@ -5,6 +5,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig([
     {
+        extends: ['js/recommended'],
         rules: {
             'no-var': 'error',
             'semi': 'error',
@@ -15,7 +16,6 @@ export default defineConfig([
             'prefer-const': 'error',
             'no-use-before-define': 'error',
             'eol-last': 'error',
-            'no-unused-vars': 'off',
             'max-len': [1, 100],
             'max-params': [2, 3],
             'import/extensions': 'off',
@@ -28,9 +28,7 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-member-access': 'off',
             '@typescript-eslint/ban-ts-comment': 'off',
         },
-        files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
-        extends: ['js/recommended'],
         languageOptions: {
             globals: {
                 ...globals.browser,

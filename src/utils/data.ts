@@ -26,50 +26,15 @@ export const pages: PageLinkProps[] = [
         link: 'Error500',
     },
 ];
-export const chatList: Discussant[] = [
-    {
-        name: 'Рафик Непричёмкин',
-        date: '15:30',
-        count: 2,
-        text: 'Go to',
-        image: '/images/user.webp',
-    },
-    {
-        name: 'Альберт Душный',
-        date: '13:01',
-        count: 6,
-        text: 'Labore, repellendus.',
-        image: '/images/user.webp',
-    },
-    {
-        name: 'Алёна Кораблёва',
-        date: '11:33',
-        count: 12,
-        text: 'Consectetur adipisicing elit. Assumenda cumque, deserunt.',
-        image: '/images/user.webp',
-    },
-    {
-        name: 'Владимир Уточкин',
-        date: '09:02',
-        count: 3,
-        text: 'Saepe sed sunt vero?',
-        image: '/images/user.webp',
-    },
-    {
-        name: 'Соня Прищепкина',
-        date: '06:00',
-        count: 3,
-        text: 'синие тапочки.',
-        image: '/images/user.webp',
-    }
-];
-export const chatMessages: Message[] = [
+
+const chatMessages: Message[] = [
     {
         direction: 'to',
         type: 'text',
         time: '08:13',
         status: 'unread',
         content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda cumque, deserunt, dignissimos dolores exercitationem explicabo id ipsam laborum laudantium molestiae porro quis quisquam quos saepe sed sunt vero? Labore, repellendus.',
+
     },
     {
         direction: 'to',
@@ -84,6 +49,53 @@ export const chatMessages: Message[] = [
         time: '08:17',
         status: 'unread',
         content: 'Go to',
+    }
+];
+export const chatList: Discussant[] = [
+    {
+        id: 1,
+        name: 'Рафик Непричёмкин',
+        date: '15:30',
+        count: 2,
+        text: 'Go to',
+        image: '/images/user.webp',
+        messages: chatMessages,
+    },
+    {
+        id: 2,
+        name: 'Альберт Душный',
+        date: '13:01',
+        count: 6,
+        text: 'Labore, repellendus.',
+        image: '/images/user.webp',
+        messages: chatMessages,
+    },
+    {
+        id: 2,
+        name: 'Алёна Кораблёва',
+        date: '11:33',
+        count: 12,
+        text: 'Consectetur adipisicing elit. Assumenda cumque, deserunt.',
+        image: '/images/user.webp',
+        messages: chatMessages,
+    },
+    {
+        id: 3,
+        name: 'Владимир Уточкин',
+        date: '09:02',
+        count: 3,
+        text: 'Saepe sed sunt vero?',
+        image: '/images/user.webp',
+        messages: chatMessages,
+    },
+    {
+        id: 4,
+        name: 'Соня Прищепкина',
+        date: '06:00',
+        count: 3,
+        text: 'синие тапочки.',
+        image: '/images/user.webp',
+        messages: chatMessages,
     }
 ];
 
@@ -189,9 +201,9 @@ export function getLabelByName(name: string): string {
 export function getFieldParams(arrFieldName: string[]): InputParams[] {
     const arParams: InputParams[] = [];
     arrFieldName.forEach(fieldName => {
-        const field: InputParams | undefined = fieldsParams.find((fieldRow: InputParams) => fieldRow.name === fieldName)
+        const field: InputParams | undefined = fieldsParams.find((fieldRow: InputParams) => fieldRow.name === fieldName);
         if (field) {
-            arParams.push(field)
+            arParams.push(field);
         }
     });
     return arParams;
