@@ -7,7 +7,7 @@ import {ProfileChangePassword} from "@/components/profile-change-password";
 
 export class Profile extends Block {
     constructor({...props}) {
-        const profile = Object.entries(profileData).map(([key, value])=>{
+        const profile = Object.entries(profileData).map(([key, value]) => {
             return new ProfileRow({
                 prop: getLabelByName(key),
                 value: value,
@@ -19,7 +19,31 @@ export class Profile extends Block {
             ProfileEdit: new ProfileEdit({}),
             ProfileChangePassword: new ProfileChangePassword({}),
             ProfileRows: profile,
-        })
+            events: {
+                click: (e: Event) => {
+                    if (
+                        e.target instanceof HTMLElement
+                        && e.target.classList.contains('popup_link')
+                        && e.target.dataset
+                        && typeof e.target.dataset.target === 'string'
+                    ) {
+                        e.preventDefault();
+                        const element: HTMLElement | null = document.getElementById(e.target.dataset.target);
+                        if (element) {
+                            element.classList.add('active');
+                        }
+                    }
+                    const openedModal = document.querySelector('.popup_modal.active')
+                    if (
+                        e.target instanceof HTMLElement
+                        && e.target.classList.contains('popup_modal_close')
+                        && openedModal
+                    ) {
+                        openedModal.classList.remove('active');
+                    }
+                }
+            }
+        });
     }
 
     render() {
@@ -47,12 +71,11 @@ export class Profile extends Block {
                                         <div class="popup_modal_content">
                                             <div class="profile_modal profile_edit">
                                                 {{{ProfileEdit}}}
+                                                <div class="popup_modal_close">✕</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
                                 <div class="popup">
                                     <div class="popup_link profile_action" id="change_password" data-target="modal_change_password">
                                         Изменить пароль
@@ -61,13 +84,11 @@ export class Profile extends Block {
                                         <div class="popup_modal_content">
                                              <div class="profile_modal profile_change_pass">
                                                 {{{ProfileChangePassword}}}
+                                                <div class="popup_modal_close">✕</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            
-                            
-                            
                                 <div class="profile_action profile_logout nav_list_item" data-link="Auth" id="profile_logout">Выйти</div>
                             </div>
                         </div>
@@ -76,30 +97,4 @@ export class Profile extends Block {
             </div>
         `;
     }
-}
-export function initModal() {
-    const popup_links = document.querySelectorAll('.popup_link');
-    popup_links.forEach(element => {
-        element.addEventListener('click', (e:Event):void => {
-            e.preventDefault();
-            if (e.target instanceof HTMLElement
-                && e.target.dataset
-                && typeof e.target.dataset.target === 'string'
-            ){
-                const element:HTMLElement | null = document.getElementById(e.target.dataset.target);
-                if(element){
-                    element.classList.add('active');
-                }
-            }
-        });
-    });
-    const modals = document.querySelectorAll('.popup_modal');
-    modals.forEach(element => {
-        element.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (e.target instanceof HTMLElement){
-                e.target.classList.remove('active');
-            }
-        });
-    });
 }

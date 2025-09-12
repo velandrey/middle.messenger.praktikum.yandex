@@ -1,6 +1,7 @@
 export { Button } from './button';
 export { ChatListItem } from './chat-list-item';
 export { ChatMessageRow } from './chat-message-row';
+export { ChatMessageSender } from './chat-message-sender';
 export { Error } from './error';
 export { FormAuth } from './form-auth';
 export { FormField } from './form-field';

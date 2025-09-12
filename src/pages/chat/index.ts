@@ -1,6 +1,6 @@
 import './style.pcss';
 import Block from '@/utils/block'
-import {ChatListItem, ChatMessageRow, Nav} from "@/components";
+import {ChatListItem, ChatMessageRow, ChatMessageSender, Nav} from "@/components";
 import {chatList, chatMessages} from "@/utils/data";
 
 
@@ -47,6 +47,7 @@ export class Chat extends Block {
             ChatMessages: chatMessages.map((item)=>{
                 return new ChatMessageRow({...item})
             }),
+            ChatMessageSender: new ChatMessageSender({}),
         })
     }
 
@@ -72,7 +73,7 @@ export class Chat extends Block {
                         <div class="chat_box">
                             <div class="chat_box_head">
                                 <div class="chat_box_head_partner">
-                                    <img src="/images/user.webp" alt="{{p_name}}" class="chat_box_head_partner_avatar">
+                                    <img src="/images/user.webp" alt="Рафик Непричёмкин" class="chat_box_head_partner_avatar">
                                     Рафик Непричёмкин
                                 </div>
                 <!--                <div class="chat_box_head_menu">⋮</div>-->
@@ -80,15 +81,7 @@ export class Chat extends Block {
                             <div class="chat_box_feed">
                                 {{{ChatMessages}}}
                             </div>
-                            <form class="chat_box_sending" method="post" action="/">
-                                <div class="chat_box_sending_attach">
-                                    <input type="hidden" name="message_attach">
-                                </div>
-                                <div class="chat_box_sending_message">
-                                    <input type="text" name="message" id="message" placeholder="Сообщение" class="chat_box_sending_message_input" required/>
-                                </div>
-                                <button type="submit" class="chat_box_sending_submit">➤</button>
-                            </form>
+                            {{{ChatMessageSender}}}
                         </div>
                     </div>
                 </main>

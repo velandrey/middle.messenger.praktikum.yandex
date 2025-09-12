@@ -1,24 +1,10 @@
 import Block from '@/utils/block'
-import {Button, FormField, Input} from "@/components";
 import {FormValidator} from "@/utils/validator";
-import {getFieldParams} from "@/utils/data";
-import {InputParams} from "@/utils/types";
 
-export class ProfileChangePassword extends Block {
-    constructor({...props}: object) {
-        const fieldsColum: string[] = [
-            'oldPassword',
-            'newPassword',
-        ]
-        const formField: Input[] = getFieldParams(fieldsColum).map((item: InputParams) => new FormField(item));
+export class ChatMessageSender extends Block {
+    constructor(props: object) {
         super({
             ...props,
-            FormField: formField,
-            ButtonSubmit: new Button({
-                type: 'submit',
-                id: 'button_save_password',
-                label: 'Изменить пароль',
-            }),
             events: {
                 submit: (e: Event) => this.submitCallback(e)
             }
@@ -36,7 +22,7 @@ export class ProfileChangePassword extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Данные для изменения пароля: ', arResult)
+                console.log('Корректные данные для авторизации: ', arResult)
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }
@@ -45,9 +31,14 @@ export class ProfileChangePassword extends Block {
 
     render() {
         return `
-            <form action="/" method="post">
-                {{{FormField}}}
-                {{{ButtonSubmit}}}
+            <form class="chat_box_sending" method="post" action="/">
+                <div class="chat_box_sending_attach">
+                    <input type="hidden" name="message_attach">
+                </div>
+                <div class="chat_box_sending_message">
+                    <input type="text" name="message" id="message" placeholder="Сообщение" class="chat_box_sending_message_input" required/>
+                </div>
+                <button type="submit" class="chat_box_sending_submit">➤</button>
             </form>
         `;
     }

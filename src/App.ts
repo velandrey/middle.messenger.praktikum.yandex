@@ -1,7 +1,6 @@
 import Block from "@/utils/block";
 import {Auth, Chat, Error404, Error500, Profile, Registration} from './pages';
 import {pages} from "@/utils/data";
-import {initModal} from "@/pages/profile";
 import {PageContext, PageLinkProps} from "@/utils/types";
 
 /**
@@ -71,7 +70,6 @@ export default class App {
                 }
             });
         });
-        initModal();
     }
 
     /**

@@ -14,11 +14,7 @@ type ValidationRules = {
 
 export class FormValidator {
     private readonly validationRules: ValidationRules= {
-        first_name: {
-            pattern: /^[A-ZА-ЯЁ][a-zA-Zа-яА-ЯёЁ0-9!@#$%^&*()_+=\[\]{};:'",.<>/?\\|`~]*$/,
-            errorMessage: 'Латиница | Кириллица, первая буква заглавная, допустимы цифры и спецсимволы. Запрещён пробел и дефис.'
-        },
-        second_name: {
+        name: {
             pattern: /^[A-ZА-ЯЁ][a-zA-Zа-яА-ЯёЁ0-9!@#$%^&*()_+=\[\]{};:'",.<>/?\\|`~]*$/,
             errorMessage: 'Латиница | Кириллица, первая буква заглавная, допустимы цифры и спецсимволы. Запрещён пробел и дефис.'
         },
@@ -69,17 +65,17 @@ export class FormValidator {
     }
 
     public validateField(fieldName: string, value: string): ValidationResult {
+        if (fieldName === 'oldPassword' || fieldName === 'newPassword'){
+            fieldName = 'password'
+        }
+        if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'nic_name'){
+            fieldName = 'name'
+        }
         const rule:FieldValidationRule = this.validationRules[fieldName];
         if (!rule) {
             return {
                 isValid: true,
                 errorMessage: `Правило валидации для поля ${fieldName} не найдено`
-            };
-        }
-        if (!value && fieldName !== 'message') {
-            return {
-                isValid: false,
-                errorMessage: 'Поле не может быть пустым'
             };
         }
         const patternMatch:boolean = rule.pattern.test(value);
