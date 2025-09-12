@@ -1,14 +1,29 @@
 import Block from '@/utils/block'
 import {Button, FormField, Input} from "@/components";
-import {getFieldParams} from "@/utils/data";
+import {getFieldParams, profileData} from "@/utils/data";
 import {InputParams} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
 
-/**
- * Получить параметры для полей ввода.
- * @param arrFieldName
- */
+function getValue(fieldName:string):string | null {
+    const key = Object.keys(profileData).find((key) => {
+        return key === fieldName
+    })
+    if(key){
+        return profileData[key];
+    }
+    return null;
+}
 
+function initInput(item:InputParams):FormField {
+    const inputParams = {
+        ...item
+    }
+    const value = getValue(inputParams.name);
+    if (value) {
+        inputParams.value = value;
+    }
+    return new FormField(inputParams)
+}
 
 export class ProfileEdit extends Block {
     constructor({...props}: object) {
@@ -23,8 +38,8 @@ export class ProfileEdit extends Block {
             'phone',
             'avatar',
         ]
-        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new FormField(item));
-        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new FormField(item));
+        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => initInput(item));
+        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => initInput(item));
         super({
             ...props,
             InputsLeft: inputsLeft,

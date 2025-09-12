@@ -27,4 +27,5 @@ export type InputParams = {
     label: string,
     error: string,
     required?: 'required',
+    value?: string,
 }
