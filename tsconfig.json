@@ -15,6 +15,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "strictNullChecks": true,
+    "noUnusedParameters": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
