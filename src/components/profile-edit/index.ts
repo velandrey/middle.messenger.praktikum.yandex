@@ -4,17 +4,17 @@ import {getFieldParams, profileData} from "@/utils/data";
 import {InputParams} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
 
-function getValue(fieldName:string):string | null {
+function getValue(fieldName: string): string | null {
     const key = Object.keys(profileData).find((key) => {
         return key === fieldName;
     });
-    if(key){
+    if (key) {
         return profileData[key];
     }
     return null;
 }
 
-function initInput(item:InputParams):FormField {
+function initInput(item: InputParams): FormField {
     const inputParams = {
         ...item
     };
@@ -57,7 +57,6 @@ export class ProfileEdit extends Block {
 
     submitCallback(e: Event) {
         e.preventDefault();
-        console.log(e);
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
             const arResult: Record<string, string> = {};

@@ -7,8 +7,12 @@ import {Discussant, Message} from "@/utils/types";
 const getChatList = (activeChatId: number = 1): {
     list: Discussant[];
     messages: Message[] | []
+    name: string
+    image: string
 } => {
     let messages: Message[] | [] = [];
+    let name: string = '';
+    let image: string = '';
 
     const list: Discussant[] = chatList.map((item: Discussant) => {
         const chatParams = {...item};
@@ -16,25 +20,57 @@ const getChatList = (activeChatId: number = 1): {
         if (item.id === activeChatId) {
             chatParams.active = 'active';
             messages = item.messages;
+            name = item.name;
+            image = item.image;
         }
         return chatParams;
     });
-    return {list, messages};
+    return {list, messages, name, image};
 };
 
 export class Chat extends Block {
     constructor({...props}) {
-        const {list, messages} = getChatList();
+        if (!props.chatId) {
+            props.chatId = 1;
+        }
+        const {list, messages, name, image} = getChatList(props.chatId);
         super({
             ...props,
             Navigation: new Nav({...props}),
+            name: name,
+            image: image,
             ChatListBlocks: list.map((item) => {
-                return new ChatListItem({...item});
+                return new ChatListItem(item);
             }),
             ChatMessages: messages.map((item) => {
-                return new ChatMessageRow({...item});
+                return new ChatMessageRow(item);
             }),
-            ChatMessageSender: new ChatMessageSender({}),
+            ChatMessageSender: new ChatMessageSender({
+                chatId: props.chatId
+            }),
+            events: {
+                click: (e: Event) => {
+                    if (e.target instanceof HTMLElement) {
+                        const chatListItem = e.target.closest('.chat_list_item');
+                        if (chatListItem instanceof HTMLElement && chatListItem.dataset.chatid) {
+                            const chatId: number = parseInt(chatListItem.dataset.chatid);
+                            this.props.chatId = chatId;
+                            const {list, messages, name, image} = getChatList(chatId);
+                            this.props.name = name;
+                            this.props.image = image;
+                            this.lists.ChatListBlocks = list.map((item) => {
+                                return new ChatListItem(item);
+                            });
+                            this.lists.ChatMessages = messages.map((item) => {
+                                return new ChatMessageRow(item);
+                            });
+                            this.children.ChatMessageSender = new ChatMessageSender({
+                                chatId: props.chatId
+                            });
+                        }
+                    }
+                }
+            }
         });
     }
 
@@ -60,8 +96,8 @@ export class Chat extends Block {
                         <div class="chat_box">
                             <div class="chat_box_head">
                                 <div class="chat_box_head_partner">
-                                    <img src="/images/user.webp" alt="Рафик Непричёмкин" class="chat_box_head_partner_avatar">
-                                    Рафик Непричёмкин
+                                    <img src="{{image}}" alt="{{name}}" class="chat_box_head_partner_avatar">
+                                    {{name}}
                                 </div>
                 <!--                <div class="chat_box_head_menu">⋮</div>-->
                             </div>

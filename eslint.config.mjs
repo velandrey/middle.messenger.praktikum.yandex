@@ -16,8 +16,6 @@ export default defineConfig([
             'prefer-const': 'error',
             'no-use-before-define': 'error',
             'eol-last': 'error',
-            'max-len': [1, 100],
-            'max-params': [2, 3],
             'import/extensions': 'off',
             'import/no-extraneous-dependencies': 'off',
             '@typescript-eslint/no-explicit-any': 'off',

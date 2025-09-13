@@ -8,7 +8,7 @@ export class ChatListItem extends Block {
 
     render() {
         return `
-            <div class="chat_list_item {{active}}">
+            <div class="chat_list_item {{active}}" data-chatid="{{id}}">
                 <div class="chat_list_item_main">
                     <div class="chat_list_item_avatar">
                         <img src="{{image}}" alt="{{name}}">

@@ -71,7 +71,7 @@ export const chatList: Discussant[] = [
         messages: chatMessages,
     },
     {
-        id: 2,
+        id: 3,
         name: 'Алёна Кораблёва',
         date: '11:33',
         count: 12,
@@ -80,7 +80,7 @@ export const chatList: Discussant[] = [
         messages: chatMessages,
     },
     {
-        id: 3,
+        id: 4,
         name: 'Владимир Уточкин',
         date: '09:02',
         count: 3,
@@ -89,7 +89,7 @@ export const chatList: Discussant[] = [
         messages: chatMessages,
     },
     {
-        id: 4,
+        id: 5,
         name: 'Соня Прищепкина',
         date: '06:00',
         count: 3,

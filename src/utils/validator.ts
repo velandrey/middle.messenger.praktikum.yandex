@@ -15,7 +15,7 @@ type ValidationRules = {
 export class FormValidator {
     private readonly validationRules: ValidationRules= {
         name: {
-            pattern: /^[A-ZА-ЯЁ][a-zA-Zа-яА-ЯёЁ0-9!@#$%^&*()_+=\[\]{};:'",.<>/?\\|`~]*$/,
+            pattern: /^[A-ZА-ЯЁ][a-zA-Zа-яА-ЯёЁ0-9!@#$%^&*()_+=[\]{};:'",.<>/?\\|`~]*$/,
             errorMessage: 'Латиница | Кириллица, первая буква заглавная, допустимы цифры и спецсимволы. Запрещён пробел и дефис.'
         },
         login: {
@@ -27,7 +27,7 @@ export class FormValidator {
             errorMessage: 'Некорректный email. Должен содержать @ и точку после неё, перед точкой должны быть буквы',
         },
         password: {
-            pattern: /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,40}$/,
+            pattern: /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,40}$/,
             errorMessage: 'От 8 до 40 символов, должна быть хотя бы одна заглавная буква и цифра',
         },
         phone: {
