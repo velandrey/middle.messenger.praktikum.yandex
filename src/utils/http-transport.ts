@@ -1,3 +1,16 @@
+export enum HttpStatus {
+    Ok = 200,
+    Created = 201,
+    NoContent = 204,
+    MultipleChoices = 300,
+    BadRequest = 400,
+    Unauthorized = 401,
+    Forbidden = 403,
+    NotFound = 404,
+    Conflict = 409,
+    InternalServerError = 500,
+}
+
 const METHODS = {
     GET: 'GET',
     PUT: 'PUT',
@@ -45,28 +58,26 @@ function queryStringify(data: Record<string, unknown>): string {
 }
 
 export class HTTPTransport {
-    get = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
-        return this.request(url, {...options, method: METHODS.GET}, options.timeout);
-    };
+    // Фабричный метод для создания HTTP методов
+    private createMethod(method: HTTPMethod) {
+        return (url: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
+            return this.request(url, { ...options, method });
+        };
+    }
 
-    post = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
-        return this.request(url, {...options, method: METHODS.POST}, options.timeout);
-    };
+    // Методы создаются через фабрику
+    public get = this.createMethod(METHODS.GET);
+    public post = this.createMethod(METHODS.POST);
+    public put = this.createMethod(METHODS.PUT);
+    public delete = this.createMethod(METHODS.DELETE);
 
-    put = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
-        return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
-    };
-
-    delete = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
-        return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
-    };
-
-    request = (url: string, options: Options = {}, timeout: number = 5000): Promise<XMLHttpRequest> => {
+    private request = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
         const {
             method = METHODS.GET,
             data = {},
             headers = {},
-            retries = 0
+            retries = 0,
+            timeout = 5000
         } = options;
 
         let requestUrl = url;
@@ -91,7 +102,7 @@ export class HTTPTransport {
                 });
 
                 xhr.onload = (): void => {
-                    if (xhr.status >= 200 && xhr.status < 300) {
+                    if (xhr.status >= HttpStatus.Ok && xhr.status < HttpStatus.MultipleChoices) {
                         resolve(xhr);
                     } else if (attemptNumber < retries) {
                         console.log(`Попытка ${attemptNumber} не удалась. Статус: ${xhr.status}`);

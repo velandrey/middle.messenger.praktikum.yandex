@@ -5,11 +5,11 @@ export type TypeProps<T = Record<string, unknown>> = T & {
     events?: Record<string, EventListener>;
 };
 
-export type TypeChild = Record<string, Block>;
-export type TypeList = Record<string, Block[]>;
+export type TypeChild = Record<string, Block<TypeProps>>;
+export type TypeList = Record<string, Block<TypeProps>[]>;
 
-export default abstract class Block {
-    static EVENTS: Record<string, string> = {
+export default abstract class Block<Props extends TypeProps = TypeProps> {
+    static readonly EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
         FLOW_CDU: "flow:component-did-update",
@@ -18,7 +18,7 @@ export default abstract class Block {
 
     protected _element: HTMLElement | null = null;
     protected _id: number = Math.floor(100000 + Math.random() * 900000);
-    protected props: TypeProps;
+    protected props: Props;
     protected children: TypeChild;
     protected lists: TypeList;
     protected eventBus: () => EventBus;
@@ -26,7 +26,7 @@ export default abstract class Block {
     protected constructor(propsBlock: TypeProps = {}) {
         const eventBus = new EventBus();
         const { props, children, lists } = this._geTypeChildrenPropsAndProps(propsBlock);
-        this.props = this._makePropsProxy({ ...props });
+        this.props = this._makePropsProxy({ ...props }) as Props;
         this.children = children;
         this.lists = this._makePropsProxy({ ...lists }) as TypeList;
         this._element = null;
@@ -148,6 +148,7 @@ export default abstract class Block {
 
         const newElement: HTMLElement = fragment.content.firstElementChild as HTMLElement;
         if (this._element && newElement) {
+            this._removeEvents();
             this._element.replaceWith(newElement);
         }
         this._element = newElement;
@@ -162,6 +163,13 @@ export default abstract class Block {
             if (this._element) {
                 this._element.addEventListener(eventName, events[eventName]);
             }
+        });
+    }
+
+    private _removeEvents(): void {
+        const { events = {} } = this.props;
+        Object.entries(events).forEach(([eventName, callback]) => {
+            this._element?.removeEventListener(eventName, callback as EventListener);
         });
     }
 
