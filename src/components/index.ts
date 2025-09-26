@@ -7,8 +7,6 @@ export { FormAuth } from './form-auth';
 export { FormField } from './form-field';
 export { FormRegistration } from './form-registration';
 export { Input } from './input';
-export { Nav } from './nav';
-export { NavItem } from './nav-item';
 export { ProfileChangePassword } from './profile-change-password';
 export { ProfileEdit } from './profile-edit';
 export { ProfileRow } from './profile-row';

@@ -1,6 +1,6 @@
 import './style.pcss';
 import Block from '@/utils/block';
-import {Nav, ProfileRow} from "@/components";
+import {ProfileRow} from "@/components";
 import {getLabelByName, profileData} from "@/utils/data";
 import {ProfileEdit} from "@/components/profile-edit";
 import {ProfileChangePassword} from "@/components/profile-change-password";
@@ -15,7 +15,6 @@ export class Profile extends Block {
         });
         super({
             ...props,
-            Navigation: new Nav({...props}),
             ProfileEdit: new ProfileEdit({}),
             ProfileChangePassword: new ProfileChangePassword({}),
             ProfileRows: profile,
@@ -49,7 +48,6 @@ export class Profile extends Block {
     render() {
         return `
             <div class="wrapper">
-                {{{Navigation}}}
                 <main class="app_box">
                     <div class="box_wrapper">
                         <h1 class="main_title">Профиль</h1>
@@ -59,7 +57,6 @@ export class Profile extends Block {
                                 <h2 class="profile_name">Игнат Ёжиков</h2>
                             </div>
                             <div class="profile_info">
-                                {{Test}}
                                 {{{ProfileRows}}}
                             </div>
                             <div class="profile_info">

@@ -1,6 +1,6 @@
 import './style.pcss';
 import Block from '@/utils/block';
-import {ChatListItem, ChatMessageRow, ChatMessageSender, Nav} from "@/components";
+import {ChatListItem, ChatMessageRow, ChatMessageSender} from "@/components";
 import {chatList} from "@/utils/data";
 import {Discussant, Message} from "@/utils/types";
 
@@ -36,7 +36,6 @@ export class Chat extends Block {
         const {list, messages, name, image} = getChatList(props.chatId);
         super({
             ...props,
-            Navigation: new Nav({...props}),
             name: name,
             image: image,
             ChatListBlocks: list.map((item) => {
@@ -77,7 +76,6 @@ export class Chat extends Block {
     render() {
         return `
             <div class="wrapper">
-                {{{Navigation}}}
                 <main class="app_box">
                     <div class="chat">
                         <div class="chat_list">
