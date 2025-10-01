@@ -1,23 +1,48 @@
 import './style.pcss';
-import Block from '@/utils/block';
-import {ProfileRow} from "@/components";
-import {getLabelByName, profileData} from "@/utils/data";
-import {ProfileEdit} from "@/components/profile-edit";
+import Block, {TypeProps} from '@/utils/block';
+import {Logout, profileEdit, profileRow} from "@/components";
+import {getLabelByName} from "@/utils/data";
 import {ProfileChangePassword} from "@/components/profile-change-password";
+import {hoc} from "@/utils/hoc";
+import {State, UserInfo} from "@/utils/types";
+
+
+function getFullName(user: UserInfo):string{
+    return (user) ? `${user.first_name} ${user.second_name}`: '';
+}
+const fieldsProfileRows = [
+    'first_name',
+    'second_name',
+    'email',
+    'login',
+    'phone'
+] as const;
+
+const defaultAvatarLink = '/images/user.webp';
+
+function profileRowConstructor(){
+    const arProfilesBlocks = [];
+    for(const fieldName of fieldsProfileRows){
+        const block = new profileRow({
+            name: fieldName,
+            title: getLabelByName(fieldName)
+        });
+        arProfilesBlocks.push(block);
+    }
+    return arProfilesBlocks;
+}
 
 export class Profile extends Block {
     constructor({...props}) {
-        const profile = Object.entries(profileData).map(([key, value]) => {
-            return new ProfileRow({
-                prop: getLabelByName(key),
-                value: value,
-            });
-        });
+        const { user = {} } = props;
         super({
             ...props,
-            ProfileEdit: new ProfileEdit({}),
+            ProfileEdit: new profileEdit({}),
             ProfileChangePassword: new ProfileChangePassword({}),
-            ProfileRows: profile,
+            ProfileRows: profileRowConstructor(),
+            Logout: new Logout({}),
+            UserName: getFullName(user),
+            Avatar: defaultAvatarLink,
             events: {
                 click: (e: Event) => {
                     if (
@@ -45,6 +70,18 @@ export class Profile extends Block {
         });
     }
 
+    componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
+        if(newProps.user && typeof newProps.user === 'object') {
+            newProps.UserName = getFullName(newProps.user as UserInfo);
+            if('avatar' in newProps.user && newProps.user.avatar){
+                newProps.Avatar = newProps.user.avatar;
+            } else {
+                newProps.Avatar = defaultAvatarLink;
+            }
+        }
+
+        return super.componentDidUpdate(oldProps, newProps);
+    }
     render() {
         return `
             <div class="wrapper">
@@ -53,10 +90,11 @@ export class Profile extends Block {
                         <h1 class="main_title">Профиль</h1>
                         <div class="profile">
                             <div class="profile_head">
-                                <img src="/images/user.webp" alt="Игнат Ёжиков" class="profile_image"/>
-                                <h2 class="profile_name">Игнат Ёжиков</h2>
+                                <img src="{{Avatar}}" alt="{{UserName}}" class="profile_image"/>
+                                <h2 class="profile_name">{{UserName}}</h2>
                             </div>
                             <div class="profile_info">
+                                {{{Loading}}}
                                 {{{ProfileRows}}}
                             </div>
                             <div class="profile_info">
@@ -86,7 +124,7 @@ export class Profile extends Block {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="profile_action profile_logout nav_list_item" data-link="Auth" id="profile_logout">Выйти</div>
+                                {{{Logout}}}
                             </div>
                         </div>
                     </div>
@@ -95,3 +133,9 @@ export class Profile extends Block {
         `;
     }
 }
+export const profilePage = hoc(
+    state =>
+        ({
+            user: state.user,
+        }) as State
+)(Profile);

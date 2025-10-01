@@ -1,29 +1,10 @@
-import Block from '@/utils/block';
+import Block, {TypeProps} from '@/utils/block';
 import {Button, FormField, Input} from "@/components";
-import {getFieldParams, profileData} from "@/utils/data";
-import {InputParams} from "@/utils/types";
+import {getFieldParams} from "@/utils/data";
+import {InputParams, State} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
+import {hoc} from "@/utils/hoc";
 
-function getValue(fieldName: string): string | null {
-    const key = Object.keys(profileData).find((key) => {
-        return key === fieldName;
-    });
-    if (key) {
-        return profileData[key];
-    }
-    return null;
-}
-
-function initInput(item: InputParams): FormField {
-    const inputParams = {
-        ...item
-    };
-    const value = getValue(inputParams.name);
-    if (value) {
-        inputParams.value = value;
-    }
-    return new FormField(inputParams);
-}
 
 export class ProfileEdit extends Block {
     constructor({...props}: object) {
@@ -38,8 +19,8 @@ export class ProfileEdit extends Block {
             'phone',
             'avatar',
         ];
-        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => initInput(item));
-        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => initInput(item));
+        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new FormField({...item}));
+        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new FormField({...item}));
         super({
             ...props,
             InputsLeft: inputsLeft,
@@ -73,6 +54,23 @@ export class ProfileEdit extends Block {
         }
     }
 
+
+    componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
+        console.log(oldProps, newProps);
+
+
+        // if(newProps.user && typeof newProps.user === 'object') {
+        //     newProps.UserName = getFullName(newProps.user as UserInfo);
+        //     if('avatar' in newProps.user && newProps.user.avatar){
+        //         newProps.Avatar = newProps.user.avatar;
+        //     } else {
+        //         newProps.Avatar = defaultAvatarLink;
+        //     }
+        // }
+
+        return super.componentDidUpdate(oldProps, newProps);
+    }
+
     render() {
         return `
             <form action="/" method="post">
@@ -91,3 +89,10 @@ export class ProfileEdit extends Block {
         `;
     }
 }
+
+export const profileEdit = hoc(
+    state =>
+        ({
+            user: state.user,
+        }) as State
+)(ProfileEdit);

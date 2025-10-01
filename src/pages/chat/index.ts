@@ -3,6 +3,7 @@ import Block from '@/utils/block';
 import {ChatListItem, ChatMessageRow, ChatMessageSender} from "@/components";
 import {chatList} from "@/utils/data";
 import {Discussant, Message} from "@/utils/types";
+import {Routes} from "@/utils/router/routes";
 
 const getChatList = (activeChatId: number = 1): {
     list: Discussant[];
@@ -81,7 +82,7 @@ export class Chat extends Block {
                         <div class="chat_list">
                             <div class="chat_list_head">
                                 <div class="chat_list_head_profile">
-                                    <a href="#" class="chat_list_head_profile_link nav_list_item" data-link="Profile">Профиль</a>
+                                    <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
                                 <form class="chat_list_head_search" action="/" method="post">
                                     <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input" required/>

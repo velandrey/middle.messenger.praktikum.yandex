@@ -32,3 +32,34 @@ export type InputParams = {
     required?: 'required',
     value?: string,
 }
+export type LoginData = {
+    login: string;
+    password: string;
+}
+export type RegistrationData = {
+    first_name: string;
+    second_name: string;
+    login: string;
+    email: string;
+    password: string;
+    phone: string;
+}
+export type UserInfo = {
+    id: number | null;
+    avatar: string | null;
+    display_name: string | null;
+    email: string | null;
+    first_name: string | null;
+    second_name: string | null;
+    login: string | null;
+    phone: string | null;
+} | null;
+
+export type State = {
+    loading: boolean;
+    user: UserInfo | null;
+};
+
+export type PlainObject<T = unknown> = {
+    [k in string]: T;
+}

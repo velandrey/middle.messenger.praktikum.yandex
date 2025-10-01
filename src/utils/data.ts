@@ -115,7 +115,7 @@ export const fieldsParams: InputParams[] = [
     {
         name: 'login',
         label: 'Логин',
-        type: 'text',
+        type: 'email',
         required: 'required',
         error: '',
     }, {

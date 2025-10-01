@@ -8,7 +8,6 @@ export class Route {
     constructor(pathname: string, block: Block, selectorElementForRender:string = '#app') {
         this._pathname = pathname;
         this._block = block;
-        this._block = block;
         this._selectorElementForRender = selectorElementForRender;
     }
 

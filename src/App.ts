@@ -1,6 +1,6 @@
-import {Auth, Chat, Error404, Error500, Profile, Registration} from './pages';
+import {Auth, Chat, Error404, Error500, profilePage, Registration} from './pages';
 import {Routes} from "@/utils/router/routes";
-import {Router} from "@/utils/router/router";
+import routeManager from "@/utils/router/route-manager";
 
 
 /**
@@ -16,23 +16,22 @@ export default class App {
     /**
      * Точка входа в приложение.
      */
-    load() {
-        const router = new Router();
-        router
+    public async load() {
+        routeManager
             .use(Routes.AUTH, new Auth({}))
             .use(Routes.REGISTRATION, new Registration({}))
-            .use(Routes.PROFILE, new Profile({}))
+            .use(Routes.PROFILE, new profilePage({}))
             .use(Routes.CHAT, new Chat({}))
             .use(Routes.ERROR_NOT_FOUND, new Error404({}))
             .use(Routes.ERROR_SERVER, new Error500({}))
         ;
-
-        router.start();
-
-        //TODO тут тоже бредовый код который надо удалить
-        // const userIsAuth = false;
-        // if (!userIsAuth) {
-        //     router.go(Routes.AUTH);
-        // }
+        routeManager.start();
+        // store.on(StoreEvents.Updated, () => {
+        //     console.log('store updated',store.getState());
+        //     // this.routes();
+        // });
+        // this.routes();
     }
+
+
 }

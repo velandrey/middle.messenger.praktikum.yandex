@@ -25,7 +25,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
 
     protected constructor(propsBlock: TypeProps = {}) {
         const eventBus = new EventBus();
-        const { props, children, lists } = this._geTypeChildrenPropsAndProps(propsBlock);
+        const { props, children, lists } = this._getChildrenPropsAndProps(propsBlock);
         this.props = this._makePropsProxy({ ...props }) as Props;
         this.children = children;
         this.lists = this._makePropsProxy({ ...lists }) as TypeList;
@@ -35,7 +35,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    private _geTypeChildrenPropsAndProps(propsAndChildren: TypeProps): {
+    private _getChildrenPropsAndProps(propsAndChildren: TypeProps): {
         children: TypeChild;
         props: TypeProps;
         lists: TypeList;
