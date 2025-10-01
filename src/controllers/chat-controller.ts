@@ -113,6 +113,23 @@ class ChatController {
             store.set('loading', false);
         }
     }
+    public async getToken(chatId:number) {
+        try {
+            store.set('loading', true);
+            const response = await chatApi.getToken(chatId);
+            if (response === 'OK') {
+                // [
+                //     {
+                //         "token": "string"
+                //     }
+                // ]
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            store.set('loading', false);
+        }
+    }
 }
 
 export default new ChatController();

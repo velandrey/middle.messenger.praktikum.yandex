@@ -1,9 +1,8 @@
 export enum Routes {
     ROOT = '/',
-    AUTH = '/auth',
-    REGISTRATION = '/registration',
-    PROFILE = '/profile',
-    CHAT = '/chat',
+    REGISTRATION = '/sign-up',
+    PROFILE = '/settings',
+    CHAT = '/messenger',
     ERROR_NOT_FOUND = '/404',
     ERROR_SERVER = '/500'
 }

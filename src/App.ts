@@ -18,7 +18,7 @@ export default class App {
      */
     public async load() {
         routeManager
-            .use(Routes.AUTH, new Auth({}))
+            .use(Routes.ROOT, new Auth({}))
             .use(Routes.REGISTRATION, new Registration({}))
             .use(Routes.PROFILE, new profilePage({}))
             .use(Routes.CHAT, new Chat({}))
@@ -26,11 +26,6 @@ export default class App {
             .use(Routes.ERROR_SERVER, new Error500({}))
         ;
         routeManager.start();
-        // store.on(StoreEvents.Updated, () => {
-        //     console.log('store updated',store.getState());
-        //     // this.routes();
-        // });
-        // this.routes();
     }
 
 

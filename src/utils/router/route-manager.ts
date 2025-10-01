@@ -33,15 +33,12 @@ class RouteManager {
         if (arRoutes.includes(pathname)) {
             const userIsAuth = await AuthController.checkUserIsAuth();
             if (userIsAuth) {
-                if (pathname === Routes.ROOT || pathname === Routes.AUTH || pathname === Routes.REGISTRATION) {
+                if (pathname === Routes.ROOT || pathname === Routes.REGISTRATION) {
                     this.go(Routes.CHAT);
                 }
             } else {
-                if (pathname === Routes.ROOT) {
-                    this.go(Routes.AUTH);
-                }
                 if (pathname === Routes.CHAT) {
-                    this.go(Routes.AUTH);
+                    this.go(Routes.ROOT);
                 }
             }
         } else {

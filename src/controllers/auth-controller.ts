@@ -56,7 +56,7 @@ class AuthController {
         } catch (error) {
             console.log(error);
         } finally {
-            RouteManager.go(Routes.AUTH);
+            RouteManager.go(Routes.ROOT);
             store.set('loading', false);
         }
     }

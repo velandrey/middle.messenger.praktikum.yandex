@@ -18,7 +18,7 @@ export class Registration extends Block {
                         <h1 class="main_title">Регистрация</h1>
                         {{{FormRegistration}}}
                         <div class="form_field_link">
-                            <a href="${Routes.AUTH}" class="form_field_link_auth nav_list_item">Войти</a>
+                            <a href="${Routes.ROOT}" class="form_field_link_auth nav_list_item">Войти</a>
                         </div>
                     </div>
                 </main>

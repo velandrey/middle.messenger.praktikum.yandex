@@ -31,11 +31,7 @@ class ChatApi extends BaseAPI {
         return this.delete('', this.options);
     }
     public getNewMessagesCount(chatId:number) {
-        this.options.data = {
-            id: chatId
-        };
-
-        return this.get('', this.options);
+        return this.get(`new/${chatId}`, this.options);
     }
 
     public addUserToChat(userId:number,chatId:number) {
@@ -55,6 +51,10 @@ class ChatApi extends BaseAPI {
         };
 
         return this.delete('/users', this.options);
+    }
+
+    public getToken(chatId:number) {
+        return this.post(`/token/${chatId}`, this.options);
     }
 }
 
