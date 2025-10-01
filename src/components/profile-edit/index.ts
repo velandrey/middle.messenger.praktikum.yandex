@@ -4,6 +4,7 @@ import {getFieldParams} from "@/utils/data";
 import {InputParams, State} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
 import {hoc} from "@/utils/hoc";
+import userApi from "@/api/user-api";
 
 
 export class ProfileEdit extends Block {
@@ -47,7 +48,14 @@ export class ProfileEdit extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Корректные данные для изменения профиля: ', arResult);
+                userApi.changeProfile({
+                    first_name: arResult.first_name,
+                    second_name: arResult.second_name,
+                    display_name: arResult.display_name,
+                    login: arResult.login,
+                    email: arResult.email,
+                    phone: arResult.phone
+                });
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

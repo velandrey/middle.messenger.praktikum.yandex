@@ -53,7 +53,20 @@ export type UserInfo = {
     second_name: string | null;
     login: string | null;
     phone: string | null;
-} | null;
+};
+
+export type ProfileData = {
+    first_name: string,
+    second_name: string,
+    display_name: string,
+    login: string,
+    email: string,
+    phone: string
+}
+export type PasswordData = {
+    oldPassword: string,
+    second_name: string,
+}
 
 export type State = {
     loading: boolean;

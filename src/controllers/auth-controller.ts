@@ -64,8 +64,8 @@ class AuthController {
     public async registration(registrationData: RegistrationData) {
         try {
             store.set('loading', true);
-            const request = await authApi.create(registrationData);
-            if (request.responseText === 'OK') {
+            const response = await authApi.create(registrationData);
+            if (response === 'OK') {
                 await this.checkUserIsAuth();
             }
         } catch (error) {
