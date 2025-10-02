@@ -6,6 +6,7 @@ import {ProfileChangePassword} from "@/components/profile-change-password";
 import {hoc} from "@/utils/hoc";
 import {State, UserInfo} from "@/utils/types";
 import {ProfileChangeAvatar} from "@/components/profile-change-avatar";
+import {Routes} from "@/utils/router/routes";
 
 
 function getFullName(user: UserInfo):string{
@@ -89,25 +90,21 @@ export class Profile extends Block {
             <div class="wrapper">
                 <main class="app_box">
                     <div class="box_wrapper">
+                        <div class="profile_back"><a href="${Routes.CHAT}">Вернуться в чат</a></div>
                         <h1 class="main_title">Профиль</h1>
                         <div class="profile">
                             <div class="profile_head">
-                                
-                                
-                                
-                                    <div class="popup_link profile_image" id="change_avatar" data-target="modal_change_avatar"
-                                        style="{{Avatar}}"
-                                    >🖉</div>
-                                    <div class="popup_modal" id="modal_change_avatar">
-                                        <div class="popup_modal_content">
-                                            <div class="profile_modal profile_edit">
-                                                {{{ProfileChangeAvatar}}}
-                                                <div class="popup_modal_close">✕</div>
-                                            </div>
+                                <div class="popup_link profile_image" id="change_avatar" data-target="modal_change_avatar"
+                                    style="{{Avatar}}"
+                                >🖉</div>
+                                <div class="popup_modal" id="modal_change_avatar">
+                                    <div class="popup_modal_content">
+                                        <div class="profile_modal profile_edit">
+                                            {{{ProfileChangeAvatar}}}
+                                            <div class="popup_modal_close">✕</div>
                                         </div>
                                     </div>
-                                
-                                
+                                </div>
                                 <h2 class="profile_name">{{UserName}}</h2>
                             </div>
                             <div class="profile_info">

@@ -3,6 +3,7 @@ import {Button, FormField, Input} from "@/components";
 import {FormValidator} from "@/utils/validator";
 import {getFieldParams} from "@/utils/data";
 import {InputParams} from "@/utils/types";
+import userController from "@/controllers/user-controller";
 
 export class ProfileChangePassword extends Block {
     constructor({...props}: object) {
@@ -25,7 +26,7 @@ export class ProfileChangePassword extends Block {
         });
     }
 
-    submitCallback(e: Event) {
+    async submitCallback(e: Event) {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
@@ -36,7 +37,14 @@ export class ProfileChangePassword extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Данные для изменения пароля: ', arResult);
+                const result = await userController.changePassword({
+                    oldPassword: arResult.oldPassword,
+                    newPassword: arResult.newPassword,
+                });
+                const modal = document.getElementById('modal_change_password');
+                if(result && modal){
+                    modal.classList.remove('active');
+                }
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

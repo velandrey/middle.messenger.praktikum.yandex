@@ -65,7 +65,7 @@ export type ProfileData = {
 }
 export type PasswordData = {
     oldPassword: string,
-    second_name: string,
+    newPassword: string,
 }
 
 export type State = {

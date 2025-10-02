@@ -38,13 +38,14 @@ class UserController {
             store.set('loading', true);
             const response = await userApi.changePassword(passwordData);
             if (response === 'OK') {
-
+                return true;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
 
     public async searchUserByLogin(login: string) {
