@@ -1,10 +1,11 @@
 import './style.pcss';
 import Block, {TypeProps} from '@/utils/block';
 import {Logout, profileEdit, profileRow} from "@/components";
-import {getLabelByName} from "@/utils/data";
+import {getLabelByName, URL} from "@/utils/data";
 import {ProfileChangePassword} from "@/components/profile-change-password";
 import {hoc} from "@/utils/hoc";
 import {State, UserInfo} from "@/utils/types";
+import {ProfileChangeAvatar} from "@/components/profile-change-avatar";
 
 
 function getFullName(user: UserInfo):string{
@@ -18,7 +19,7 @@ const fieldsProfileRows = [
     'phone'
 ] as const;
 
-const defaultAvatarLink = '/images/user.webp';
+const defaultAvatarLink = 'background-image: url("/images/user.webp")';
 
 function profileRowConstructor(){
     const arProfilesBlocks = [];
@@ -39,6 +40,7 @@ export class Profile extends Block {
             ...props,
             ProfileEdit: new profileEdit({}),
             ProfileChangePassword: new ProfileChangePassword({}),
+            ProfileChangeAvatar: new ProfileChangeAvatar({}),
             ProfileRows: profileRowConstructor(),
             Logout: new Logout({}),
             UserName: getFullName(user),
@@ -74,7 +76,7 @@ export class Profile extends Block {
         if(newProps.user && typeof newProps.user === 'object') {
             newProps.UserName = getFullName(newProps.user as UserInfo);
             if('avatar' in newProps.user && newProps.user.avatar){
-                newProps.Avatar = newProps.user.avatar;
+                newProps.Avatar = `background-image: url("${URL.API}/resources${newProps.user.avatar}")`;
             } else {
                 newProps.Avatar = defaultAvatarLink;
             }
@@ -90,7 +92,22 @@ export class Profile extends Block {
                         <h1 class="main_title">Профиль</h1>
                         <div class="profile">
                             <div class="profile_head">
-                                <img src="{{Avatar}}" alt="{{UserName}}" class="profile_image"/>
+                                
+                                
+                                
+                                    <div class="popup_link profile_image" id="change_avatar" data-target="modal_change_avatar"
+                                        style="{{Avatar}}"
+                                    >🖉</div>
+                                    <div class="popup_modal" id="modal_change_avatar">
+                                        <div class="popup_modal_content">
+                                            <div class="profile_modal profile_edit">
+                                                {{{ProfileChangeAvatar}}}
+                                                <div class="popup_modal_close">✕</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                
                                 <h2 class="profile_name">{{UserName}}</h2>
                             </div>
                             <div class="profile_info">

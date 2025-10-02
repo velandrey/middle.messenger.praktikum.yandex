@@ -1,5 +1,6 @@
 import ChatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
+import {URL} from "@/utils/data";
 
 // Если вы увидели в консоли, что код 1006 и сокет закрылся, — это означает,
 // что вы долго были не активны и он это сделал автоматически. Чтобы избежать этого,
@@ -8,7 +9,6 @@ import store from "@/utils/store";
 
 
 class MessageController {
-    private readonly BASE_URL = 'wss://ya-praktikum.tech/ws/chats';
     private socket: WebSocket | null = null;
 
     public async init(userId: number, chatId: number) {
@@ -23,7 +23,7 @@ class MessageController {
     private async connect(userId: number, chatId: number) {
         try {
             const tokenId = await ChatController.getToken(chatId);
-            this.socket = new WebSocket(`${this.BASE_URL}/${userId}/${chatId}/${tokenId}`);
+            this.socket = new WebSocket(`${URL.WS}/${userId}/${chatId}/${tokenId}`);
         } catch (error) {
             console.log(error);
             throw Error('Невозможно подключиться');

@@ -12,8 +12,7 @@ class UserApi extends BaseAPI {
     }
 
     public changeAvatar(file:File) {
-        this.options.file = file;//TODO разобраться
-        return this.put('/profile/avatar', file);
+        return this.put('/profile/avatar', {data: {avatar: file}});
     }
 
     public changePassword(passwordData: PasswordData) {

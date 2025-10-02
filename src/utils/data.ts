@@ -208,3 +208,8 @@ export function getFieldParams(arrFieldName: string[]): InputParams[] {
     });
     return arParams;
 }
+
+export const URL = {
+    API: 'https://ya-praktikum.tech/api/v2',
+    WS: 'wss://ya-praktikum.tech/ws/chats'
+};

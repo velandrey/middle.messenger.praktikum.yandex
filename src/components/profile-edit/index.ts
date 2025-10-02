@@ -13,12 +13,11 @@ export class ProfileEdit extends Block {
             'first_name',
             'second_name',
             'nic_name',
-            'login',
         ];
         const fieldsRColum: string[] = [
+            'login',
             'email',
             'phone',
-            'avatar',
         ];
         const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new FormField({...item}));
         const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new FormField({...item}));

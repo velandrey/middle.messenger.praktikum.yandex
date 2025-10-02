@@ -1,3 +1,5 @@
+import {URL} from "@/utils/data";
+
 export enum HttpStatus {
     Ok = 200,
     Created = 201,
@@ -57,12 +59,11 @@ function queryStringify(data: Record<string, unknown>): string {
 }
 
 export class HTTPTransport {
-    private readonly BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
     // Фабричный метод для создания HTTP методов
     private createMethod(method: HTTPMethod) {
         return (url: string, options: Omit<HttpRequestOptions, 'method'> = {}): Promise<XMLHttpRequest> => {
-            url = `${this.BASE_URL}${url}`;
+            url = `${URL.API}${url}`;
             return this.request(url, { ...options, method });
         };
     }
@@ -116,7 +117,6 @@ export class HTTPTransport {
 
                 xhr.onerror = (): void => {
                     if (attemptNumber < retries) {
-                        // console.log(`Ошибка соединения. Попытка ${attemptNumber}`);
                         makeRequest();
                     } else {
                         let result = `Ошибка соединения с ${url}`;

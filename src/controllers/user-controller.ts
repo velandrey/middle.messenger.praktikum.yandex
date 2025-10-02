@@ -21,14 +21,16 @@ class UserController {
         try {
             store.set('loading', true);
             const response = await userApi.changeAvatar(file);
-            if (response === 'OK') {
+            if ('id' in response) {
                 store.set('user', response);
+                return true;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
 
     public async changePassword(passwordData: PasswordData) {
