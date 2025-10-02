@@ -4,27 +4,23 @@ import {getFieldParams} from "@/utils/data";
 import {InputParams, State} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
 import {hoc} from "@/utils/hoc";
-import userApi from "@/api/user-api";
+import userController from "@/controllers/user-controller";
 
 
 export class ProfileEdit extends Block {
     constructor({...props}: object) {
-        const fieldsLColum: string[] = [
+        const fieldsColum: string[] = [
             'first_name',
             'second_name',
             'nic_name',
-        ];
-        const fieldsRColum: string[] = [
             'login',
             'email',
             'phone',
         ];
-        const inputsLeft: Input[] = getFieldParams(fieldsLColum).map((item: InputParams) => new FormField({...item}));
-        const inputsRight: Input[] = getFieldParams(fieldsRColum).map((item: InputParams) => new FormField({...item}));
+        const inputs: Input[] = getFieldParams(fieldsColum).map((item: InputParams) => new FormField({...item}));
         super({
             ...props,
-            InputsLeft: inputsLeft,
-            InputsRight: inputsRight,
+            Inputs: inputs,
             ButtonSubmit: new Button({
                 type: 'submit',
                 id: 'button_save_profile',
@@ -36,7 +32,7 @@ export class ProfileEdit extends Block {
         });
     }
 
-    submitCallback(e: Event) {
+    async submitCallback(e: Event) {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
@@ -47,7 +43,7 @@ export class ProfileEdit extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                userApi.changeProfile({
+                const result = await userController.changeProfile({
                     first_name: arResult.first_name,
                     second_name: arResult.second_name,
                     display_name: arResult.display_name,
@@ -55,6 +51,10 @@ export class ProfileEdit extends Block {
                     email: arResult.email,
                     phone: arResult.phone
                 });
+                const modal = document.getElementById('modal_change_profile');
+                if(result && modal){
+                    modal.classList.remove('active');
+                }
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }
@@ -63,7 +63,7 @@ export class ProfileEdit extends Block {
 
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        console.log(oldProps, newProps);
+        console.log(this, oldProps, newProps);
 
 
         // if(newProps.user && typeof newProps.user === 'object') {
@@ -82,12 +82,7 @@ export class ProfileEdit extends Block {
         return `
             <form action="/" method="post">
                 <div class="profile_edit_row">
-                    <div class="profile_edit_colum">
-                        {{{InputsLeft}}}
-                    </div>
-                    <div class="profile_edit_colum">
-                        {{{InputsRight}}}
-                    </div>
+                    {{{Inputs}}}
                 </div>
                 <div class="profile_edit_save">
                     {{{ButtonSubmit}}}

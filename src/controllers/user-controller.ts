@@ -10,12 +10,14 @@ class UserController {
             const response = await userApi.changeProfile(profileData);
             if (response === 'OK') {
                 store.set('user', response);
+                return true;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
     public async changeAvatar(file:File) {
         try {
