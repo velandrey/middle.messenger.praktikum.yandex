@@ -1,4 +1,4 @@
-import {PasswordData, ProfileData} from "@/utils/types";
+import {PasswordData, ProfileData, UserInfo} from "@/utils/types";
 import store from "@/utils/store";
 import userApi from "@/api/user-api";
 
@@ -50,29 +50,19 @@ class UserController {
         return false;
     }
 
-    public async searchUserByLogin(login: string) {
+    public async searchUsersByLogin(login: string) {
         try {
             store.set('loading', true);
-            const response = await userApi.searchUserByLogin(login);
-            if (response === 'OK') {
-                // [
-                //     {
-                //         "id": 123,
-                //         "first_name": "Petya",
-                //         "second_name": "Pupkin",
-                //         "display_name": "Petya Pupkin",
-                //         "phone": "+79001001100",
-                //         "login": "userLogin",
-                //         "avatar": "/path/to/avatar.jpg",
-                //         "email": "string@ya.ru"
-                //     }
-                // ]
+            const response:UserInfo[] = await userApi.searchUserByLogin(login);
+            if (response.length > 0) {
+                return response;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return [];
     }
 }
 

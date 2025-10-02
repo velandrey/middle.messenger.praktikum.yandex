@@ -24,7 +24,7 @@ class UserApi extends BaseAPI {
         this.options.data = {
             login: login
         };
-        return this.put('/search', this.options);
+        return this.post('/search', this.options);
     }
 }
 

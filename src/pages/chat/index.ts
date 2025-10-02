@@ -1,6 +1,6 @@
 import './style.pcss';
 import Block from '@/utils/block';
-import {ChatListItem, ChatMessageRow, ChatMessageSender} from "@/components";
+import {ChatListItem, ChatMessageRow, ChatMessageSender, ChatSearch} from "@/components";
 import {chatList} from "@/utils/data";
 import {Discussant, Message} from "@/utils/types";
 import {Routes} from "@/utils/router/routes";
@@ -39,6 +39,7 @@ export class Chat extends Block {
             ...props,
             name: name,
             image: image,
+            Search: new ChatSearch({}),
             ChatListBlocks: list.map((item) => {
                 return new ChatListItem(item);
             }),
@@ -84,9 +85,7 @@ export class Chat extends Block {
                                 <div class="chat_list_head_profile">
                                     <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
-                                <form class="chat_list_head_search" action="/" method="post">
-                                    <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input" required/>
-                                </form>
+                                {{{Search}}}
                             </div>
                             <div class="chat_list_body">
                                 {{{ChatListBlocks}}}

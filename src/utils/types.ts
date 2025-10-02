@@ -71,6 +71,7 @@ export type PasswordData = {
 export type State = {
     loading: boolean;
     user: UserInfo | null;
+    chat_partner_user_id: number | null;
     messages: [];
 };
 
