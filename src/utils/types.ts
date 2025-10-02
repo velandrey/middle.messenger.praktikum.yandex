@@ -71,6 +71,7 @@ export type PasswordData = {
 export type State = {
     loading: boolean;
     user: UserInfo | null;
+    messages: [];
 };
 
 export type PlainObject<T = unknown> = {

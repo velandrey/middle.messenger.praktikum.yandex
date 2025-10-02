@@ -9,6 +9,7 @@ class Store extends EventBus {
     private _state: State = {
         loading: false,
         user: null,
+        messages: [],
     };
 
     public getState(): State {
