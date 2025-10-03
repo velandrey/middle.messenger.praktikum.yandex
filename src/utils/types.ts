@@ -1,29 +1,5 @@
-export type PageLinkProps = {
-    title: string,
-    link: string,
-    class?: string;
-}
-export type PageContext = {
-    title: string,
-    pages: PageLinkProps[],
-}
-export type Message = {
-    direction: 'to' | 'from',
-    type: 'text' | 'image',
-    time: string,
-    status?: 'read' | 'unread',
-    content: string,
-}
-export type Discussant = {
-    id: number,
-    name: string,
-    date: string,
-    count: number,
-    text: string,
-    image: string,
-    active?: 'active' | '',
-    messages: Message[],
-}
+import MessageController from "@/controllers/message-controller";
+
 export type InputParams = {
     name: string,
     type: 'text' | 'password' | 'email' | 'file',
@@ -67,12 +43,40 @@ export type PasswordData = {
     oldPassword: string,
     newPassword: string,
 }
+export type Chat = {
+    id: number,
+    title: string,
+    avatar?: string,
+    unread_count: number,
+    created_by?: number,
+    last_message: {
+        user?: UserInfo,
+        time?: string,
+        content?: string
+    }
+};
+
+export type Message = {
+    id: number
+    user_id: number
+    chat_id: number
+    content: string
+    file: unknown
+    is_read: boolean
+    type: 'message' | string
+    time: string
+}
 
 export type State = {
     loading: boolean;
     user: UserInfo | null;
-    chat_partner_user_id: number | null;
-    messages: [];
+    msgSocket: MessageController | null;
+    chatList: Chat[];
+    search: string;
+    searchUsers: UserInfo[];
+    chatPartnerUserId: number | null;
+    chatIdActive: number | null;
+    messages: Message[];
 };
 
 export type PlainObject<T = unknown> = {

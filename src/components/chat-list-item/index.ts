@@ -1,9 +1,26 @@
 import './style.pcss';
 import Block from '@/utils/block';
+import store from "@/utils/store";
 
 export class ChatListItem extends Block {
     constructor({ ...props }:object) {
-        super({...props});
+        super({
+            ...props,
+            events: {
+                click: (e:Event)=>{
+                    if (e?.target instanceof HTMLElement) {
+                        const chatItem = e.target.closest('.chat_list_item');
+                        if (chatItem instanceof HTMLElement && chatItem.dataset.chatid) {
+                            const chatId = parseInt(chatItem.dataset.chatid);
+                            if (!isNaN(chatId) && chatId > 0) {
+                                store.set('chatIdActive', chatId);
+                                store.set('messages', []);
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     render() {

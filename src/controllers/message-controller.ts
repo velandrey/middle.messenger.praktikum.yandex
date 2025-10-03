@@ -8,22 +8,32 @@ import {URL} from "@/utils/data";
 // вы не «отвалились» от чата. Для переподключения сделайте новый запрос на connect.
 
 
-class MessageController {
+export default class MessageController {
     private socket: WebSocket | null = null;
+    private userId: number;
+    private chatId: number;
+    private intervalObjectForPing: number | null = null;
+    public constructor(userId: number, chatId: number) {
+        this.userId = userId;
+        this.chatId = chatId;
+    }
 
-    public async init(userId: number, chatId: number) {
+
+    public async init() {
         try {
-            await this.connect(userId, chatId);
+            await this.connect();
             this.addListeners();
         } catch (error) {
             console.log(error);
         }
     }
 
-    private async connect(userId: number, chatId: number) {
+    private async connect() {
         try {
-            const tokenId = await ChatController.getToken(chatId);
-            this.socket = new WebSocket(`${URL.WS}/${userId}/${chatId}/${tokenId}`);
+            const tokenId = await ChatController.getToken(this.chatId);
+            if(tokenId){
+                this.socket = new WebSocket(`${URL.WS}/${this.userId}/${this.chatId}/${tokenId}`);
+            }
         } catch (error) {
             console.log(error);
             throw Error('Невозможно подключиться');
@@ -33,24 +43,39 @@ class MessageController {
     private addListeners() {
         if (this.socket) {
             this.socket.addEventListener('open', () => {
-                console.log('Соединение установлено');
+                // console.log('Соединение установлено');
+                store.set('messages',[]);
+                this.getOldMessage(0);
+                this.intervalObjectForPing = setInterval(() => {
+                    this.sendPing();
+                }, 15000);
             });
 
             this.socket.addEventListener('close', event => {
+                if (this.intervalObjectForPing) {
+                    clearInterval(this.intervalObjectForPing);
+                    this.intervalObjectForPing = null;
+                }
                 if (event.wasClean) {
                     console.log('Соединение закрыто чисто');
                 } else {
                     console.log('Обрыв соединения');
                 }
-
-                console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+                // console.log(`Код: ${event.code} | Причина: ${event.reason}`);
             });
 
             this.socket.addEventListener('message', event => {
-                console.log('Получены данные', event.data);
                 try {
                     const data = JSON.parse(event.data);
-                    store.set('messages', data);
+                    // console.log('Получены данные', data);
+                    if(Array.isArray(data) && data.length > 0){
+                        store.set('messages', data.reverse());
+                    } else if (data.type === 'message') {
+                        store.set('messages', [...store.getState().messages, data]);
+                    }
+                    // else if (data.type === 'pong'){
+                    //     console.log('Pong');
+                    // }
                 } catch (error) {
                     console.log('Ошибка при получении данных', error);
                 }
@@ -82,14 +107,19 @@ class MessageController {
         this.send('get old', offset.toString());
     }
 
+    private sendPing() {
+        this.send('ping', '');
+    }
+
     public close() {
         if (this.socket) {
             this.socket.close();
             this.socket = null;
+            this.socket = null;
+        }
+        if (this.intervalObjectForPing) {
+            clearInterval(this.intervalObjectForPing);
+            this.intervalObjectForPing = null;
         }
     }
-
-
 }
-
-export default new MessageController();

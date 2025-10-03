@@ -53,10 +53,15 @@ class UserController {
     public async searchUsersByLogin(login: string) {
         try {
             store.set('loading', true);
-            const response:UserInfo[] = await userApi.searchUserByLogin(login);
-            if (response.length > 0) {
-                return response;
+            let response:UserInfo[] = [];
+            if(login.length > 0){
+                response = await userApi.searchUserByLogin(login);
+                store.set('searchUsers',response);
+            } else {
+                store.set('searchUsers',response);
             }
+            store.set('search',login);
+            return response;
         } catch (error) {
             console.log(error);
         } finally {

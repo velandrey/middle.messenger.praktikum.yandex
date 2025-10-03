@@ -1,7 +1,7 @@
 import './style.pcss';
 import Block, {TypeProps} from '@/utils/block';
 import {Logout, profileEdit, profileRow} from "@/components";
-import {getLabelByName, URL} from "@/utils/data";
+import {defaultPath, getLabelByName, URL} from "@/utils/data";
 import {ProfileChangePassword} from "@/components/profile-change-password";
 import {hoc} from "@/utils/hoc";
 import {State, UserInfo} from "@/utils/types";
@@ -20,7 +20,7 @@ const fieldsProfileRows = [
     'phone'
 ] as const;
 
-const defaultAvatarLink = 'background-image: url("/images/user.webp")';
+const defaultAvatarLink = `background-image: url("${defaultPath.avatar}")`;
 
 function profileRowConstructor(){
     const arProfilesBlocks = [];

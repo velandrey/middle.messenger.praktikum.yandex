@@ -1,11 +1,3 @@
-// export function debounce(func, ms) {
-//     let timeout;
-//     return function() {
-//         clearTimeout(timeout);
-//         timeout = setTimeout(() => func.apply(this, arguments), ms);
-//     };
-// }
-
 export default function debounce<T extends unknown[], U>(
     callback: (...args: T) => PromiseLike<U> | U,
     wait: number

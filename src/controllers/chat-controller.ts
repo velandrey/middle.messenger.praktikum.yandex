@@ -7,28 +7,10 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.getChats();
-            if (response === 'OK') {
-                // [
-                //     {
-                //         "id": 123,
-                //         "title": "my-chat",
-                //         "avatar": "/123/avatar1.jpg",
-                //         "unread_count": 15,
-                //         "created_by": 12345,
-                //         "last_message": {
-                //             "user": {
-                //                 "first_name": "Petya",
-                //                 "second_name": "Pupkin",
-                //                 "avatar": "/path/to/avatar.jpg",
-                //                 "email": "my@email.com",
-                //                 "login": "userLogin",
-                //                 "phone": "8(911)-222-33-22"
-                //             },
-                //             "time": "2020-01-02T14:22:22.000Z",
-                //             "content": "this is message content"
-                //         }
-                //     }
-                // ]
+            if (response.length > 0) {
+                store.set('chatList', [...response]);
+                store.set('chatIdActive', response[0].id);
+                return response;
             }
         } catch (error) {
             console.log(error);
@@ -40,10 +22,9 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.createChat(title);
-            if (response === 'OK') {
-                // {
-                //     "id": 0
-                // }
+            console.log('createChat',response);
+            if ('id' in response) {
+                return response.id;
             }
         } catch (error) {
             console.log(error);
@@ -87,18 +68,21 @@ class ChatController {
             store.set('loading', false);
         }
     }
+
     public async addUserToChat(userId:number,chatId:number) {
         try {
             store.set('loading', true);
             const response = await chatApi.addUserToChat(userId,chatId);
+            console.log('addUserToChat',response);
             if (response === 'OK') {
-
+                return true;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
     public async removeUserFromChat(userId:number,chatId:number) {
         try {
@@ -117,18 +101,15 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.getToken(chatId);
-            if (response === 'OK') {
-                // [
-                //     {
-                //         "token": "string"
-                //     }
-                // ]
+            if (response.token) {
+                return response.token;
             }
         } catch (error) {
             console.log(error);
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
 }
 

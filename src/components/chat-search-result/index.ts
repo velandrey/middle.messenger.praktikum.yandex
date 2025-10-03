@@ -1,6 +1,7 @@
 import './style.pcss';
 import Block from '@/utils/block';
 import store from "@/utils/store";
+import chatController from "@/controllers/chat-controller";
 
 export type StrictComponentProps = {
     id: number;
@@ -10,28 +11,26 @@ export type StrictComponentProps = {
 }
 export class ChatSearchResult extends Block {
     constructor({ ...props }:StrictComponentProps) {
-        const { id, first_name, second_name, clear } = props;
+        const { id, first_name, second_name } = props;
         const finalParams = {
             id,
             first_name,
             second_name,
-            clear,
             events: {
-                click: () => {
-                    store.set('chat_partner_user_id', id);
-                    clear();
+                click: async () => {
+                    const newChatId = await chatController.createChat(`${first_name} ${second_name}`);
+                    const addUserToChat = await chatController.addUserToChat(id,newChatId);
+                    if(addUserToChat){
+                        store.set('search', '');
+                        store.set('searchUsers', []);
+                        store.set('chatPartnerUserId', id);
+                        store.set('chatIdActive', newChatId);
+                        chatController.getChats();
+                    }
                 }
             }
         };
-        super({
-            ...finalParams,
-            events: {
-                click: function (){
-                    store.set('chat_partner_user_id', finalParams.id);
-                    finalParams.clear();
-                }
-            }
-        });
+        super(finalParams);
     }
 
     render() {

@@ -61,6 +61,11 @@
 .chat_list_item_text_preview {
     font-size: 14px;
     margin-top: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .chat_list_item_info_date {

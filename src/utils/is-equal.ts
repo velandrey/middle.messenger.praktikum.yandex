@@ -15,7 +15,7 @@ function isArrayOrObject(value: unknown): value is unknown[] | PlainObject {
     return isPlainObject(value) || isArray(value);
 }
 
-function isEqual(lhs: PlainObject | unknown[], rhs: PlainObject | unknown[]): boolean {
+export default function isEqual(lhs: PlainObject | unknown[], rhs: PlainObject | unknown[]): boolean {
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
         return false;
     }
@@ -37,5 +37,3 @@ function isEqual(lhs: PlainObject | unknown[], rhs: PlainObject | unknown[]): bo
 
     return true;
 }
-
-export default isEqual;

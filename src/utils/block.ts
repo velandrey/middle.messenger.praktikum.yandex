@@ -194,13 +194,13 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
                 return undefined;
             },
             set: (target: TypeProps, prop: string | symbol, newValue: unknown): boolean => {
-                if (prop in target) {
-                    const oldTarget: TypeProps = { ...target };
-                    (target as Record<string | symbol, unknown>)[prop] = newValue;
-                    this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
-                    return true;
-                }
-                return false;
+                // if (prop in target) {
+                const oldTarget: TypeProps = { ...target };
+                (target as Record<string | symbol, unknown>)[prop] = newValue;
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                return true;
+                // }
+                // return false;
             },
             deleteProperty: (): never => {
                 throw new Error('Нет доступа');
@@ -212,7 +212,18 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
         if (!nextProps) {
             return;
         }
-        Object.assign(this.props, nextProps);
+        const { props, children, lists } = this._getChildrenPropsAndProps(nextProps);
+        Object.entries(children).forEach(([key, child]) => {
+            if (this.children[key]) {
+                this.children[key].setProps(child.props);
+            } else {
+                this.children[key] = child;
+            }
+        });
+        Object.entries(lists).forEach(([key, list]) => {
+            this.lists[key] = list;
+        });
+        Object.assign(this.props, props);
     }
 
     public show(): void {

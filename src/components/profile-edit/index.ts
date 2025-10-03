@@ -63,18 +63,6 @@ export class ProfileEdit extends Block {
 
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        console.log(this, oldProps, newProps);
-
-
-        // if(newProps.user && typeof newProps.user === 'object') {
-        //     newProps.UserName = getFullName(newProps.user as UserInfo);
-        //     if('avatar' in newProps.user && newProps.user.avatar){
-        //         newProps.Avatar = newProps.user.avatar;
-        //     } else {
-        //         newProps.Avatar = defaultAvatarLink;
-        //     }
-        // }
-
         return super.componentDidUpdate(oldProps, newProps);
     }
 
