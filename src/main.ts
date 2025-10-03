@@ -1,6 +1,6 @@
 import App from "./App.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const app = new App();
-    app.load();
+    await app.load();
 });

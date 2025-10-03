@@ -1,114 +1,87 @@
 import './style.pcss';
-import Block from '@/utils/block';
-import {ChatListItem, ChatMessageRow, ChatMessageSender, Nav} from "@/components";
-import {chatList} from "@/utils/data";
-import {Discussant, Message} from "@/utils/types";
+import Block, {TypeProps} from '@/utils/block';
+import {ChatListItem, chatSearch} from "@/components";
+import {State} from "@/utils/types";
+import {Routes} from "@/utils/router/routes";
+import chatController from "@/controllers/chat-controller";
+import store from "@/utils/store";
+import {hoc} from "@/utils/hoc";
+import {chatBox} from "@/components/chat-box";
+import {defaultPath} from "@/utils/data";
 
-const getChatList = (activeChatId: number = 1): {
-    list: Discussant[];
-    messages: Message[] | []
-    name: string
-    image: string
-} => {
-    let messages: Message[] | [] = [];
-    let name: string = '';
-    let image: string = '';
 
-    const list: Discussant[] = chatList.map((item: Discussant) => {
-        const chatParams = {...item};
-        chatParams.active = '';
-        if (item.id === activeChatId) {
-            chatParams.active = 'active';
-            messages = item.messages;
-            name = item.name;
-            image = item.image;
+function createChatListBlock() {
+    const chatIdActive = store.getState().chatIdActive;
+    return store.getState().chatList.map((item) => {
+        const text = (item.last_message && 'content' in item.last_message) ? item.last_message.content : '';
+        let time = '';
+        if (item.last_message && 'time' in item.last_message && typeof (item.last_message.time) === 'string') {
+            const date = new Date(item.last_message.time);
+            const h = (date.getHours() < 10 ? '0' : '') + date.getHours();
+            const m = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+            time = `${h}:${m}`;
         }
-        return chatParams;
+        return new ChatListItem({
+            id: item.id,
+            active: (chatIdActive == item.id) ? 'active' : '',
+            image: item.avatar || defaultPath.avatar,
+            name: item.title,
+            text: text || '',
+            date: time,
+            count: item.unread_count,
+        });
     });
-    return {list, messages, name, image};
-};
+}
 
 export class Chat extends Block {
     constructor({...props}) {
-        if (!props.chatId) {
-            props.chatId = 1;
-        }
-        const {list, messages, name, image} = getChatList(props.chatId);
+        chatController.getChats();
         super({
             ...props,
-            Navigation: new Nav({...props}),
-            name: name,
-            image: image,
-            ChatListBlocks: list.map((item) => {
-                return new ChatListItem(item);
-            }),
-            ChatMessages: messages.map((item) => {
-                return new ChatMessageRow(item);
-            }),
-            ChatMessageSender: new ChatMessageSender({
-                chatId: props.chatId
-            }),
-            events: {
-                click: (e: Event) => {
-                    if (e.target instanceof HTMLElement) {
-                        const chatListItem = e.target.closest('.chat_list_item');
-                        if (chatListItem instanceof HTMLElement && chatListItem.dataset.chatid) {
-                            const chatId: number = parseInt(chatListItem.dataset.chatid);
-                            this.props.chatId = chatId;
-                            const {list, messages, name, image} = getChatList(chatId);
-                            this.props.name = name;
-                            this.props.image = image;
-                            this.lists.ChatListBlocks = list.map((item) => {
-                                return new ChatListItem(item);
-                            });
-                            this.lists.ChatMessages = messages.map((item) => {
-                                return new ChatMessageRow(item);
-                            });
-                            this.children.ChatMessageSender = new ChatMessageSender({
-                                chatId: props.chatId
-                            });
-                        }
-                    }
-                }
-            }
+            Search: new chatSearch({}),
+            ChatListBlocks: createChatListBlock(),
+            ChatBox: new chatBox({}),
         });
+    }
+
+    componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
+        if ('chatList' in newProps) {
+            delete newProps.chatList;
+            const newChatListBlocks = {ChatListBlocks: createChatListBlock()};
+            this.setProps(newChatListBlocks);
+        }
+
+        return super.componentDidUpdate(oldProps, newProps);
     }
 
     render() {
         return `
             <div class="wrapper">
-                {{{Navigation}}}
                 <main class="app_box">
                     <div class="chat">
                         <div class="chat_list">
                             <div class="chat_list_head">
                                 <div class="chat_list_head_profile">
-                                    <a href="#" class="chat_list_head_profile_link nav_list_item" data-link="Profile">Профиль</a>
+                                    <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
-                                <form class="chat_list_head_search" action="/" method="post">
-                                    <input type="text" name="search" id="search" placeholder="Поиск" class="chat_list_head_search_input" required/>
-                                </form>
+                                {{{Search}}}
                             </div>
                             <div class="chat_list_body">
                                 {{{ChatListBlocks}}}
                             </div>
                         </div>
-                        <div class="chat_box">
-                            <div class="chat_box_head">
-                                <div class="chat_box_head_partner">
-                                    <img src="{{image}}" alt="{{name}}" class="chat_box_head_partner_avatar">
-                                    {{name}}
-                                </div>
-                <!--                <div class="chat_box_head_menu">⋮</div>-->
-                            </div>
-                            <div class="chat_box_feed">
-                                {{{ChatMessages}}}
-                            </div>
-                            {{{ChatMessageSender}}}
-                        </div>
+                        {{{ChatBox}}}
                     </div>
                 </main>
             </div>
         `;
     }
 }
+
+export const chatPage = hoc(
+    state =>
+        ({
+            chatIdActive: state.chatIdActive,
+            chatList: state.chatList,
+        }) as State
+)(Chat);

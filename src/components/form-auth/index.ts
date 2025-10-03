@@ -2,15 +2,16 @@ import Block from '@/utils/block';
 import {Button, FormField} from "@/components";
 import {getFieldParams} from "@/utils/data";
 import {FormValidator} from "@/utils/validator";
-import {InputParams} from "@/utils/types";
+import {InputParams, LoginData} from "@/utils/types";
+import authController from "@/controllers/auth-controller";
 
 export class FormAuth extends Block {
     constructor(props: object) {
-        const fields:string[] = [
+        const fields: string[] = [
             'login',
             'password',
         ];
-        const formFields:FormField[] = getFieldParams(fields).map((item:InputParams) => {
+        const formFields: FormField[] = getFieldParams(fields).map((item: InputParams) => {
             return new FormField({
                 ...item
             });
@@ -33,14 +34,17 @@ export class FormAuth extends Block {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
-            const arResult: Record<string, string> = {};
+            const authData: LoginData = {
+                login: '',
+                password: ''
+            };
             formData.forEach((value: FormDataEntryValue, nameField: string) => {
-                arResult[nameField] = value.toString();
+                authData[nameField as keyof LoginData] = value.toString();
             });
             const validator = new FormValidator();
-            const validationResult = validator.validateForm(arResult);
+            const validationResult = validator.validateForm(authData);
             if (validationResult.isValid) {
-                console.log('Корректные данные для авторизации: ', arResult);
+                authController.login(authData);
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

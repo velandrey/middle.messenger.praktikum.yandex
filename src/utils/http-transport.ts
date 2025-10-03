@@ -1,3 +1,5 @@
+import {URL} from "@/utils/data";
+
 export enum HttpStatus {
     Ok = 200,
     Created = 201,
@@ -20,8 +22,7 @@ const METHODS = {
 
 type Method = keyof typeof METHODS;
 type HTTPMethod = (typeof METHODS)[Method];
-
-type Options = {
+export type HttpRequestOptions = {
     data?: Record<string, unknown>;
     headers?: Record<string, string>;
     timeout?: number;
@@ -58,10 +59,12 @@ function queryStringify(data: Record<string, unknown>): string {
 }
 
 export class HTTPTransport {
+
     // Фабричный метод для создания HTTP методов
     private createMethod(method: HTTPMethod) {
-        return (url: string, options: Omit<Options, 'method'> = {}): Promise<XMLHttpRequest> => {
-            return this.request(url, { ...options, method });
+        return (url: string, options: Omit<HttpRequestOptions, 'method'> = {}): Promise<XMLHttpRequest> => {
+            url = `${URL.API}${url}`;
+            return this.request(url, {...options, method});
         };
     }
 
@@ -71,7 +74,7 @@ export class HTTPTransport {
     public put = this.createMethod(METHODS.PUT);
     public delete = this.createMethod(METHODS.DELETE);
 
-    private request = (url: string, options: Options = {}): Promise<XMLHttpRequest> => {
+    private request = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => {
         const {
             method = METHODS.GET,
             data = {},
@@ -85,17 +88,15 @@ export class HTTPTransport {
         if (method === METHODS.GET && data && Object.keys(data).length > 0) {
             requestUrl += queryStringify(data);
         }
-
         return new Promise((resolve, reject) => {
             let attemptNumber = 0;
 
             const makeRequest = (): void => {
                 attemptNumber++;
-
                 const xhr = new XMLHttpRequest();
                 xhr.open(method, requestUrl, true);
                 xhr.timeout = timeout;
-
+                xhr.withCredentials = true;
                 // Устанавливаем заголовки
                 Object.entries(headers).forEach(([key, value]) => {
                     xhr.setRequestHeader(key, value);
@@ -105,25 +106,27 @@ export class HTTPTransport {
                     if (xhr.status >= HttpStatus.Ok && xhr.status < HttpStatus.MultipleChoices) {
                         resolve(xhr);
                     } else if (attemptNumber < retries) {
-                        console.log(`Попытка ${attemptNumber} не удалась. Статус: ${xhr.status}`);
                         makeRequest();
                     } else {
-                        reject(new Error(`Запрос к ${url} не удался после ${retries} попыток. Статус: ${xhr.status}`));
+                        let result = `Запрос к ${url} не удался`;
+                        result += (retries) ? ` после ${retries} попыток` : '';
+                        result += `. Статус: ${xhr.status}`;
+                        reject(new Error(result));
                     }
                 };
 
                 xhr.onerror = (): void => {
                     if (attemptNumber < retries) {
-                        console.log(`Ошибка соединения. Попытка ${attemptNumber}`);
                         makeRequest();
                     } else {
-                        reject(new Error(`Ошибка соединения с ${url} после ${retries} попыток`));
+                        let result = `Ошибка соединения с ${url}`;
+                        result += (retries) ? ` после ${retries} попыток` : '';
+                        reject(new Error(result));
                     }
                 };
 
                 xhr.ontimeout = (): void => {
                     if (attemptNumber < retries) {
-                        console.log(`Таймаут. Попытка ${attemptNumber}`);
                         makeRequest();
                     } else {
                         reject(new Error(`Таймаут запроса к ${url} после ${retries} попыток`));
@@ -164,27 +167,27 @@ export class HTTPTransport {
  * @param url
  * @param options
  */
-export function fetchWithRetry(url: string, options: Options): Promise<XMLHttpRequest> {
+export function fetchWithRetry(url: string, options: HttpRequestOptions): Promise<XMLHttpRequest> {
     return new HTTPTransport().get(url, options);
 }
 
 /**
  * Пример использования
  *
-fetchWithRetry('https://fakeapi.extendsclass.com/books/23456', {
-    data: {limit: 3},
-    retries: 3,
-    timeout: 1000
-})
-    .then(response => {
-        try {
-            const json = JSON.parse(response.responseText);
-            console.log('Результат:', json);
-        } catch (e) {
-            console.error('Ошибка парсинга JSON:', e);
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка:', error);
-    });
+ fetchWithRetry('https://fakeapi.extendsclass.com/books/23456', {
+ data: {limit: 3},
+ retries: 3,
+ timeout: 1000
+ })
+ .then(response => {
+ try {
+ const json = JSON.parse(response.responseText);
+ console.log('Результат:', json);
+ } catch (e) {
+ console.error('Ошибка парсинга JSON:', e);
+ }
+ })
+ .catch(error => {
+ console.error('Ошибка:', error);
+ });
  */
