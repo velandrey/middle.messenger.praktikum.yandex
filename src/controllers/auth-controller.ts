@@ -10,18 +10,20 @@ class AuthController {
         try {
             store.set('loading', true);
             const user = await authApi.getUser();
-            const userInfo: UserInfo = {
-                id: user.id,
-                avatar: user.avatar,
-                display_name: user.display_name,
-                email: user.email,
-                first_name: user.first_name,
-                second_name: user.second_name,
-                login: user.login,
-                phone: user.phone,
-            };
-            store.set('user', userInfo);
-            return true;
+            if(user.id){
+                const userInfo: UserInfo = {
+                    id: user.id,
+                    avatar: user.avatar,
+                    display_name: user.display_name,
+                    email: user.email,
+                    first_name: user.first_name,
+                    second_name: user.second_name,
+                    login: user.login,
+                    phone: user.phone,
+                };
+                store.set('user', userInfo);
+                return true;
+            }
         } catch (error) {
             console.log(error);
             store.set('user', null);
@@ -29,6 +31,7 @@ class AuthController {
         } finally {
             store.set('loading', false);
         }
+        return false;
     }
 
     public async login(loginRequest: LoginData) {

@@ -37,7 +37,7 @@ class RouteManager {
                     this.go(Routes.CHAT);
                 }
             } else {
-                if (pathname === Routes.CHAT) {
+                if (pathname === Routes.CHAT || pathname === Routes.PROFILE) {
                     this.go(Routes.ROOT);
                 }
             }
