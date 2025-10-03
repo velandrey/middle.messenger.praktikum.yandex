@@ -8,7 +8,7 @@ class UserController {
         try {
             store.set('loading', true);
             const response = await userApi.changeProfile(profileData);
-            if (response === 'OK') {
+            if (response.id) {
                 store.set('user', response);
                 return true;
             }

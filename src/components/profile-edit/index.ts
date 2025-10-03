@@ -1,26 +1,40 @@
 import Block, {TypeProps} from '@/utils/block';
-import {Button, FormField, Input} from "@/components";
+import {Button, FormField} from "@/components";
 import {getFieldParams} from "@/utils/data";
-import {InputParams, State} from "@/utils/types";
+import {InputParams, State, UserInfo} from "@/utils/types";
 import {FormValidator} from "@/utils/validator";
 import {hoc} from "@/utils/hoc";
 import userController from "@/controllers/user-controller";
+import store from "@/utils/store";
 
+function constructInputs(){
+    const fieldsColum: string[] = [
+        'first_name',
+        'second_name',
+        'display_name',
+        'login',
+        'email',
+        'phone',
+    ];
+    const user = store.getState().user;
+    return getFieldParams(fieldsColum).map((item: InputParams) => {
+        let value = '';
+        const key:string = item.name;
+        if(user && key in user){
+            value = user[key as keyof UserInfo] as string;
+        }
+        return new FormField({
+            ...item,
+            value: value,
+        });
+    });
+}
 
 export class ProfileEdit extends Block {
     constructor({...props}: object) {
-        const fieldsColum: string[] = [
-            'first_name',
-            'second_name',
-            'nic_name',
-            'login',
-            'email',
-            'phone',
-        ];
-        const inputs: Input[] = getFieldParams(fieldsColum).map((item: InputParams) => new FormField({...item}));
         super({
             ...props,
-            Inputs: inputs,
+            Inputs: constructInputs(),
             ButtonSubmit: new Button({
                 type: 'submit',
                 id: 'button_save_profile',
@@ -63,6 +77,9 @@ export class ProfileEdit extends Block {
 
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
+        if(newProps.user){
+            this.setProps({Inputs: constructInputs()});
+        }
         return super.componentDidUpdate(oldProps, newProps);
     }
 

@@ -14,13 +14,18 @@ function createChatListBlock() {
     const chatIdActive = store.getState().chatIdActive;
     return store.getState().chatList.map((item) => {
         const text = (item.last_message && 'content' in item.last_message) ? item.last_message.content : '';
+        let time = '';
+        if (item.created_by) {
+            const date = new Date(item.created_by);
+            time = `${date.getHours()}:${date.getMinutes()}`;
+        }
         return new ChatListItem({
             id: item.id,
             active: (chatIdActive == item.id) ? 'active' : '',
             image: item.avatar || defaultPath.avatar,
             name: item.title,
             text: text || '',
-            date: item.created_by,
+            date: time,
             count: item.unread_count,
         });
     });
@@ -33,12 +38,12 @@ export class Chat extends Block {
             ...props,
             Search: new chatSearch({}),
             ChatListBlocks: createChatListBlock(),
-            ChatBox: new chatBox(),
+            ChatBox: new chatBox({}),
         });
     }
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        if('chatList' in newProps){
+        if ('chatList' in newProps) {
             delete newProps.chatList;
             const newChatListBlocks = {ChatListBlocks: createChatListBlock()};
             this.setProps(newChatListBlocks);

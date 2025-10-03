@@ -69,7 +69,7 @@ export class FormValidator {
         if (fieldName === 'oldPassword' || fieldName === 'newPassword'){
             fieldName = 'password';
         }
-        if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'nic_name'){
+        if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'display_name'){
             fieldName = 'name';
         }
         const rule:FieldValidationRule = this.validationRules[fieldName];

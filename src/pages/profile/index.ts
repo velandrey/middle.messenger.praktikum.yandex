@@ -15,6 +15,7 @@ function getFullName(user: UserInfo):string{
 const fieldsProfileRows = [
     'first_name',
     'second_name',
+    'display_name',
     'email',
     'login',
     'phone'
@@ -108,7 +109,6 @@ export class Profile extends Block {
                                 <h2 class="profile_name">{{UserName}}</h2>
                             </div>
                             <div class="profile_info">
-                                {{{Loading}}}
                                 {{{ProfileRows}}}
                             </div>
                             <div class="profile_info">

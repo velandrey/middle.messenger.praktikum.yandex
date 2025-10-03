@@ -60,7 +60,7 @@ export const fieldsParams: InputParams[] = [
         error: '',
     },
     {
-        name: 'nic_name',
+        name: 'display_name',
         label: 'Имя в чате',
         type: 'text',
         required: 'required',
@@ -79,7 +79,7 @@ export const inputLabels: Record<string, string> = {
     second_name: 'Фамилия',
     email: 'Почта',
     login: 'Логин',
-    nic_name: 'Имя в чате',
+    display_name: 'Имя в чате',
     phone: 'Телефон',
 };
 
