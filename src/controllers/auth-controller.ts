@@ -3,6 +3,7 @@ import {LoginData, RegistrationData, UserInfo} from "@/utils/types";
 import store from "@/utils/store";
 import RouteManager from "@/utils/router/route-manager";
 import {Routes} from "@/utils/router/routes";
+import chatController from "@/controllers/chat-controller";
 
 
 class AuthController {
@@ -39,8 +40,11 @@ class AuthController {
             store.set('loading', true);
             const response = await authApi.login(loginRequest);
             if (response === 'OK') {
-                await this.checkUserIsAuth();
-                RouteManager.go(Routes.CHAT);
+                const isAuth = await this.checkUserIsAuth();
+                if(isAuth){
+                    await chatController.getChats();
+                    RouteManager.go(Routes.CHAT);
+                }
             }
         } catch (error) {
             console.log(error);
