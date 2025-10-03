@@ -15,9 +15,11 @@ function createChatListBlock() {
     return store.getState().chatList.map((item) => {
         const text = (item.last_message && 'content' in item.last_message) ? item.last_message.content : '';
         let time = '';
-        if (item.created_by) {
-            const date = new Date(item.created_by);
-            time = `${date.getHours()}:${date.getMinutes()}`;
+        if (item.last_message && 'time' in item.last_message && typeof (item.last_message.time) === 'string') {
+            const date = new Date(item.last_message.time);
+            const h = (date.getHours() < 10 ? '0' : '') + date.getHours();
+            const m = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+            time = `${h}:${m}`;
         }
         return new ChatListItem({
             id: item.id,
