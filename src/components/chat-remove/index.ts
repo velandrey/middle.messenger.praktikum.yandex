@@ -9,9 +9,11 @@ export default class ChatRemove extends Block {
             events: {
                 click: (e)=>{
                     e.preventDefault();
-                    const chatIdActive = store.getState().chatIdActive;
-                    if(chatIdActive){
-                        chatController.deleteChat(chatIdActive);
+                    if(confirm('Подтвердите удаление чата')) {
+                        const chatIdActive = store.getState().chatIdActive;
+                        if(chatIdActive){
+                            chatController.deleteChat(chatIdActive);
+                        }
                     }
                 }
             }
