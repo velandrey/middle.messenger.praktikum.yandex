@@ -2,7 +2,7 @@ import Block from '@/utils/block';
 import authController from "@/controllers/auth-controller";
 
 export class Logout extends Block {
-    constructor(props:object) {
+    constructor(props: object) {
         super({
             ...props,
             events: {

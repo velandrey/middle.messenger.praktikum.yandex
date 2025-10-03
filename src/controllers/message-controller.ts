@@ -4,8 +4,8 @@ import {URL} from "@/utils/data";
 
 export default class MessageController {
     private socket: WebSocket | null = null;
-    private userId: number;
-    private chatId: number;
+    private readonly userId: number;
+    private readonly chatId: number;
     private intervalObjectForPing: number | null = null;
 
     public constructor(userId: number, chatId: number) {
@@ -26,7 +26,7 @@ export default class MessageController {
     private async connect() {
         try {
             const tokenId = await ChatController.getToken(this.chatId);
-            if(tokenId){
+            if (tokenId) {
                 this.socket = new WebSocket(`${URL.WS}/${this.userId}/${this.chatId}/${tokenId}`);
             }
         } catch (error) {
@@ -39,7 +39,7 @@ export default class MessageController {
         if (this.socket) {
             this.socket.addEventListener('open', () => {
                 // console.log('Соединение установлено');
-                store.set('messages',[]);
+                store.set('messages', []);
                 this.getOldMessage(0);
                 this.intervalObjectForPing = setInterval(() => {
                     this.sendPing();
@@ -63,7 +63,7 @@ export default class MessageController {
                 try {
                     const data = JSON.parse(event.data);
                     // console.log('Получены данные', data);
-                    if(Array.isArray(data) && data.length > 0){
+                    if (Array.isArray(data) && data.length > 0) {
                         store.set('messages', data.reverse());
                     } else if (data.type === 'message') {
                         store.set('messages', [...store.getState().messages, data]);

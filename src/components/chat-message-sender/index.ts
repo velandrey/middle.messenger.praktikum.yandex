@@ -26,7 +26,7 @@ export class ChatMessageSender extends Block {
                 const msgSocket = store.getState().msgSocket;
                 if (msgSocket) {
                     msgSocket.sendMessage(arResult.message);
-                    this.setProps({value:''});
+                    this.setProps({value: ''});
                 }
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);

@@ -64,7 +64,7 @@ export class HTTPTransport {
     private createMethod(method: HTTPMethod) {
         return (url: string, options: Omit<HttpRequestOptions, 'method'> = {}): Promise<XMLHttpRequest> => {
             url = `${URL.API}${url}`;
-            return this.request(url, { ...options, method });
+            return this.request(url, {...options, method});
         };
     }
 
@@ -174,20 +174,20 @@ export function fetchWithRetry(url: string, options: HttpRequestOptions): Promis
 /**
  * Пример использования
  *
-fetchWithRetry('https://fakeapi.extendsclass.com/books/23456', {
-    data: {limit: 3},
-    retries: 3,
-    timeout: 1000
-})
-    .then(response => {
-        try {
-            const json = JSON.parse(response.responseText);
-            console.log('Результат:', json);
-        } catch (e) {
-            console.error('Ошибка парсинга JSON:', e);
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка:', error);
-    });
+ fetchWithRetry('https://fakeapi.extendsclass.com/books/23456', {
+ data: {limit: 3},
+ retries: 3,
+ timeout: 1000
+ })
+ .then(response => {
+ try {
+ const json = JSON.parse(response.responseText);
+ console.log('Результат:', json);
+ } catch (e) {
+ console.error('Ошибка парсинга JSON:', e);
+ }
+ })
+ .catch(error => {
+ console.error('Ошибка:', error);
+ });
  */

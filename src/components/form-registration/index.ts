@@ -14,8 +14,8 @@ export class FormRegistration extends Block {
             'phone',
             'password',
         ];
-        const formFields = getFieldParams(fields).map((item)=>{
-            if(item){
+        const formFields = getFieldParams(fields).map((item) => {
+            if (item) {
                 return new FormField({...item});
             }
             return {};

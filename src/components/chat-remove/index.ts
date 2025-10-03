@@ -2,16 +2,17 @@ import './style.pcss';
 import Block from '@/utils/block';
 import chatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
+
 export default class ChatRemove extends Block {
     constructor({...props}: object) {
         super({
             ...props,
             events: {
-                click: (e)=>{
+                click: (e) => {
                     e.preventDefault();
-                    if(confirm('Подтвердите удаление чата')) {
+                    if (confirm('Подтвердите удаление чата')) {
                         const chatIdActive = store.getState().chatIdActive;
-                        if(chatIdActive){
+                        if (chatIdActive) {
                             chatController.deleteChat(chatIdActive);
                         }
                     }

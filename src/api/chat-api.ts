@@ -35,7 +35,6 @@ class ChatApi extends BaseAPI {
     }
 
     public addUserToChat(userId:number,chatId:number) {
-        //Возможно допустить число или массив чисел
         this.options.data = {
             users:[userId],
             chatId:chatId,

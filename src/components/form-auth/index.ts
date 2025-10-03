@@ -7,11 +7,11 @@ import authController from "@/controllers/auth-controller";
 
 export class FormAuth extends Block {
     constructor(props: object) {
-        const fields:string[] = [
+        const fields: string[] = [
             'login',
             'password',
         ];
-        const formFields:FormField[] = getFieldParams(fields).map((item:InputParams) => {
+        const formFields: FormField[] = getFieldParams(fields).map((item: InputParams) => {
             return new FormField({
                 ...item
             });

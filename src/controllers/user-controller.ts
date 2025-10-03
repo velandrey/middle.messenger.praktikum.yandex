@@ -4,7 +4,7 @@ import userApi from "@/api/user-api";
 
 
 class UserController {
-    public async changeProfile(profileData:ProfileData) {
+    public async changeProfile(profileData: ProfileData) {
         try {
             store.set('loading', true);
             const response = await userApi.changeProfile(profileData);
@@ -19,7 +19,8 @@ class UserController {
         }
         return false;
     }
-    public async changeAvatar(file:File) {
+
+    public async changeAvatar(file: File) {
         try {
             store.set('loading', true);
             const response = await userApi.changeAvatar(file);
@@ -53,14 +54,14 @@ class UserController {
     public async searchUsersByLogin(login: string) {
         try {
             store.set('loading', true);
-            let response:UserInfo[] = [];
-            if(login.length > 0){
+            let response: UserInfo[] = [];
+            if (login.length > 0) {
                 response = await userApi.searchUserByLogin(login);
-                store.set('searchUsers',response);
+                store.set('searchUsers', response);
             } else {
-                store.set('searchUsers',response);
+                store.set('searchUsers', response);
             }
-            store.set('search',login);
+            store.set('search', login);
             return response;
         } catch (error) {
             console.log(error);

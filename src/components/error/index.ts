@@ -3,7 +3,7 @@ import Block from '@/utils/block';
 import {Routes} from "@/utils/router/routes";
 
 export class Error extends Block {
-    constructor({ ...props }:object) {
+    constructor({...props}: object) {
         super({...props});
     }
 

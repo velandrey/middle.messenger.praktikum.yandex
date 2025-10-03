@@ -17,8 +17,9 @@ export class ProfileRow extends Block {
                 'first_name', 'second_name', 'login', 'phone'
             ].includes(key);
         }
+
         const user: UserInfo | null = store.getState().user;
-        if(user && 'name' in newProps){
+        if (user && 'name' in newProps) {
             const key = newProps.name;
             if (typeof key === 'string' && isValidUserInfoKey(key) && user[key] !== null) {
                 newProps.value = user[key];

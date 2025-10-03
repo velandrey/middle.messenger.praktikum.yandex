@@ -5,7 +5,7 @@ export class Route {
     private readonly _block: Block;
     private readonly _selectorElementForRender: string;
 
-    constructor(pathname: string, block: Block, selectorElementForRender:string = '#app') {
+    constructor(pathname: string, block: Block, selectorElementForRender: string = '#app') {
         this._pathname = pathname;
         this._block = block;
         this._selectorElementForRender = selectorElementForRender;
@@ -17,7 +17,7 @@ export class Route {
         }
     }
 
-    match(pathname:string) {
+    match(pathname: string) {
         return pathname === this._pathname;
     }
 

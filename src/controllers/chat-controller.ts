@@ -18,11 +18,11 @@ class ChatController {
             store.set('loading', false);
         }
     }
-    public async createChat(title:string) {
+
+    public async createChat(title: string) {
         try {
             store.set('loading', true);
             const response = await chatApi.createChat(title);
-            console.log('createChat',response);
             if ('id' in response) {
                 return response.id;
             }
@@ -32,16 +32,16 @@ class ChatController {
             store.set('loading', false);
         }
     }
-    public async deleteChat(chatId:number) {
+
+    public async deleteChat(chatId: number) {
         try {
             store.set('loading', true);
             const response = await chatApi.deleteChat(chatId);
-            console.log(response)
             if (response.result.id) {
-                store.set('chatIdActive',null);
-                store.set('chatPartnerUserId',null);
-                store.set('msgSocket',null);
-                store.set('messages',[]);
+                store.set('chatIdActive', null);
+                store.set('chatPartnerUserId', null);
+                store.set('msgSocket', null);
+                store.set('messages', []);
                 this.getChats();
             }
         } catch (error) {
@@ -50,7 +50,8 @@ class ChatController {
             store.set('loading', false);
         }
     }
-    public async getNewMessagesCount(chatId:number) {
+
+    public async getNewMessagesCount(chatId: number) {
         try {
             store.set('loading', true);
             const response = await chatApi.getNewMessagesCount(chatId);
@@ -66,10 +67,10 @@ class ChatController {
         }
     }
 
-    public async addUserToChat(userId:number,chatId:number) {
+    public async addUserToChat(userId: number, chatId: number) {
         try {
             store.set('loading', true);
-            const response = await chatApi.addUserToChat(userId,chatId);
+            const response = await chatApi.addUserToChat(userId, chatId);
             if (response === 'OK') {
                 return true;
             }
@@ -80,12 +81,13 @@ class ChatController {
         }
         return false;
     }
-    public async removeUserFromChat(userId:number,chatId:number) {
+
+    public async removeUserFromChat(userId: number, chatId: number) {
         try {
             store.set('loading', true);
-            const response = await chatApi.removeUserFromChat(userId,chatId);
+            const response = await chatApi.removeUserFromChat(userId, chatId);
             if (response === 'OK') {
-
+                console.log('user removed');
             }
         } catch (error) {
             console.log(error);
@@ -93,7 +95,8 @@ class ChatController {
             store.set('loading', false);
         }
     }
-    public async getToken(chatId:number) {
+
+    public async getToken(chatId: number) {
         try {
             store.set('loading', true);
             const response = await chatApi.getToken(chatId);

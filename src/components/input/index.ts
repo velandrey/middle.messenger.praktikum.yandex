@@ -1,7 +1,7 @@
 import Block from '@/utils/block';
 
 export class Input extends Block {
-    constructor(props:object) {
+    constructor(props: object) {
         super({
             ...props
         });

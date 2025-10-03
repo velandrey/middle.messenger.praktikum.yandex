@@ -7,9 +7,9 @@ import {State, UserInfo} from "@/utils/types";
 import {hoc} from "@/utils/hoc";
 
 
-function constructSearchResultsBlock(arUsers:UserInfo[]){
+function constructSearchResultsBlock(arUsers: UserInfo[]) {
     const arBlocks = [];
-    for(const item of arUsers){
+    for (const item of arUsers) {
         const block = new ChatSearchResult({
             id: item.id,
             first_name: item.first_name,
@@ -21,9 +21,9 @@ function constructSearchResultsBlock(arUsers:UserInfo[]){
 }
 
 export class ChatSearch extends Block {
-    constructor({ ...props }) {
+    constructor({...props}) {
         const search = props.search;
-        const callbackSearch = async function (e:Event) {
+        const callbackSearch = async function (e: Event) {
             if (e.target instanceof HTMLInputElement) {
                 await userController.searchUsersByLogin(e.target.value);
             }
@@ -38,9 +38,9 @@ export class ChatSearch extends Block {
     }
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        if('searchUsers' in newProps){
+        if ('searchUsers' in newProps) {
             const searchUsers = newProps.searchUsers;
-            if(Array.isArray(searchUsers)){
+            if (Array.isArray(searchUsers)) {
                 const newChatListBlocks = {SearchUsersResult: constructSearchResultsBlock(searchUsers)};
                 delete newProps.searchUsers;
                 this.setProps(newChatListBlocks);

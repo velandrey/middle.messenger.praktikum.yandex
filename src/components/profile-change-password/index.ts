@@ -42,7 +42,7 @@ export class ProfileChangePassword extends Block {
                     newPassword: arResult.newPassword,
                 });
                 const modal = document.getElementById('modal_change_password');
-                if(result && modal){
+                if (result && modal) {
                     modal.classList.remove('active');
                 }
             } else {

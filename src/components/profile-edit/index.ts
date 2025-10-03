@@ -7,7 +7,7 @@ import {hoc} from "@/utils/hoc";
 import userController from "@/controllers/user-controller";
 import store from "@/utils/store";
 
-function constructInputs(){
+function constructInputs() {
     const fieldsColum: string[] = [
         'first_name',
         'second_name',
@@ -19,8 +19,8 @@ function constructInputs(){
     const user = store.getState().user;
     return getFieldParams(fieldsColum).map((item: InputParams) => {
         let value = '';
-        const key:string = item.name;
-        if(user && key in user){
+        const key: string = item.name;
+        if (user && key in user) {
             value = user[key as keyof UserInfo] as string;
         }
         return new FormField({
@@ -66,7 +66,7 @@ export class ProfileEdit extends Block {
                     phone: arResult.phone
                 });
                 const modal = document.getElementById('modal_change_profile');
-                if(result && modal){
+                if (result && modal) {
                     modal.classList.remove('active');
                 }
             } else {
@@ -77,7 +77,7 @@ export class ProfileEdit extends Block {
 
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        if(newProps.user){
+        if (newProps.user) {
             this.setProps({Inputs: constructInputs()});
         }
         return super.componentDidUpdate(oldProps, newProps);

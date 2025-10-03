@@ -13,7 +13,7 @@ type ValidationRules = {
 };
 
 export class FormValidator {
-    private readonly validationRules: ValidationRules= {
+    private readonly validationRules: ValidationRules = {
         name: {
             pattern: /^[A-ZА-ЯЁ][a-zA-Zа-яА-ЯёЁ0-9!@#$%^&*()_+=[\]{};:'",.<>/?\\|`~]*$/,
             errorMessage: 'Латиница | Кириллица, первая буква заглавная, допустимы цифры и спецсимволы. Запрещён пробел и дефис.'
@@ -50,8 +50,8 @@ export class FormValidator {
         errors: { [key: string]: string };
     } {
         const errors: { [key: string]: string } = {};
-        let isValid:boolean = true;
-        Object.entries(fields).forEach(([fieldName, value]:[string,string]) => {
+        let isValid: boolean = true;
+        Object.entries(fields).forEach(([fieldName, value]: [string, string]) => {
             const validationResult: ValidationResult = this.validateField(fieldName, value);
             if (!validationResult.isValid) {
                 isValid = false;
@@ -66,20 +66,20 @@ export class FormValidator {
     }
 
     public validateField(fieldName: string, value: string): ValidationResult {
-        if (fieldName === 'oldPassword' || fieldName === 'newPassword'){
+        if (fieldName === 'oldPassword' || fieldName === 'newPassword') {
             fieldName = 'password';
         }
-        if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'display_name'){
+        if (fieldName === 'first_name' || fieldName === 'second_name' || fieldName === 'display_name') {
             fieldName = 'name';
         }
-        const rule:FieldValidationRule = this.validationRules[fieldName];
+        const rule: FieldValidationRule = this.validationRules[fieldName];
         if (!rule) {
             return {
                 isValid: true,
                 errorMessage: `Правило валидации для поля ${fieldName} не найдено`
             };
         }
-        const patternMatch:boolean = rule.pattern.test(value);
+        const patternMatch: boolean = rule.pattern.test(value);
         if (!patternMatch) {
             return {
                 isValid: false,

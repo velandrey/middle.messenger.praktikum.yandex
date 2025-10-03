@@ -9,9 +9,10 @@ export type StrictComponentProps = {
     second_name: string;
     clear: () => void;
 }
+
 export class ChatSearchResult extends Block {
-    constructor({ ...props }:StrictComponentProps) {
-        const { id, first_name, second_name } = props;
+    constructor({...props}: StrictComponentProps) {
+        const {id, first_name, second_name} = props;
         const finalParams = {
             id,
             first_name,
@@ -19,8 +20,8 @@ export class ChatSearchResult extends Block {
             events: {
                 click: async () => {
                     const newChatId = await chatController.createChat(`${first_name} ${second_name}`);
-                    const addUserToChat = await chatController.addUserToChat(id,newChatId);
-                    if(addUserToChat){
+                    const addUserToChat = await chatController.addUserToChat(id, newChatId);
+                    if (addUserToChat) {
                         await chatController.getChats();
                         store.set('search', '');
                         store.set('searchUsers', []);

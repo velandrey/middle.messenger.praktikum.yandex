@@ -28,7 +28,7 @@ class RouteManager {
     }
 
     public async _onRoute(pathname: string) {
-        const arRoutes:string[] = Object.values(Routes);
+        const arRoutes: string[] = Object.values(Routes);
         const route = this.getRoute(pathname);
         if (arRoutes.includes(pathname)) {
             const userIsAuth = await AuthController.checkUserIsAuth();
@@ -47,7 +47,7 @@ class RouteManager {
         if (this._currentRoute) {
             this._currentRoute.leave();
         }
-        if(route){
+        if (route) {
             this._currentRoute = route;
             route.render();
         }

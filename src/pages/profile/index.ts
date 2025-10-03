@@ -9,9 +9,10 @@ import {ProfileChangeAvatar} from "@/components/profile-change-avatar";
 import {Routes} from "@/utils/router/routes";
 
 
-function getFullName(user: UserInfo):string{
-    return (user) ? `${user.first_name} ${user.second_name}`: '';
+function getFullName(user: UserInfo): string {
+    return (user) ? `${user.first_name} ${user.second_name}` : '';
 }
+
 const fieldsProfileRows = [
     'first_name',
     'second_name',
@@ -23,9 +24,9 @@ const fieldsProfileRows = [
 
 const defaultAvatarLink = `background-image: url("${defaultPath.avatar}")`;
 
-function profileRowConstructor(){
+function profileRowConstructor() {
     const arProfilesBlocks = [];
-    for(const fieldName of fieldsProfileRows){
+    for (const fieldName of fieldsProfileRows) {
         const block = new profileRow({
             name: fieldName,
             title: getLabelByName(fieldName)
@@ -37,7 +38,7 @@ function profileRowConstructor(){
 
 export class Profile extends Block {
     constructor({...props}) {
-        const { user = {} } = props;
+        const {user = {}} = props;
         super({
             ...props,
             ProfileEdit: new profileEdit({}),
@@ -75,9 +76,9 @@ export class Profile extends Block {
     }
 
     componentDidUpdate(oldProps: TypeProps, newProps: TypeProps): boolean {
-        if(newProps.user && typeof newProps.user === 'object') {
+        if (newProps.user && typeof newProps.user === 'object') {
             newProps.UserName = getFullName(newProps.user as UserInfo);
-            if('avatar' in newProps.user && newProps.user.avatar){
+            if ('avatar' in newProps.user && newProps.user.avatar) {
                 newProps.Avatar = `background-image: url("${URL.API}/resources${newProps.user.avatar}")`;
             } else {
                 newProps.Avatar = defaultAvatarLink;
@@ -86,6 +87,7 @@ export class Profile extends Block {
 
         return super.componentDidUpdate(oldProps, newProps);
     }
+
     render() {
         return `
             <div class="wrapper">
@@ -147,6 +149,7 @@ export class Profile extends Block {
         `;
     }
 }
+
 export const profilePage = hoc(
     state =>
         ({
