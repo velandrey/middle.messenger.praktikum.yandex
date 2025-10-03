@@ -16,36 +16,7 @@ export class FormRegistration extends Block {
         ];
         const formFields = getFieldParams(fields).map((item)=>{
             if(item){
-                //TODO удали value
-                let value = '';
-                switch (item.name) {
-                case 'first_name': 
-                    value = 'Kroko';
-                    break;
-                case 'second_name':
-                    value = 'DilDil';
-                    break;
-                case 'login':
-                    value = 'kroko@dil.dil';
-                    break;
-                case 'email':
-                    value = 'kroko@dil.dil';
-                    break;
-                case 'password':
-                    value = '!QAZ2wsx';
-                    break;
-                case 'phone':
-                    value = '+79846543210';
-                    break;
-                }
-                item = {
-                    value: value,
-                    ...item
-                };
-                //TODO удали всё выше
-
-
-                return new FormField(item);
+                return new FormField({...item});
             }
             return {};
         });

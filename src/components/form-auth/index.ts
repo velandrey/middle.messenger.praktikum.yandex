@@ -12,13 +12,7 @@ export class FormAuth extends Block {
             'password',
         ];
         const formFields:FormField[] = getFieldParams(fields).map((item:InputParams) => {
-
-            //TODO удали value
-            const value = (item.name === 'login') ? 'trolollelo@trala.la' : '!QAZ2wsx';
-            //TODO удали выше value
-
             return new FormField({
-                value:value,
                 ...item
             });
         });
