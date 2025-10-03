@@ -14,11 +14,17 @@ function constructChatMessages(arMessages: Message[]) {
     return arMessages.map((item: Message) => {
         const direction = (chatPartnerUserId === item.user_id) ? 'to' : 'from';
         const status = (item.is_read) ? 'read' : 'unread';
-        const date = new Date(item.time);
+        let time = '';
+        if (item.time && 'time' in item && typeof (item.time) === 'string') {
+            const date = new Date(item.time);
+            const h = (date.getHours() < 10 ? '0' : '') + date.getHours();
+            const m = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+            time = `${h}:${m}`;
+        }
         return new ChatMessageRow({
             direction: direction,
             type: item.type,
-            time: `${date.getHours()}:${date.getMinutes()}`,
+            time: time,
             status: status,
             content: item.content,
         });
