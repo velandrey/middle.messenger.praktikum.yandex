@@ -2,17 +2,12 @@ import ChatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
 import {URL} from "@/utils/data";
 
-// Если вы увидели в консоли, что код 1006 и сокет закрылся, — это означает,
-// что вы долго были не активны и он это сделал автоматически. Чтобы избежать этого,
-// необходимо делать “ping” (например, отправлять пустое сообщение). Это покажет, что
-// вы не «отвалились» от чата. Для переподключения сделайте новый запрос на connect.
-
-
 export default class MessageController {
     private socket: WebSocket | null = null;
     private userId: number;
     private chatId: number;
     private intervalObjectForPing: number | null = null;
+
     public constructor(userId: number, chatId: number) {
         this.userId = userId;
         this.chatId = chatId;

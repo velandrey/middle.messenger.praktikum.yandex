@@ -36,16 +36,13 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.deleteChat(chatId);
-            if (response === 'OK') {
-                // {
-                //     "userId": 12,
-                //     "result": {
-                //     "id": 123,
-                //         "title": "deleted-chat",
-                //         "avatar": "/123/avatar1.jpg",
-                //         "created_by": 12345
-                // }
-                // }
+            console.log(response)
+            if (response.result.id) {
+                store.set('chatIdActive',null);
+                store.set('chatPartnerUserId',null);
+                store.set('msgSocket',null);
+                store.set('messages',[]);
+                this.getChats();
             }
         } catch (error) {
             console.log(error);

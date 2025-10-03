@@ -7,6 +7,7 @@ import {ChatMessageRow, ChatMessageSender} from "@/components";
 import {defaultPath} from "@/utils/data";
 import MessageController from "@/controllers/message-controller";
 import isEqual from "@/utils/is-equal";
+import ChatRemove from "@/components/chat-remove";
 
 function constructChatMessages(arMessages: Message[]) {
     const chatPartnerUserId = store.getState().chatPartnerUserId;
@@ -38,6 +39,7 @@ class ChatBox extends Block {
             image: '',
             ChatMessages: constructChatMessages([]),
             ChatMessageSender: new ChatMessageSender(),
+            ChatRemove: new ChatRemove({}),
         });
     }
 
@@ -73,7 +75,7 @@ class ChatBox extends Block {
                         <img src="{{image}}" alt="{{name}}" class="chat_box_head_partner_avatar">
                         {{name}}
                     </div>
-    <!--                <div class="chat_box_head_menu">⋮</div>-->
+                    {{{ChatRemove}}}
                 </div>
                 <div class="chat_box_feed">
                     {{{ChatMessages}}}

@@ -7,14 +7,13 @@ import {State, UserInfo} from "@/utils/types";
 import {hoc} from "@/utils/hoc";
 
 
-function constructSeurchResultsBlock(arUsers:UserInfo[]){
+function constructSearchResultsBlock(arUsers:UserInfo[]){
     const arBlocks = [];
     for(const item of arUsers){
         const block = new ChatSearchResult({
             id: item.id,
             first_name: item.first_name,
             second_name: item.second_name,
-            // clear: clearResult,
         } as StrictComponentProps);
         arBlocks.push((block));
     }
@@ -31,7 +30,7 @@ export class ChatSearch extends Block {
         };
         super({
             search: search,
-            ChatListBlocks: constructSeurchResultsBlock([]),
+            ChatListBlocks: constructSearchResultsBlock([]),
             events: {
                 keyup: debounce(callbackSearch, 1000)
             }
@@ -42,7 +41,7 @@ export class ChatSearch extends Block {
         if('searchUsers' in newProps){
             const searchUsers = newProps.searchUsers;
             if(Array.isArray(searchUsers)){
-                const newChatListBlocks = {SearchUsersResult: constructSeurchResultsBlock(searchUsers)};
+                const newChatListBlocks = {SearchUsersResult: constructSearchResultsBlock(searchUsers)};
                 delete newProps.searchUsers;
                 this.setProps(newChatListBlocks);
             }

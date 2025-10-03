@@ -44,7 +44,7 @@ export class BaseAPI {
 
     protected async delete(url: string, options = {}) {
         const request = await this.transport
-            .put(this.baseURL + url, options);
+            .delete(this.baseURL + url, options);
         return await this.toJSON(request);
     }
 }
