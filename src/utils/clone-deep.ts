@@ -26,7 +26,7 @@ export function cloneDeep<T extends PlainObject>(obj: T): T {
             return copy as unknown as T;
         }
 
-        if (typeof item === "object" && item !== null) {
+        if (typeof item === "object") {
             const copy: PlainObject = {};
 
             Object.getOwnPropertySymbols(item).forEach(s => {
