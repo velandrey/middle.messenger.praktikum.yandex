@@ -70,7 +70,6 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.addUserToChat(userId,chatId);
-            console.log('addUserToChat',response);
             if (response === 'OK') {
                 return true;
             }

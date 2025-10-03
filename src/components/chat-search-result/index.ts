@@ -21,11 +21,11 @@ export class ChatSearchResult extends Block {
                     const newChatId = await chatController.createChat(`${first_name} ${second_name}`);
                     const addUserToChat = await chatController.addUserToChat(id,newChatId);
                     if(addUserToChat){
+                        await chatController.getChats();
                         store.set('search', '');
                         store.set('searchUsers', []);
                         store.set('chatPartnerUserId', id);
                         store.set('chatIdActive', newChatId);
-                        chatController.getChats();
                     }
                 }
             }
