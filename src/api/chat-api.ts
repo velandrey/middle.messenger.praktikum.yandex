@@ -30,8 +30,22 @@ class ChatApi extends BaseAPI {
 
         return this.delete('', this.options);
     }
+
+    public deleteChatUsers(chatId: number, userId: number) {
+        this.options.data = {
+            users: [userId],
+            chatId: chatId
+        };
+
+        return this.delete('/users', this.options);
+    }
+
     public getNewMessagesCount(chatId:number) {
-        return this.get(`new/${chatId}`, this.options);
+        return this.get(`/new/${chatId}`, this.options);
+    }
+
+    public getChatUsers(chatId:number) {
+        return this.get(`/${chatId}/users`, this.options);
     }
 
     public addUserToChat(userId:number,chatId:number) {

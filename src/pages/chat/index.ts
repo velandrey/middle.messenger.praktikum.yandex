@@ -65,7 +65,6 @@ export class Chat extends Block {
                                 <div class="chat_list_head_profile">
                                     <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
-                                {{{Search}}}
                                 {{{ChatCreateButton}}}
                             </div>
                             <div class="chat_list_body">

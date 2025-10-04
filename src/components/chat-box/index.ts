@@ -3,7 +3,7 @@ import Block, {TypeProps} from '@/utils/block';
 import store from "@/utils/store";
 import {hoc} from "@/utils/hoc";
 import {Chat, Message, State} from "@/utils/types";
-import {ChatMessageRow, ChatMessageSender} from "@/components";
+import {ChatMessageRow, ChatMessageSender, chatSearch, chatUsersList} from "@/components";
 import {defaultPath, URL} from "@/utils/data";
 import MessageController from "@/controllers/message-controller";
 import isEqual from "@/utils/is-equal";
@@ -46,6 +46,8 @@ class ChatBox extends Block {
             name: '',
             image: '',
             ChatChangeAvatar: new ChangeAvatar({target: 'chat'}),
+            Search: new chatSearch({}),
+            ChatUsersList: new chatUsersList({}),
             ChatMessages: constructChatMessages([]),
             ChatMessageSender: new ChatMessageSender(),
             ChatRemove: new ChatRemove({}),
@@ -106,7 +108,9 @@ class ChatBox extends Block {
                     <div class="popup_modal" id="modal_change_chat_add_user">
                         <div class="popup_modal_content">
                             <div class="profile_modal profile_edit">
-                                22222222222222222222222
+                                <div class="chat_search_users">
+                                    {{{Search}}}
+                                </div>
                                 <div class="popup_modal_close">✕</div>
                             </div>
                         </div>
@@ -123,6 +127,9 @@ class ChatBox extends Block {
                         </div>
                     </div>
                     {{{ChatRemove}}}
+                </div>
+                <div class="chat_users_list">
+                    {{{ChatUsersList}}}
                 </div>
                 <div class="chat_box_feed">
                     {{{ChatMessages}}}
