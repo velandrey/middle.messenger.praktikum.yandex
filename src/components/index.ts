@@ -1,4 +1,5 @@
 export {Button} from './button';
+export {ChatCreateButton} from './chat-create-button';
 export {ChatListItem} from './chat-list-item';
 export {ChatMessageRow} from './chat-message-row';
 export {ChatMessageSender} from './chat-message-sender';

@@ -1,6 +1,6 @@
 import './style.pcss';
 import Block, {TypeProps} from '@/utils/block';
-import {ChatListItem, chatSearch} from "@/components";
+import {ChatCreateButton, ChatListItem, chatSearch} from "@/components";
 import {State} from "@/utils/types";
 import {Routes} from "@/utils/router/routes";
 import chatController from "@/controllers/chat-controller";
@@ -39,6 +39,7 @@ export class Chat extends Block {
         super({
             ...props,
             Search: new chatSearch({}),
+            ChatCreateButton: new ChatCreateButton({}),
             ChatListBlocks: createChatListBlock(),
             ChatBox: new chatBox({}),
         });
@@ -65,6 +66,7 @@ export class Chat extends Block {
                                     <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
                                 {{{Search}}}
+                                {{{ChatCreateButton}}}
                             </div>
                             <div class="chat_list_body">
                                 {{{ChatListBlocks}}}
