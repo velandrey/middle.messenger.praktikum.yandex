@@ -20,7 +20,7 @@ class ChatController {
         }
     }
 
-    public async getChatUsers(chatId:number) {
+    public async getChatUsers(chatId: number) {
         try {
             store.set('loading', true);
             const response = await chatApi.getChatUsers(chatId);
@@ -38,7 +38,7 @@ class ChatController {
     public async deleteChatUsers(chatId: number, userId: number) {
         try {
             store.set('loading', true);
-            const response = await chatApi.deleteChatUsers(chatId,userId);
+            const response = await chatApi.deleteChatUsers(chatId, userId);
             if (response === 'OK') {
                 await this.getChats();
             }
@@ -126,10 +126,10 @@ class ChatController {
         }
     }
 
-    public async changeAvatar(file: File,chatId:number) {
+    public async changeAvatar(file: File, chatId: number) {
         try {
             store.set('loading', true);
-            const response = await chatApi.changeAvatar(file,chatId);
+            const response = await chatApi.changeAvatar(file, chatId);
             if ('id' in response) {
                 await this.getChats();
                 return true;

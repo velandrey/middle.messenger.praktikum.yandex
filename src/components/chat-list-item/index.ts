@@ -16,7 +16,6 @@ export class ChatListItem extends Block {
                             if (!isNaN(chatId) && chatId > 0) {
                                 store.set('chatIdActive', chatId);
                                 store.set('messages', []);
-                                console.log(chatId)
                                 await chatController.getChatUsers(chatId);
                             }
                         }

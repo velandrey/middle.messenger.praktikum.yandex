@@ -21,3 +21,10 @@ export function openModalCallback(e: Event) {
         openedModal.classList.remove('active');
     }
 }
+
+export function closeModal() {
+    const openModal = document.querySelector('.popup_modal.active');
+    if (openModal && openModal.classList.contains('active')) {
+        openModal.classList.remove('active');
+    }
+}

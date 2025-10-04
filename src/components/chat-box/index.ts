@@ -52,7 +52,7 @@ class ChatBox extends Block {
             ChatMessageSender: new ChatMessageSender(),
             ChatRemove: new ChatRemove({}),
             events: {
-                click: (e)=>openModalCallback(e)
+                click: (e) => openModalCallback(e)
             }
         });
     }
@@ -111,17 +111,6 @@ class ChatBox extends Block {
                                 <div class="chat_search_users">
                                     {{{Search}}}
                                 </div>
-                                <div class="popup_modal_close">✕</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_box_head_changer popup_link" id="change_profile" data-target="modal_change_chat_remove_user">
-                        Удалить пользователя
-                    </div>
-                    <div class="popup_modal" id="modal_change_chat_remove_user">
-                        <div class="popup_modal_content">
-                            <div class="profile_modal profile_edit">
-                                3333333333333333333
                                 <div class="popup_modal_close">✕</div>
                             </div>
                         </div>

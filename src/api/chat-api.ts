@@ -15,7 +15,7 @@ class ChatApi extends BaseAPI {
         return this.get('', this.options);
     }
 
-    public createChat(title:string) {
+    public createChat(title: string) {
         this.options.data = {
             title: title
         };
@@ -23,7 +23,7 @@ class ChatApi extends BaseAPI {
         return this.post('', this.options);
     }
 
-    public deleteChat(chatId:number) {
+    public deleteChat(chatId: number) {
         this.options.data = {
             chatId: chatId
         };
@@ -40,37 +40,37 @@ class ChatApi extends BaseAPI {
         return this.delete('/users', this.options);
     }
 
-    public getNewMessagesCount(chatId:number) {
+    public getNewMessagesCount(chatId: number) {
         return this.get(`/new/${chatId}`, this.options);
     }
 
-    public getChatUsers(chatId:number) {
+    public getChatUsers(chatId: number) {
         return this.get(`/${chatId}/users`, this.options);
     }
 
-    public addUserToChat(userId:number,chatId:number) {
+    public addUserToChat(userId: number, chatId: number) {
         this.options.data = {
-            users:[userId],
-            chatId:chatId,
+            users: [userId],
+            chatId: chatId,
         };
 
         return this.put('/users', this.options);
     }
 
-    public removeUserFromChat(userId:number,chatId:number) {
+    public removeUserFromChat(userId: number, chatId: number) {
         this.options.data = {
-            users:[userId],
-            chatId:chatId,
+            users: [userId],
+            chatId: chatId,
         };
 
         return this.delete('/users', this.options);
     }
 
-    public changeAvatar(file:File, chatId:number) {
+    public changeAvatar(file: File, chatId: number) {
         return this.put('/avatar', {data: {avatar: file, chatId: chatId}});
     }
 
-    public getToken(chatId:number) {
+    public getToken(chatId: number) {
         return this.post(`/token/${chatId}`, this.options);
     }
 }

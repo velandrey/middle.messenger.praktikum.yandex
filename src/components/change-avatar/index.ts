@@ -5,6 +5,7 @@ import {InputParams} from "@/utils/types";
 import userController from "@/controllers/user-controller";
 import chatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
+import {closeModal} from "@/utils/modal";
 
 export class ChangeAvatar extends Block {
     constructor({...props}: object) {
@@ -19,12 +20,12 @@ export class ChangeAvatar extends Block {
                 label: 'Изменить аватар',
             }),
             events: {
-                submit: (e: Event) => this.submitCallback(e,target)
+                submit: (e: Event) => this.submitCallback(e, target)
             }
         });
     }
 
-    async submitCallback(e: Event,target:string) {
+    async submitCallback(e: Event, target: string) {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
@@ -34,10 +35,11 @@ export class ChangeAvatar extends Block {
                     throw new Error('Слишком большой файл');
                 }
                 if (file.type.match('image.*')) {
-                    if(target === 'chat'){
+                    if (target === 'chat') {
                         const chatId = store.getState().chatIdActive;
-                        if(chatId){
-                            await chatController.changeAvatar(file,chatId);
+                        if (chatId) {
+                            await chatController.changeAvatar(file, chatId);
+                            closeModal();
                         }
                     } else {
                         await userController.changeAvatar(file);
