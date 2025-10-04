@@ -52,6 +52,10 @@ class ChatApi extends BaseAPI {
         return this.delete('/users', this.options);
     }
 
+    public changeAvatar(file:File, chatId:number) {
+        return this.put('/avatar', {data: {avatar: file, chatId: chatId}});
+    }
+
     public getToken(chatId:number) {
         return this.post(`/token/${chatId}`, this.options);
     }

@@ -5,8 +5,9 @@ import {defaultPath, getLabelByName, URL} from "@/utils/data";
 import {ProfileChangePassword} from "@/components/profile-change-password";
 import {hoc} from "@/utils/hoc";
 import {State, UserInfo} from "@/utils/types";
-import {ProfileChangeAvatar} from "@/components/profile-change-avatar";
+import {ChangeAvatar} from "@/components/change-avatar";
 import {Routes} from "@/utils/router/routes";
+import {openModalCallback} from "@/utils/modal";
 
 
 function getFullName(user: UserInfo): string {
@@ -43,34 +44,13 @@ export class Profile extends Block {
             ...props,
             ProfileEdit: new profileEdit({}),
             ProfileChangePassword: new ProfileChangePassword({}),
-            ProfileChangeAvatar: new ProfileChangeAvatar({}),
+            ProfileChangeAvatar: new ChangeAvatar({target: 'profile'}),
             ProfileRows: profileRowConstructor(),
             Logout: new Logout({}),
             UserName: getFullName(user),
             Avatar: defaultAvatarLink,
             events: {
-                click: (e: Event) => {
-                    if (
-                        e.target instanceof HTMLElement
-                        && e.target.classList.contains('popup_link')
-                        && e.target.dataset
-                        && typeof e.target.dataset.target === 'string'
-                    ) {
-                        e.preventDefault();
-                        const element: HTMLElement | null = document.getElementById(e.target.dataset.target);
-                        if (element) {
-                            element.classList.add('active');
-                        }
-                    }
-                    const openedModal = document.querySelector('.popup_modal.active');
-                    if (
-                        e.target instanceof HTMLElement
-                        && e.target.classList.contains('popup_modal_close')
-                        && openedModal
-                    ) {
-                        openedModal.classList.remove('active');
-                    }
-                }
+                click: (e)=>openModalCallback(e)
             }
         });
     }

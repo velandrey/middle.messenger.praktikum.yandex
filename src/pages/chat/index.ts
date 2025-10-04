@@ -7,7 +7,7 @@ import chatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
 import {hoc} from "@/utils/hoc";
 import {chatBox} from "@/components/chat-box";
-import {defaultPath} from "@/utils/data";
+import {defaultPath, URL} from "@/utils/data";
 
 
 function createChatListBlock() {
@@ -24,7 +24,7 @@ function createChatListBlock() {
         return new ChatListItem({
             id: item.id,
             active: (chatIdActive == item.id) ? 'active' : '',
-            image: item.avatar || defaultPath.avatar,
+            image: (item.avatar) ? `${URL.API}/resources${item.avatar}` : defaultPath.avatar,
             name: item.title,
             text: text || '',
             date: time,

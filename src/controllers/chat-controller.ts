@@ -7,7 +7,6 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.getChats();
-            console.log(response)
             if (response.length > 0) {
                 store.set('chatList', [...response]);
                 store.set('chatIdActive', response[0].id);
@@ -96,6 +95,23 @@ class ChatController {
             store.set('loading', false);
         }
     }
+
+    public async changeAvatar(file: File,chatId:number) {
+        try {
+            store.set('loading', true);
+            const response = await chatApi.changeAvatar(file,chatId);
+            if ('id' in response) {
+                await this.getChats();
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            store.set('loading', false);
+        }
+        return false;
+    }
+
 
     public async getToken(chatId: number) {
         try {
