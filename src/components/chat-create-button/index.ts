@@ -9,9 +9,10 @@ export class ChatCreateButton extends Block {
             events: {
                 click: async (e)=>{
                     e.preventDefault();
-                    let title = prompt('Введите название чата');
+                    const defaultTitle = 'New chat';
+                    let title = prompt('Введите название чата', defaultTitle);
                     if(title){
-                        title = title.replace(/[^\w\s]/gi, '');
+                        title = title.replace(/[^a-zA-Z0-9\s]/g, '').trim() || defaultTitle;
                         await chatController.createChat(title);
                         await chatController.getChats();
                     }

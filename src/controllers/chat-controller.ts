@@ -7,6 +7,7 @@ class ChatController {
         try {
             store.set('loading', true);
             const response = await chatApi.getChats();
+            console.log(response)
             if (response.length > 0) {
                 store.set('chatList', [...response]);
                 store.set('chatIdActive', response[0].id);
