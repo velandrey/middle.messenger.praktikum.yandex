@@ -100,6 +100,7 @@ export class Profile extends Block {
                                 <div class="popup_link profile_image" id="change_avatar" data-target="modal_change_avatar"
                                     style="{{Avatar}}"
                                 >🖉</div>
+                                <div class="popup_link profile_avatar_change_link" data-target="modal_change_avatar">Изменить аватар</div>
                                 <div class="popup_modal" id="modal_change_avatar">
                                     <div class="popup_modal_content">
                                         <div class="profile_modal profile_edit">

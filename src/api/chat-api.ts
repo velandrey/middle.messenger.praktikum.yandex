@@ -5,7 +5,7 @@ class ChatApi extends BaseAPI {
         super('/chats');
     }
 
-    public getChats(offset = 0, limit = 5, title = '') {
+    public getChats(offset = 0, limit = 999, title = '') {
         this.options.data = {
             offset: offset,
             limit: limit,
