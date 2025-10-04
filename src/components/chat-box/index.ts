@@ -3,11 +3,13 @@ import Block, {TypeProps} from '@/utils/block';
 import store from "@/utils/store";
 import {hoc} from "@/utils/hoc";
 import {Chat, Message, State} from "@/utils/types";
-import {ChatMessageRow, ChatMessageSender} from "@/components";
-import {defaultPath} from "@/utils/data";
+import {ChatMessageRow, ChatMessageSender, chatSearch, chatUsersList} from "@/components";
+import {defaultPath, URL} from "@/utils/data";
 import MessageController from "@/controllers/message-controller";
 import isEqual from "@/utils/is-equal";
 import ChatRemove from "@/components/chat-remove";
+import {openModalCallback} from "@/utils/modal";
+import {ChangeAvatar} from "@/components/change-avatar";
 
 function constructChatMessages(arMessages: Message[]) {
     const chatPartnerUserId = store.getState().chatPartnerUserId;
@@ -43,9 +45,15 @@ class ChatBox extends Block {
             ...props,
             name: '',
             image: '',
+            ChatChangeAvatar: new ChangeAvatar({target: 'chat'}),
+            Search: new chatSearch({}),
+            ChatUsersList: new chatUsersList({}),
             ChatMessages: constructChatMessages([]),
             ChatMessageSender: new ChatMessageSender(),
             ChatRemove: new ChatRemove({}),
+            events: {
+                click: (e) => openModalCallback(e)
+            }
         });
     }
 
@@ -59,7 +67,7 @@ class ChatBox extends Block {
                 store.getState().msgSocket?.close();
             }
             newProps.name = activeChatUserInfo.title;
-            newProps.image = activeChatUserInfo.avatar || defaultPath.avatar;
+            newProps.image = (activeChatUserInfo.avatar) ? `${URL.API}/resources${activeChatUserInfo.avatar}` : defaultPath.avatar;
             loadConnection(userId, activeChatId);
         }
         if (
@@ -81,7 +89,36 @@ class ChatBox extends Block {
                         <img src="{{image}}" alt="{{name}}" class="chat_box_head_partner_avatar">
                         {{name}}
                     </div>
+                    
+                    
+                    <div class="chat_box_head_changer popup_link" id="change_profile" data-target="modal_change_chat_avatar">
+                        Изменить аватар
+                    </div>
+                    <div class="popup_modal" id="modal_change_chat_avatar">
+                        <div class="popup_modal_content">
+                            <div class="profile_modal profile_edit">
+                                {{{ChatChangeAvatar}}}
+                                <div class="popup_modal_close">✕</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat_box_head_changer popup_link" id="change_profile" data-target="modal_change_chat_add_user">
+                        Добавить пользователя
+                    </div>
+                    <div class="popup_modal" id="modal_change_chat_add_user">
+                        <div class="popup_modal_content">
+                            <div class="profile_modal profile_edit">
+                                <div class="chat_search_users">
+                                    {{{Search}}}
+                                </div>
+                                <div class="popup_modal_close">✕</div>
+                            </div>
+                        </div>
+                    </div>
                     {{{ChatRemove}}}
+                </div>
+                <div class="chat_users_list">
+                    {{{ChatUsersList}}}
                 </div>
                 <div class="chat_box_feed">
                     {{{ChatMessages}}}

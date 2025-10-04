@@ -1,13 +1,13 @@
 import './style.pcss';
 import Block, {TypeProps} from '@/utils/block';
-import {ChatListItem, chatSearch} from "@/components";
+import {ChatCreateButton, ChatListItem, chatSearch} from "@/components";
 import {State} from "@/utils/types";
 import {Routes} from "@/utils/router/routes";
 import chatController from "@/controllers/chat-controller";
 import store from "@/utils/store";
 import {hoc} from "@/utils/hoc";
 import {chatBox} from "@/components/chat-box";
-import {defaultPath} from "@/utils/data";
+import {defaultPath, URL} from "@/utils/data";
 
 
 function createChatListBlock() {
@@ -24,7 +24,7 @@ function createChatListBlock() {
         return new ChatListItem({
             id: item.id,
             active: (chatIdActive == item.id) ? 'active' : '',
-            image: item.avatar || defaultPath.avatar,
+            image: (item.avatar) ? `${URL.API}/resources${item.avatar}` : defaultPath.avatar,
             name: item.title,
             text: text || '',
             date: time,
@@ -39,6 +39,7 @@ export class Chat extends Block {
         super({
             ...props,
             Search: new chatSearch({}),
+            ChatCreateButton: new ChatCreateButton({}),
             ChatListBlocks: createChatListBlock(),
             ChatBox: new chatBox({}),
         });
@@ -64,7 +65,7 @@ export class Chat extends Block {
                                 <div class="chat_list_head_profile">
                                     <a href="${Routes.PROFILE}" class="chat_list_head_profile_link">Профиль</a>
                                 </div>
-                                {{{Search}}}
+                                {{{ChatCreateButton}}}
                             </div>
                             <div class="chat_list_body">
                                 {{{ChatListBlocks}}}

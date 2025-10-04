@@ -13,6 +13,7 @@ class Store extends EventBus {
         search: '',
         searchUsers: [],
         chatList: [],
+        chatUsers: [],
         chatPartnerUserId: null,
         chatIdActive: null,
         messages: [],

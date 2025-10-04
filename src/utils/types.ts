@@ -73,6 +73,7 @@ export type State = {
     msgSocket: MessageController | null;
     chatList: Chat[];
     search: string;
+    chatUsers: UserInfo[];
     searchUsers: UserInfo[];
     chatPartnerUserId: number | null;
     chatIdActive: number | null;

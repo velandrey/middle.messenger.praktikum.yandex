@@ -2,6 +2,7 @@ import './style.pcss';
 import Block from '@/utils/block';
 import store from "@/utils/store";
 import chatController from "@/controllers/chat-controller";
+import {closeModal} from "@/utils/modal";
 
 export type StrictComponentProps = {
     id: number;
@@ -19,14 +20,17 @@ export class ChatSearchResult extends Block {
             second_name,
             events: {
                 click: async () => {
-                    const newChatId = await chatController.createChat(`${first_name} ${second_name}`);
-                    const addUserToChat = await chatController.addUserToChat(id, newChatId);
-                    if (addUserToChat) {
-                        await chatController.getChats();
-                        store.set('search', '');
-                        store.set('searchUsers', []);
-                        store.set('chatPartnerUserId', id);
-                        store.set('chatIdActive', newChatId);
+                    const chatId = store.getState().chatIdActive;
+                    if (chatId) {
+                        const addUserToChat = await chatController.addUserToChat(id, chatId);
+                        if (addUserToChat) {
+                            await chatController.getChats();
+                            store.set('search', '');
+                            store.set('searchUsers', []);
+                            store.set('chatPartnerUserId', id);
+                            store.set('chatIdActive', chatId);
+                            closeModal();
+                        }
                     }
                 }
             }
