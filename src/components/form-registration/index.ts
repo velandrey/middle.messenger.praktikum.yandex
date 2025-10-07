@@ -2,6 +2,7 @@ import Block from '@/utils/block';
 import {Button, FormField} from "@/components";
 import {getFieldParams} from "@/utils/data";
 import {FormValidator} from "@/utils/validator";
+import authController from "@/controllers/auth-controller";
 
 export class FormRegistration extends Block {
     constructor(props: object) {
@@ -13,9 +14,9 @@ export class FormRegistration extends Block {
             'phone',
             'password',
         ];
-        const formFields = getFieldParams(fields).map((item)=>{
-            if(item){
-                return new FormField(item);
+        const formFields = getFieldParams(fields).map((item) => {
+            if (item) {
+                return new FormField({...item});
             }
             return {};
         });
@@ -33,7 +34,7 @@ export class FormRegistration extends Block {
         });
     }
 
-    submitCallback(e: Event) {
+    async submitCallback(e: Event) {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
@@ -44,7 +45,14 @@ export class FormRegistration extends Block {
             const validator = new FormValidator();
             const validationResult = validator.validateForm(arResult);
             if (validationResult.isValid) {
-                console.log('Корректные данные для регистрации: ', arResult);
+                await authController.registration({
+                    first_name: arResult.first_name,
+                    second_name: arResult.second_name,
+                    login: arResult.login,
+                    email: arResult.email,
+                    password: arResult.password,
+                    phone: arResult.phone,
+                });
             } else {
                 console.error('Обнаружены ошибки ввода: ', validationResult.errors);
             }

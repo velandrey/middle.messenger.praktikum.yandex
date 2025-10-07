@@ -1,4 +1,4 @@
-import { EventBus } from "./event-bus";
+import {EventBus} from "./event-bus";
 import Handlebars from "handlebars";
 
 export type TypeProps<T = Record<string, unknown>> = T & {
@@ -25,17 +25,17 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
 
     protected constructor(propsBlock: TypeProps = {}) {
         const eventBus = new EventBus();
-        const { props, children, lists } = this._geTypeChildrenPropsAndProps(propsBlock);
-        this.props = this._makePropsProxy({ ...props }) as Props;
+        const {props, children, lists} = this._getChildrenPropsAndProps(propsBlock);
+        this.props = this._makePropsProxy({...props}) as Props;
         this.children = children;
-        this.lists = this._makePropsProxy({ ...lists }) as TypeList;
+        this.lists = this._makePropsProxy({...lists}) as TypeList;
         this._element = null;
         this.eventBus = (): EventBus => eventBus;
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    private _geTypeChildrenPropsAndProps(propsAndChildren: TypeProps): {
+    private _getChildrenPropsAndProps(propsAndChildren: TypeProps): {
         children: TypeChild;
         props: TypeProps;
         lists: TypeList;
@@ -54,7 +54,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
             }
         });
 
-        return { children, props, lists };
+        return {children, props, lists};
     }
 
     private _registerEvents(eventBus: EventBus): void {
@@ -84,7 +84,8 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
         this.componentDidMount();
     }
 
-    protected componentDidMount(): void {}
+    protected componentDidMount(): void {
+    }
 
     public dispatchComponentDidMount(): void {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -102,7 +103,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
     }
 
     private _render(): void {
-        const propsAndStubs: Record<string, unknown> = { ...this.props };
+        const propsAndStubs: Record<string, unknown> = {...this.props};
 
         if (this.children) {
             Object.entries(this.children).forEach(([key, child]: [string, Block]) => {
@@ -158,7 +159,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
     protected abstract render(): string;
 
     private _addEvents(): void {
-        const { events = {} } = this.props;
+        const {events = {}} = this.props;
         Object.keys(events).forEach((eventName: string) => {
             if (this._element) {
                 this._element.addEventListener(eventName, events[eventName]);
@@ -167,7 +168,7 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
     }
 
     private _removeEvents(): void {
-        const { events = {} } = this.props;
+        const {events = {}} = this.props;
         Object.entries(events).forEach(([eventName, callback]) => {
             this._element?.removeEventListener(eventName, callback as EventListener);
         });
@@ -194,13 +195,13 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
                 return undefined;
             },
             set: (target: TypeProps, prop: string | symbol, newValue: unknown): boolean => {
-                if (prop in target) {
-                    const oldTarget: TypeProps = { ...target };
-                    (target as Record<string | symbol, unknown>)[prop] = newValue;
-                    this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
-                    return true;
-                }
-                return false;
+                // if (prop in target) {
+                const oldTarget: TypeProps = {...target};
+                (target as Record<string | symbol, unknown>)[prop] = newValue;
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                return true;
+                // }
+                // return false;
             },
             deleteProperty: (): never => {
                 throw new Error('Нет доступа');
@@ -212,7 +213,18 @@ export default abstract class Block<Props extends TypeProps = TypeProps> {
         if (!nextProps) {
             return;
         }
-        Object.assign(this.props, nextProps);
+        const {props, children, lists} = this._getChildrenPropsAndProps(nextProps);
+        Object.entries(children).forEach(([key, child]) => {
+            if (this.children[key]) {
+                this.children[key].setProps(child.props);
+            } else {
+                this.children[key] = child;
+            }
+        });
+        Object.entries(lists).forEach(([key, list]) => {
+            this.lists[key] = list;
+        });
+        Object.assign(this.props, props);
     }
 
     public show(): void {
