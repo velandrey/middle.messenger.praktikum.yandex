@@ -49,19 +49,6 @@ describe('HTTPTransport', () => {
         global.XMLHttpRequest = jest.fn(() => mockXHR as unknown as XMLHttpRequest) as unknown as typeof XMLHttpRequest;
     });
 
-    describe('queryStringify', () => {
-        it('Формирование строки запроса', () => {
-            const data = {offset: 3, limit: 21, title: 'ChatTitle'};
-            const result = queryStringify(data);
-            expect(result).toBe('?offset=3&limit=21&title=ChatTitle');
-        });
-        it('Используются спецсимволы', () => {
-            const data = {title: 'Где тесты'};
-            const result = queryStringify(data);
-            expect(result).toBe('?title=%D0%93%D0%B4%D0%B5+%D1%82%D0%B5%D1%81%D1%82%D1%8B');
-        });
-    });
-
     describe('Все методы запросов определены', () => {
         it('GET', () => {
             expect(httpTransport.get).toBeDefined();
@@ -79,15 +66,13 @@ describe('HTTPTransport', () => {
 
     describe('Запросы корректно срабатывают', () => {
         it('В XMLHttpRequest формируется правильный метод', async () => {
-            const data = {name: 'John'};
-            const promise = httpTransport.post('/chats', {data});
+            const promise = httpTransport.post('/chats', {});
             mockXHR.initSuccess();
             await promise;
             expect(mockXHR.method).toBe('POST');
         });
         it('Правильно обрабатываются ошибки соединения', async () => {
-            const data = {name: 'John'};
-            const promise = httpTransport.post('/chats', {data});
+            const promise = httpTransport.post('/chats', {});
             mockXHR.initError();
             await expect(promise).rejects.toThrow(`Ошибка соединения с ${URL.API}/chats`);
         });
@@ -101,5 +86,18 @@ describe('HTTPTransport', () => {
             mockXHR.initTimeout();
             await expect(promise).rejects.toThrow(`Таймаут запроса к ${URL.API}/chats после 0 попыток`);
         });
+    });
+});
+
+describe('queryStringify', () => {
+    it('Формирование строки запроса', () => {
+        const data = {offset: 3, limit: 21, title: 'ChatTitle'};
+        const result = queryStringify(data);
+        expect(result).toBe('?offset=3&limit=21&title=ChatTitle');
+    });
+    it('Используются спецсимволы', () => {
+        const data = {title: 'Где тесты'};
+        const result = queryStringify(data);
+        expect(result).toBe('?title=%D0%93%D0%B4%D0%B5+%D1%82%D0%B5%D1%81%D1%82%D1%8B');
     });
 });

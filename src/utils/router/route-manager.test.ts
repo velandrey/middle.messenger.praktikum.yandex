@@ -1,10 +1,7 @@
-import { Route } from '@/utils/router/route';
+import {Route} from '@/utils/router/route';
 import routeManager from "@/utils/router/route-manager";
 
-jest.mock('@/utils/router/route');
 jest.mock('@/controllers/auth-controller');
-jest.mock('@/utils/router/routes');
-
 
 type RouteManagerPrivate = {
     routes: Route[];
