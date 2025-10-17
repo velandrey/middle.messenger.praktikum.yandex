@@ -6,7 +6,7 @@ export default class MessageController {
     private socket: WebSocket | null = null;
     private readonly userId: number;
     private readonly chatId: number;
-    private intervalObjectForPing: number | null = null;
+    private intervalObjectForPing: NodeJS.Timeout | null = null;
 
     public constructor(userId: number, chatId: number) {
         this.userId = userId;
