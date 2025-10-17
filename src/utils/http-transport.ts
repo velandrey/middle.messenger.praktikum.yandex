@@ -33,7 +33,7 @@ export type HttpRequestOptions = {
 /**
  * Функция для преобразования объекта в query string
  */
-function queryStringify(data: Record<string, unknown>): string {
+export function queryStringify(data: Record<string, unknown>): string {
     if (typeof data !== 'object' || data === null) {
         throw new Error('Неверный тип данных - требуется объект');
     }
